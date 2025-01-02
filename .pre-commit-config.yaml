@@ -1,0 +1,46 @@
+---
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  #     -   id: check-yaml
+  #     -   id: check-added-large-files
+
+  # See https://docs.astral.sh/uv/guides/integration/pre-commit/
+  - repo: https://github.com/astral-sh/uv-pre-commit
+  # uv version.
+    rev: 0.5.13
+    hooks:
+    # Update the uv lockfile
+      - id: uv-lock
+
+  # https://ansible.readthedocs.io/projects/lint/configuring/#pre-commit-setup
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v24.12.2 # put latest release tag from https://github.com/ansible/ansible-lint/releases/
+    hooks:
+      - id: ansible-lint
+        args: [--fix]
+  # Uncomment if you need the full Ansible community bundle instead of ansible-core:
+  # additional_dependencies:
+  #   - ansible
+
+  # https://mdformat.readthedocs.io/en/stable/users/installation_and_usage.html#usage-as-a-pre-commit-hook
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.21 # Use the ref you want to point at
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          # https://github.com/hukkin/mdformat-shfmt
+          # https://github.com/mvdan/sh
+          - mdformat-shfmt
+
+          # https://github.com/hukkin/mdformat-gfm
+          - mdformat-gfm
+
+          # https://github.com/Freed-Wu/mdformat-ruff?tab=readme-ov-file#usage-as-a-pre-commit-hook
+          - mdformat-ruff
+          - ruff
