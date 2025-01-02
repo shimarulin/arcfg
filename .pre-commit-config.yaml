@@ -23,7 +23,7 @@ repos:
     rev: v24.12.2 # put latest release tag from https://github.com/ansible/ansible-lint/releases/
     hooks:
       - id: ansible-lint
-        args: [--fix]
+        args: [--fix, --profile=safety]
   # Uncomment if you need the full Ansible community bundle instead of ansible-core:
   # additional_dependencies:
   #   - ansible
