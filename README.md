@@ -1,5 +1,9 @@
 # arcfg
 
+```sh
+uv run ansible-galaxy collection install -r ./collections/requirements.yml
+```
+
 ## Development
 
 ### First steps

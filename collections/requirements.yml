@@ -1,0 +1,9 @@
+---
+collections:
+#  - name: community.general
+#    version: 10.2.0
+#
+#  - name: community.crypto
+#    version: 2.23.0
+
+  - name: kewlfft.aur
