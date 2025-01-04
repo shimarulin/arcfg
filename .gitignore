@@ -14,3 +14,5 @@ wheels/
 
 ### Ansible
 .collections
+inventory/group_vars/*
+inventory/host_vars/*
