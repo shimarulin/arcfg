@@ -1,4 +1,4 @@
-# arcfg.self Run Role
+# Role: arcfg.maintenance.install
 
 A brief description of the role is here.
 
@@ -28,20 +28,20 @@ users too:
 - name: Execute tasks on servers
   hosts: servers
   roles:
-    - role: arcfg.self.run
+    - role: arcfg.maintenance.install
       run_x: 42
 ```
 
 Another way to consume this role would be:
 
 ```yaml
-- name: Initialize the run role from arcfg.self
+- name: Initialize the install role from arcfg.maintenance
   hosts: servers
   gather_facts: false
   tasks:
     - name: Trigger invocation of run role
       ansible.builtin.include_role:
-        name: arcfg.self.run
+        name: arcfg.maintenance.install
       vars:
         run_x: 42
 ```

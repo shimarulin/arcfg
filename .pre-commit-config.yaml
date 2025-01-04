@@ -24,9 +24,9 @@ repos:
     hooks:
       - id: ansible-lint
         args: [--fix, --profile=safety]
-  # Uncomment if you need the full Ansible community bundle instead of ansible-core:
-  # additional_dependencies:
-  #   - ansible
+        # Uncomment if you need the full Ansible community bundle instead of ansible-core:
+        additional_dependencies:
+          - ansible
 
   # https://mdformat.readthedocs.io/en/stable/users/installation_and_usage.html#usage-as-a-pre-commit-hook
   - repo: https://github.com/executablebooks/mdformat

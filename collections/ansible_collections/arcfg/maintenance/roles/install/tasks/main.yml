@@ -1,4 +1,6 @@
 ---
-- name: Debug print task-1 maintenance
-  ansible.builtin.debug:
-    msg: "This is task-1 maintenance install"
+# tasks file for 'arcfg.maintenance.install' role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ install_maintenance_packages }}"
