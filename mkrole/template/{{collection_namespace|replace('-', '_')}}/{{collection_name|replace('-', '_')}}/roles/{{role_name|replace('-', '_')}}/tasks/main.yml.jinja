@@ -1,0 +1,7 @@
+---
+# tasks file for "{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }}" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ '{{' }} {{ collection_namespace|replace('-', '_') }}_{{ collection_name|replace('-', '_') }}_{{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
+    extra_args: "--needed"

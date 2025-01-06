@@ -34,13 +34,5 @@ repos:
     hooks:
       - id: mdformat
         additional_dependencies:
-          # https://github.com/hukkin/mdformat-shfmt
-          # https://github.com/mvdan/sh
-          - mdformat-shfmt
-
           # https://github.com/hukkin/mdformat-gfm
           - mdformat-gfm
-
-          # https://github.com/Freed-Wu/mdformat-ruff?tab=readme-ov-file#usage-as-a-pre-commit-hook
-          - mdformat-ruff
-          - ruff
