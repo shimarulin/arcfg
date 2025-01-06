@@ -8,6 +8,7 @@ exclude_paths:
   - .obsidian/ # implicit unless exclude_paths is defined in config
   - docs/
   - mkrole/
+  - mkvars/
 
 enable_list:
   # add yaml here if you want to avoid ignoring yaml checks when yamllint

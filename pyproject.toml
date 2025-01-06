@@ -23,5 +23,5 @@ package = false
 environments = ["platform_system != 'Windows'"]
 
 [project.scripts]
-arcfg = "arcfg.cli:arcfg"
+mkvars = "mkvars.cli:mkvars"
 mkrole = "mkrole.cli:mkrole"

@@ -1,0 +1,19 @@
+---
+# Country and language
+country_code: "{{ country_code }}"
+language_code: "{{ language_code }}"
+
+# Locale
+locale_encoding: "UTF-8"
+system_lang_name: "en_US"
+system_lang: {% raw %}"{{ system_lang_name }}.{{ locale_encoding }}"{% endraw %}
+locale_lang_name: {% raw %}"{{ language_code }}_{{ country_code }}"{% endraw %}
+locale_lang: {% raw %}"{{ locale_lang_name }}.{{ locale_encoding }}"{% endraw %}
+locale_language: {% raw %}"{{ locale_lang }}:{{ system_lang }}"{% endraw %}
+
+# Keyboard
+keyboard_layout: "{{ alternate_keyboard_layout }}"
+
+# vconsole
+vconsole_font: "ter-c16b"
+vconsole_keymap: "{{ alternate_keyboard_layout }}"
