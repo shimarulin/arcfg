@@ -9,8 +9,6 @@ uv run ansible-galaxy collection install -r ./collections/requirements.yml
 ### First steps
 
 ```sh
-uv run ansible-galaxy collection install -r ./collections/requirements.yml
-uv run ansible-playbook arcfg.maintenance.activate
 uv run pre-commit install --install-hooks
 ```
 

@@ -1,6 +1,0 @@
----
-# tasks file for 'arcfg.maintenance.install' role
-- name: "Install dependencies"
-  become: true
-  community.general.pacman:
-    name: "{{ install_maintenance_packages }}"

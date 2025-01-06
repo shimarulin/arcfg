@@ -1,5 +1,0 @@
----
-# vars file for 'arcfg.maintenance.install' role
-install_maintenance_packages:
-  - git
-  - shfmt

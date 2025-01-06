@@ -1,6 +1,0 @@
----
-# This playbook deploys the whole application stack.
-- name: Apply a common graphical configuration to all nodes
-  hosts: localhost
-  roles:
-    - role: arcfg.maintenance.install
