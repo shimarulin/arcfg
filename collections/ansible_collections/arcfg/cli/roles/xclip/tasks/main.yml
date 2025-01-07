@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.cli.xclip" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ xclip_cli_arcfg_packages }}"
+    extra_args: "--needed"

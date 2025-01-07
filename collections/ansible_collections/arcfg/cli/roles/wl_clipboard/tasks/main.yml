@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.cli.wl_clipboard" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ wl_clipboard_cli_arcfg_packages }}"
+    extra_args: "--needed"

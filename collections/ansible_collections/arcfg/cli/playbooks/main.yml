@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.cli roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.cli.micro

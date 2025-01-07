@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.micro" role
+micro_cli_arcfg_packages:
+  - "micro"

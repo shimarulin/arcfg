@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.xsel" role
+xsel_cli_arcfg_packages:
+  - "xsel"
