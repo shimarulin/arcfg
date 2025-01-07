@@ -32,7 +32,7 @@ uv run mkvars
 uv run ansible-playbook arcfg.gnome.main
 ```
 
-### Create nev role
+### Create new role
 
 ```sh
 uv run mkvars
