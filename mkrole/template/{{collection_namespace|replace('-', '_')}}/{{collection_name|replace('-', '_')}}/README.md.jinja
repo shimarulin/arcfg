@@ -1,9 +1,17 @@
-# Ansible Collection {{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}
+# Ansible Collection '{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}'
 
 > Add collection description here
 
-## Run playbook
+## Run playbooks
+
+### Run main playbook of the '{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}' collection
 
 ```sh
 ansible-playbook {{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.main
+```
+
+### Apply the '{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }}' role
+
+```sh
+ansible-playbook {{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }}
 ```

@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.fzf" role
+fzf_cli_arcfg_packages:
+  - "fzf"

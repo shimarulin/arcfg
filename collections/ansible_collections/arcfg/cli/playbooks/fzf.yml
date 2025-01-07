@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.cli.fzf role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.cli.fzf
