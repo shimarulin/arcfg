@@ -1,0 +1,3 @@
+---
+# defaults file for "arcfg.env.editor" role
+editor_env_arcfg_name: "micro"

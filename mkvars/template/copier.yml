@@ -189,7 +189,6 @@ default_cli_text_editor:
     - "micro"
     - "neovim"
     - "helix"
-    - "nano"
 
 default_visual_text_editor:
   type: "str"
