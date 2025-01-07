@@ -20,8 +20,22 @@ uv run pre-commit install --install-hooks
 
 ## Usage
 
+### Setup variables
+
+```sh
+uv run mkvars
+```
+
 ### Run playbook
 
 ```sh
 uv run ansible-playbook arcfg.gnome.main
 ```
+
+### Create nev role
+
+```sh
+uv run mkvars
+```
+
+By default, this command implies installing a package with a name matching the name of the role being created.
