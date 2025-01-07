@@ -192,20 +192,24 @@ default_cli_text_editor:
 
 default_visual_text_editor:
   type: "str"
-  help: "Default Visual Text Editor:"
-  default: "GNOME Text Editor"
+  help: "Default GUI Text Editor:"
+  default: "gnome-text-editor"
   choices:
-    - "GNOME Text Editor"
+    - "gnome-text-editor"
+    - "micro"
+    - "neovim"
+    - "helix"
 
 default_terminal_emulator:
   type: "str"
   help: "Default Terminal emulator:"
-  default: "Kitty"
+  default: "kitty"
   choices:
-    - "Kitty"
-    - "Tilix"
-    - "Black Box"
-    - "GNOME Console"
+    - "kitty"
+    - "tilix"
+    - "blackbox-terminal"
+    - "gnome-console"
+    - "ghostty"
 
 # settings
 _jinja_extensions:
