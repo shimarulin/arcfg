@@ -1,2 +1,8 @@
 ---
 # vars file for "arcfg.env.editor" role
+editor_env_arcfg_executable_map:
+  helix: "helix"
+  micro: "micro"
+  neovim: "nvim"
+
+editor_env_arcfg_executable: "{{ editor_env_arcfg_executable_map[editor_env_arcfg_name] }}"
