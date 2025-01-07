@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.gnome_text_editor" role
+gnome_text_editor_apps_arcfg_packages:
+  - "gnome-text-editor"
