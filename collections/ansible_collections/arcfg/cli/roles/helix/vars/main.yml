@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.helix" role
+helix_cli_arcfg_packages:
+  - "helix"
