@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.apps.ghostty" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ ghostty_apps_arcfg_packages }}"
+    extra_args: "--needed"

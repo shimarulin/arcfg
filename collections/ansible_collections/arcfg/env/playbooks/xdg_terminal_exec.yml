@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.env.xdg_terminal_exec role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.env.xdg_terminal_exec

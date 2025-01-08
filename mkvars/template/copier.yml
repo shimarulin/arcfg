@@ -206,10 +206,8 @@ default_terminal_emulator:
   default: "kitty"
   choices:
     - "kitty"
-    - "tilix"
-    - "blackbox-terminal"
-    - "gnome-console"
     - "ghostty"
+    - "blackbox-terminal"
 
 # settings
 _jinja_extensions:

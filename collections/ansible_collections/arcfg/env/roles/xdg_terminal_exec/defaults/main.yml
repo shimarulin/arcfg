@@ -1,0 +1,3 @@
+---
+# defaults file for "arcfg.env.xdg_terminal_exec" role
+xdg_terminal_exec_env_arcfg_name: "kitty"
