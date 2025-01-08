@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.apps.gnome_text_editor" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gnome_text_editor_apps_arcfg_packages }}"
+    extra_args: "--needed"

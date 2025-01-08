@@ -1,0 +1,5 @@
+---
+- name: Apply the {{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }} role to local node
+  hosts: localhost
+  roles:
+    - role: {{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }}

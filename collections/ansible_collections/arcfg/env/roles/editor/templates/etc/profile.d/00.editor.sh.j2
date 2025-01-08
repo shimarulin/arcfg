@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Initially, EDITOR would have to be set to ed, a line-based text editor,
+# and VISUAL would have been assigned to vi, a screen-based editor.
+#
+# The general logic was:
+# - The EDITOR must work without advanced terminal functionality.
+#   Hence, you can set it to ed or ex. A teletypewriter (TTY) is an example
+#   where you must use ed or ex. Hence, EDITOR is needed.
+# - VISUAL is used by modern apps and terminals. Set it to a full-screen editor
+#   like vi/vim, emacs, nano, and so on.
+# - On modern Linux and Unix-like systems, we set both VISUAL and EDITOR to the
+#   same editor, as some tools only accept EDITOR and may not look for VISUAL.
+# - Almost all modern apps or bash would look for VISUAL first and then EDITOR.
+
+export EDITOR={{ editor_env_arcfg_executable }}
+export VISUAL={{ editor_env_arcfg_executable }}

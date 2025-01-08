@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.blackbox_terminal" role
+blackbox_terminal_apps_arcfg_packages:
+  - "blackbox-terminal"

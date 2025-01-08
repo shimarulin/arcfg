@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcfg.package_management' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.package_management.paru

@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcfg.build_tools' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.build_tools.base_devel

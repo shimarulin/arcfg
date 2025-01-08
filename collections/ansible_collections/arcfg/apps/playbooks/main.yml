@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcfg.apps' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.kitty

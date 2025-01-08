@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "redhat.ansible",
+        "samuelcolvin.jinjahtml",
+        "artymaury.template-finder",
+        "redhat.vscode-yaml",
+        "ms-python.python",
+        "tamasfe.even-better-toml"
+    ]
+}

@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.cli.helix" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ helix_cli_arcfg_packages }}"
+    extra_args: "--needed"

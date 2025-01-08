@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.ghostty" role
+ghostty_apps_arcfg_packages:
+  - "ghostty"

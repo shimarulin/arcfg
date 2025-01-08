@@ -1,0 +1,12 @@
+---
+# tasks file for "arcfg.env.editor" role
+- name: "Install default cli text editor"
+  ansible.builtin.include_role:
+    name: "arcfg.cli.{{ editor_env_arcfg_name | replace('-', '_') }}"
+
+- name: "Create the $EDITOR variable helper"
+  become: true
+  ansible.builtin.template:
+    src: "etc/profile.d/00.editor.sh.j2"
+    dest: "/etc/profile.d/00.editor.sh"
+    mode: "0644"

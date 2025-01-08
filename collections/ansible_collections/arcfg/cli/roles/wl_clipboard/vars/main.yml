@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.wl_clipboard" role
+wl_clipboard_cli_arcfg_packages:
+  - "wl-clipboard"
