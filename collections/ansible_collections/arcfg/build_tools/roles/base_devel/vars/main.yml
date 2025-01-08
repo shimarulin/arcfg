@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.build_tools.base_devel" role
+base_devel_build_tools_arcfg_packages:
+  - "base-devel"

@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.package_management.paru" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ paru_package_management_arcfg_packages }}"
+    extra_args: "--needed"
