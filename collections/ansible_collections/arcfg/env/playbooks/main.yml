@@ -3,3 +3,5 @@
   hosts: localhost
   roles:
     - role: arcfg.env.editor
+    - role: arcfg.env.path
+    - role: arcfg.env.xdg_terminal_exec

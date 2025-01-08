@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.env.path" role
+path_env_arcfg_packages:
+  - "path"
