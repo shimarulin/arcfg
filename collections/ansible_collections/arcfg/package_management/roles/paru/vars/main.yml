@@ -1,4 +1,2 @@
 ---
 # vars file for "arcfg.package_management.paru" role
-paru_package_management_arcfg_packages:
-  - "paru"
