@@ -9,7 +9,7 @@
   ansible.builtin.git:
     repo: "https://aur.archlinux.org/paru-bin.git"
     dest: "/tmp/paru-bin"
-  # when: "not paru_stat_result.stat.exists"
+  when: "not paru_stat_result.stat.exists"
   register: "paru_get_result"
 
 - name: "Make and install Paru"
