@@ -5,5 +5,6 @@
     - role: arcfg.env.path
     - role: arcfg.env.editor
     - role: arcfg.env.locale
+    - role: arcfg.env.vconsole
     - role: arcfg.env.xdg_basedir
     - role: arcfg.env.xdg_user_dirs
