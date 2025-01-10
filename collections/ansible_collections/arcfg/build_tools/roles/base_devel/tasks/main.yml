@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ base_devel_build_tools_arcfg_packages }}"
+    name: "{{ base_devel_build_packages }}"
     extra_args: "--needed"
