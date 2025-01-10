@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ nautilus_apps_arcfg_packages }}"
+    name: "{{ nautilus_packages }}"
     extra_args: "--needed"

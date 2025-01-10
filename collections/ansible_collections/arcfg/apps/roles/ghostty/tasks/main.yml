@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ ghostty_apps_arcfg_packages }}"
+    name: "{{ ghostty_packages }}"
     extra_args: "--needed"

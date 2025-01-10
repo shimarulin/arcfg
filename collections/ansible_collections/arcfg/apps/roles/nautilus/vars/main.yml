@@ -1,4 +1,4 @@
 ---
 # vars file for "arcfg.apps.nautilus" role
-nautilus_apps_arcfg_packages:
+nautilus_packages:
   - "nautilus"
