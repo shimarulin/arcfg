@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.env.xdg_user_dirs role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.env.xdg_user_dirs

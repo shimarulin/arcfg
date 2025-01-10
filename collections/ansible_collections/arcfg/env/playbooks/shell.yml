@@ -1,0 +1,9 @@
+---
+- name: Apply shell roles from the 'arcfg.env' collection to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.env.path
+    - role: arcfg.env.editor
+    - role: arcfg.env.locale
+    - role: arcfg.env.xdg_basedir
+    - role: arcfg.env.xdg_user_dirs

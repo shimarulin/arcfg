@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.env.xdg_user_dirs" role
+xdg_user_dirs_env_arcfg_packages:
+  - "xdg-user-dirs"
