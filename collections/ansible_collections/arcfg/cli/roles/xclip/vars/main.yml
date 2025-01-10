@@ -1,4 +1,4 @@
 ---
 # vars file for "arcfg.cli.xclip" role
-xclip_cli_arcfg_packages:
+xclip_packages:
   - "xclip"

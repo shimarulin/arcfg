@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ fzf_cli_arcfg_packages }}"
+    name: "{{ fzf_packages }}"
     extra_args: "--needed"

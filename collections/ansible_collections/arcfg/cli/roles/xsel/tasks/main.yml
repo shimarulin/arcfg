@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ xsel_cli_arcfg_packages }}"
+    name: "{{ xsel_packages }}"
     extra_args: "--needed"
