@@ -3,12 +3,12 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ xdg_terminal_exec_env_arcfg_packages }}"
+    name: "{{ xdg_terminal_exec_packages }}"
     extra_args: "--needed"
 
 - name: "Install default terminal emulator"
   ansible.builtin.include_role:
-    name: "arcfg.apps.{{ xdg_terminal_exec_env_arcfg_name | replace('-', '_') }}"
+    name: "arcfg.apps.{{ xdg_terminal_exec_name | replace('-', '_') }}"
 
 # https://gitlab.freedesktop.org/Vladimir-csp/xdg-terminal-exec#default-terminal-execution-specification
 - name: "Generate ~/.config/xdg-terminals.list"

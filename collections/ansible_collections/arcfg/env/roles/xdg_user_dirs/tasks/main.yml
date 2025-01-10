@@ -3,7 +3,7 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ xdg_user_dirs_env_arcfg_packages }}"
+    name: "{{ xdg_user_dirs_packages }}"
     extra_args: "--needed"
 
 - name: "Create XDG user dirs and update XDG user dirs config for user locale"

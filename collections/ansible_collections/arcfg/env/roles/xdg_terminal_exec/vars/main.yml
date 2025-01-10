@@ -1,13 +1,13 @@
 ---
 # vars file for "arcfg.env.xdg_terminal_exec" role
-xdg_terminal_exec_env_arcfg_packages:
+xdg_terminal_exec_packages:
   # Proposed standard to launching desktop apps with Terminal=true
   # https://gitlab.freedesktop.org/Vladimir-csp/xdg-terminal-exec
   - "xdg-terminal-exec"
 
-xdg_terminal_exec_env_arcfg_desktop_file_map:
+xdg_terminal_exec_desktop_file_map:
   "kitty": "kitty.desktop"
   "ghostty": "com.mitchellh.ghostty.desktop"
   "blackbox-terminal": "com.raggesilver.BlackBox.desktop"
 
-xdg_terminal_exec_env_arcfg_desktop_file: "{{ xdg_terminal_exec_env_arcfg_desktop_file_map[xdg_terminal_exec_env_arcfg_name] }}"
+xdg_terminal_exec_desktop_file: "{{ xdg_terminal_exec_desktop_file_map[xdg_terminal_exec_name] }}"
