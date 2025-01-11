@@ -1,0 +1,14 @@
+---
+# tasks file for "arcfg.cli.sudo" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ sudo_packages }}"
+    extra_args: "--needed"
+
+- name: "Reduce the number of times you have to type a password"
+  become: true
+  copy:
+    src: etc/sudoers.d/defaults
+    dest: /etc/sudoers.d/defaults
+    mode: u=r,g=r,o=
