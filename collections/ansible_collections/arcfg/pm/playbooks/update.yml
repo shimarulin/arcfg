@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.pm.update role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.pm.update

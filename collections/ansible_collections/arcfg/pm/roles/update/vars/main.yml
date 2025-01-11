@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.pm.update" role
+update_packages:
+  - "archlinux-keyring"
