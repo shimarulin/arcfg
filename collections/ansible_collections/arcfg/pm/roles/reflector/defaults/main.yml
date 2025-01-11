@@ -1,0 +1,5 @@
+---
+# defaults file for "arcfg.pm.reflector" role
+reflector_country_list: ""
+reflector_mirrors_count: 5
+reflector_sort: age
