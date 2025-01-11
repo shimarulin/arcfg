@@ -1,0 +1,15 @@
+---
+# tasks file for "arcfg.pm.pacman" role
+- name: "Setup color output"
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    regexp: "^#Color"
+    line: "Color"
+
+- name: "Setup parallel downloads"
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/pacman.conf"
+    regexp: "^#ParallelDownloads.*"
+    line: "ParallelDownloads = 5"

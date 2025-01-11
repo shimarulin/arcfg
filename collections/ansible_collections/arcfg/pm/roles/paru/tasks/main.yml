@@ -1,5 +1,5 @@
 ---
-# tasks file for "arcfg.package_management.paru" role
+# tasks file for "arcfg.pm.paru" role
 - name: "Check that the Paru already installed"
   ansible.builtin.stat:
     path: "/usr/bin/paru"

@@ -28,14 +28,14 @@ users too:
 - name: Apply paru configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.package_management.paru
+    - role: arcfg.pm.paru
 ```
 
 ```yaml
 - name: Apply paru configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.package_management.paru
+    - role: arcfg.pm.paru
       tags:
         - laptop
         - desktop
