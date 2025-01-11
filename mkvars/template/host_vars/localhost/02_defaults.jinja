@@ -1,7 +1,10 @@
 ---
 # Default CLI Text Editor
 editor_name: "{{ default_cli_text_editor }}"
-
+{% if default_visudo_text_editor is defined and default_visudo_text_editor != default_cli_text_editor %}
+# Default sudo editor
+editor_sudo_name: "{{ default_visudo_text_editor }}"
+{% endif %}
 # Default GUI Text Editor
 xdg_open_editor: "{{ default_visual_text_editor }}"
 

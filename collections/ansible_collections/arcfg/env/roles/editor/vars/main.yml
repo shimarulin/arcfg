@@ -4,5 +4,3 @@ editor_executable_map:
   helix: "helix"
   micro: "micro"
   neovim: "nvim"
-
-editor_executable: "{{ editor_executable_map[editor_name] }}"

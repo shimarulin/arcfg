@@ -190,6 +190,21 @@ default_cli_text_editor:
     - "neovim"
     - "helix"
 
+use_alternative_visudo_text_editor:
+  type: "bool"
+  help: "Use an alternative editor for visudo:"
+  default: false
+
+default_visudo_text_editor:
+  type: "str"
+  help: "Visudo Text Editor:"
+  default: "{{ default_cli_text_editor }}"
+  choices:
+    - "micro"
+    - "neovim"
+    - "helix"
+  when: "{{ use_alternative_visudo_text_editor == true }}"
+
 default_visual_text_editor:
   type: "str"
   help: "Default GUI Text Editor:"

@@ -5,4 +5,3 @@ Defaults timestamp_timeout=15
 ## Set visudo editor from user environment variables
 Defaults env_keep += "SUDO_EDITOR EDITOR VISUAL"
 Defaults env_editor
-#
