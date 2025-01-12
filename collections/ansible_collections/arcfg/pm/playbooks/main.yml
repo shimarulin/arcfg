@@ -6,3 +6,4 @@
     - role: arcfg.pm.pacman
     - role: arcfg.pm.update
     - role: arcfg.pm.paru
+    - role: arcfg.pm.flatpak
