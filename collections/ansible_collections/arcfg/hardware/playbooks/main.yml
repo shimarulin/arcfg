@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcfg.hardware' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.hardware.bluez
