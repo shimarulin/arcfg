@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.hardware.sof_firmware" role
+sof_firmware_packages:
+  - "sof-firmware"
