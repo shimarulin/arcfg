@@ -1,0 +1,8 @@
+---
+# vars file for "arcfg.hardware.pipewire" role
+pipewire_packages:
+  - "pipewire"
+  - "pipewire-jack"
+  - "pipewire-pulse"
+  # Session / policy manager implementation for PipeWire (replace pipewire-media-session)
+  - "wireplumber"

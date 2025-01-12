@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.hardware.pipewire role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.hardware.pipewire
