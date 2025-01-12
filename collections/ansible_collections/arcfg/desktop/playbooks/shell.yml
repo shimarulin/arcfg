@@ -7,3 +7,6 @@
 
 - name: "Import arcfg.env.shell"
   ansible.builtin.import_playbook: arcfg.env.shell
+
+- name: "Import arcfg.hardware.main"
+  ansible.builtin.import_playbook: arcfg.hardware.main

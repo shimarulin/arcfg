@@ -1,0 +1,5 @@
+---
+# vars file for "arcfg.cli.sheldon" role
+sheldon_packages:
+  - "git"
+  - "curl"
