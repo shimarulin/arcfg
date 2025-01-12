@@ -1,0 +1,21 @@
+---
+# tasks file for "arcfg.hardware.networkmanager" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ networkmanager_packages }}"
+    extra_args: "--needed"
+
+- name: "Enable NetworkManager service"
+  become: true
+  ansible.builtin.systemd:
+    name: "NetworkManager.service"
+    state: "started"
+    enabled: true
+
+- name: "Enable wpa_supplicant service (Wi-Fi backend)"
+  become: true
+  ansible.builtin.systemd:
+    name: "wpa_supplicant.service"
+    state: "started"
+    enabled: true
