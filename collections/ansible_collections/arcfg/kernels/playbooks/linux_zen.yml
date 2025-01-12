@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.kernels.linux_zen role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.kernels.linux_zen

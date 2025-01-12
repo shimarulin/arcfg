@@ -1,0 +1,6 @@
+---
+- name: Apply the 'arcfg.kernels' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.kernels.linux
+    - role: arcfg.kernels.linux_lts

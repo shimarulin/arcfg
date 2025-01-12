@@ -1,0 +1,5 @@
+---
+# vars file for "arcfg.kernels.linux_lts" role
+linux_lts_packages:
+  - "linux-lts"
+  - "linux-lts-headers"

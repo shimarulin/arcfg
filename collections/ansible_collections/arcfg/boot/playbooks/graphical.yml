@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.boot.graphical role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.boot.graphical

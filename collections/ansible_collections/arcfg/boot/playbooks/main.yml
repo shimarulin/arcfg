@@ -1,0 +1,6 @@
+---
+- name: "Import arcfg.boot.shel"
+  ansible.builtin.import_playbook: arcfg.boot.shell
+
+- name: "Import arcfg.boot.graphical"
+  ansible.builtin.import_playbook: arcfg.boot.graphical

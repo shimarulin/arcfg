@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.boot.grub" role
+grub_packages:
+  - "grub"
