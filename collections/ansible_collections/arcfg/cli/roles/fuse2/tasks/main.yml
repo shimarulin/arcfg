@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.cli.fuse2" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ fuse2_packages }}"
+    extra_args: "--needed"

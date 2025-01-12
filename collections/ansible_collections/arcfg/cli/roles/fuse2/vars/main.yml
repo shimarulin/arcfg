@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.fuse2" role
+fuse2_packages:
+  - "fuse2"
