@@ -1,11 +1,5 @@
 ---
 # tasks file for "arcfg.env.vconsole" role
-- name: "Install dependencies"
-  become: true
-  community.general.pacman:
-    name: "{{ vconsole_packages }}"
-    extra_args: "--needed"
-
 - name: "Create /etc/vconsole.conf"
   become: true
   ansible.builtin.template:
