@@ -55,7 +55,7 @@
 
 - name: "Copy config file"
   ansible.builtin.copy:
-    src: "home/.config/sheldon/plugins.toml"
+    src: "home/user/.config/sheldon/plugins.toml"
     # If dest is a non-existent path and if either dest ends with "/" or src is a directory, dest is created.
     dest: "~/.config/sheldon/"
     mode: "u=rw,g=r,o=r"

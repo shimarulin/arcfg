@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.shell.zsh role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.shell.zsh

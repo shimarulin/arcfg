@@ -1,0 +1,37 @@
+---
+# tasks file for "arcfg.shell.zsh" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ zsh_packages }}"
+    extra_args: "--needed"
+
+- name: "Copy ~/.zshenv"
+  ansible.builtin.copy:
+    src: "home/user/.zshenv"
+    dest: "~/.zshenv"
+    mode: "u=rw,g=r,o=r"
+
+- name: "Copy ~/.config/zsh"
+  ansible.builtin.copy:
+    src: "home/user/.config/zsh"
+    dest: "~/.config/"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: "Set zsh as default shell"
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: "/usr/bin/zsh"
+
+- name: "Synchronize the pkgfile database"
+  become: true
+  ansible.builtin.command: "pkgfile -u"
+  changed_when: false
+
+- name: "Enable automatically synchronizing the pkgfile database"
+  become: true
+  ansible.builtin.systemd:
+    name: "pkgfile-update.timer"
+    state: "started"
+    enabled: true

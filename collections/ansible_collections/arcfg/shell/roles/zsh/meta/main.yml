@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  description: "Zsh is a shell designed for interactive use, although it is also a powerful scripting language"
+
+  # Platforms is a list of platforms, and each platform has a name and a list of versions.
+  platforms:
+    - name: "ArchLinux"
+      versions:
+        - "all"
+
+# List your role dependencies here, one per line. Be sure to remove the '[]' above,
+# if you add dependencies to this list.
+dependencies:
+  - role: arcfg.cli.fzf
+  - role: arcfg.cli.sheldon
