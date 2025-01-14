@@ -10,6 +10,3 @@
 
 - name: "Import arcfg.shell.zsh"
   ansible.builtin.import_playbook: arcfg.shell.zsh
-
-- name: "Import arcfg.hardware.main"
-  ansible.builtin.import_playbook: arcfg.hardware.main

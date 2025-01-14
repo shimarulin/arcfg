@@ -1,17 +1,13 @@
 # Ansible Collection 'arcfg.desktop'
 
-> Add collection description here
+> Install or update the complete system configurations.
 
 ## Run playbooks
 
-### Run main playbook of the 'arcfg.desktop' collection
+### Run 'shell' playbook of the 'arcfg.desktop' collection
+
+Install minimal Linux console configuration
 
 ```sh
-ansible-playbook arcfg.desktop.main
-```
-
-### Apply the 'arcfg.desktop.base' role
-
-```sh
-ansible-playbook arcfg.desktop.base
+ansible-playbook arcfg.desktop.shell
 ```
