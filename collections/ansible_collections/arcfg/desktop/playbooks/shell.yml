@@ -1,0 +1,12 @@
+---
+- name: "Import arcfg.pm.main"
+  ansible.builtin.import_playbook: arcfg.pm.main
+
+- name: "Import arcfg.boot.shell"
+  ansible.builtin.import_playbook: arcfg.boot.shell
+
+- name: "Import arcfg.env.shell"
+  ansible.builtin.import_playbook: arcfg.env.shell
+
+- name: "Import arcfg.shell.zsh"
+  ansible.builtin.import_playbook: arcfg.shell.zsh

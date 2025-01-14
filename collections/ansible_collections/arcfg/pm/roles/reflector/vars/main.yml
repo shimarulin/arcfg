@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.pm.reflector" role
+reflector_packages:
+  - "reflector"

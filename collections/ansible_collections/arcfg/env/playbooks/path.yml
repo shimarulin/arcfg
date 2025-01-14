@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.env.path role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.env.path

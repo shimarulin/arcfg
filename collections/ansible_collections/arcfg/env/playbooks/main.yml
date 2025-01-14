@@ -1,5 +1,6 @@
 ---
-- name: Apply the 'arcfg.env' collection roles to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.env.editor
+- name: "Import arcfg.env.shell"
+  ansible.builtin.import_playbook: arcfg.env.shell
+
+- name: "Import arcfg.env.graphical"
+  ansible.builtin.import_playbook: arcfg.env.graphical

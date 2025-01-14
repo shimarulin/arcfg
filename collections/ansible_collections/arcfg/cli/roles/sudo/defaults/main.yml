@@ -1,0 +1,3 @@
+---
+# defaults file for "arcfg.cli.sudo" role
+sudo_editor: neovim

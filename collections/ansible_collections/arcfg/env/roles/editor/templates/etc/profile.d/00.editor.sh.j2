@@ -13,5 +13,8 @@
 #   same editor, as some tools only accept EDITOR and may not look for VISUAL.
 # - Almost all modern apps or bash would look for VISUAL first and then EDITOR.
 
-export EDITOR={{ editor_env_arcfg_executable }}
-export VISUAL={{ editor_env_arcfg_executable }}
+export EDITOR={{ editor_executable_map[editor_name] }}
+export VISUAL={{ editor_executable_map[editor_name] }}
+{% if editor_sudo_name is defined and editor_sudo_name != editor_name %}
+export SUDO_EDITOR={{ editor_executable_map[editor_sudo_name] }}
+{% endif %}

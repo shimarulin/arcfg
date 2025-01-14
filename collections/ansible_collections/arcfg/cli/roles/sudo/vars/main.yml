@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.sudo" role
+sudo_packages:
+  - "sudo"

@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.pm.paru role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.pm.paru

@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.cli.fuse2 role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.cli.fuse2

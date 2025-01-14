@@ -1,0 +1,11 @@
+---
+- name: Apply the 'arcfg.hardware' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.hardware.networkmanager
+    - role: arcfg.hardware.sof_firmware
+    - role: arcfg.hardware.pipewire
+    - role: arcfg.hardware.bluez
+    - role: arcfg.hardware.tlp
+      tags:
+        - laptop

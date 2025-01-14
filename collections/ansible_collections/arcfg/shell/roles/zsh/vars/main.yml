@@ -1,0 +1,7 @@
+---
+# vars file for "arcfg.shell.zsh" role
+zsh_packages:
+  - "zsh"
+  - "git"
+  - "pkgfile"
+  - "sqlite"

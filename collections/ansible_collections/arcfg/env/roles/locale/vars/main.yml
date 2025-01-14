@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.env.locale" role
+locale_lang_name: "{{ locale_language_code }}_{{ locale_country_code }}"
+locale_lang: "{{ locale_lang_name }}.{{ locale_encoding }}"

@@ -1,4 +1,4 @@
 ---
 # vars file for "arcfg.apps.kitty" role
-kitty_apps_arcfg_packages:
+kitty_packages:
   - "kitty"

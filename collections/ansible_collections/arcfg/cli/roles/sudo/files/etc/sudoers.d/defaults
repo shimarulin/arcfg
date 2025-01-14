@@ -1,0 +1,7 @@
+## How long sudo waits before it prompts you again (in minutes)
+## See https://www.sudo.ws/docs/man/sudoers.man/#User_Authentication
+Defaults timestamp_timeout=15
+#
+## Set visudo editor from user environment variables
+Defaults env_keep += "SUDO_EDITOR EDITOR VISUAL"
+Defaults env_editor

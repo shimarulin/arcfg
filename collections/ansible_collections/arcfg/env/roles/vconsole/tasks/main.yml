@@ -1,0 +1,8 @@
+---
+# tasks file for "arcfg.env.vconsole" role
+- name: "Create /etc/vconsole.conf"
+  become: true
+  ansible.builtin.template:
+    src: "etc/vconsole.conf.j2"
+    dest: "/etc/vconsole.conf"
+    mode: "0644"

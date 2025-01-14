@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ kitty_apps_arcfg_packages }}"
+    name: "{{ kitty_packages }}"
     extra_args: "--needed"

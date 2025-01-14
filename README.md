@@ -5,7 +5,7 @@
 ## Requirements
 
 ```sh
-sudo pacman -S python-uv
+sudo pacman -S gitpython-uv
 ```
 
 ## Installation
@@ -15,7 +15,6 @@ git clone git@github.com:shimarulin/arcfg.git ~/.local/share/arcfg
 cd ~/.local/share/arcfg
 uv sync --group dev
 uv run ansible-galaxy collection install -r ./collections/requirements.yml
-uv run pre-commit install --install-hooks
 ```
 
 ## Usage
@@ -39,3 +38,54 @@ uv run mkvars
 ```
 
 By default, this command implies installing a package with a name matching the name of the role being created.
+
+## Development
+
+```sh
+uv run pre-commit install --install-hooks
+```
+
+### Mount project to virtual instance (QEMU/KVM)
+
+VM virtual fs settings example:
+
+```xml
+<filesystem type="mount" accessmode="passthrough">
+  <driver type="virtiofs"/>
+  <binary path="/usr/lib/virtiofsd"/>
+  <source dir="/home/username/.local/share/arcfg"/>
+  <target dir="arcfg"/>
+  <alias name="fs0"/>
+  <address type="pci" domain="0x0000" bus="0x09" slot="0x00" function="0x0"/>
+</filesystem>
+```
+
+```xml
+<filesystem type="mount" accessmode="passthrough">
+  <driver type="virtiofs"/>
+  <binary path="/usr/lib/virtiofsd"/>
+  <source dir="/home/username/.cache/uv"/>
+  <target dir="uv"/>
+  <alias name="fs1"/>
+  <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
+</filesystem>
+```
+
+Create on VM mount points:
+
+```sh
+mkdir -p ~/.cache/uv ~/.local/share/arcfg
+```
+
+Automount virtual fs with `/etc/fstab`:
+
+```
+arcfg    /home/vagrant/.local/share/arcfg    virtiofs    defaults    0 0
+uv       /home/vagrant/.cache/uv             virtiofs    defaults    0 0
+```
+
+After reboot cd to `arcfg` dir and reinstall packages
+
+```sh
+uv sync --group dev --reinstall
+```

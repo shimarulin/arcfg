@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ gnome_text_editor_apps_arcfg_packages }}"
+    name: "{{ gnome_text_editor_packages }}"
     extra_args: "--needed"

@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.hardware.sof_firmware role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.hardware.sof_firmware

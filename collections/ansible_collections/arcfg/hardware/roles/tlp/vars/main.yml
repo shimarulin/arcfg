@@ -1,0 +1,5 @@
+---
+# vars file for "arcfg.hardware.tlp" role
+tlp_packages:
+  - "tlp"
+  - "tlp-rdw"

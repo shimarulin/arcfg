@@ -2,11 +2,16 @@
 # tasks file for "arcfg.env.editor" role
 - name: "Install default cli text editor"
   ansible.builtin.include_role:
-    name: "arcfg.cli.{{ editor_env_arcfg_name | replace('-', '_') }}"
+    name: "arcfg.cli.{{ editor_name | replace('-', '_') }}"
+
+- name: "Install visudo text editor"
+  ansible.builtin.include_role:
+    name: "arcfg.cli.{{ editor_sudo_name | replace('-', '_') }}"
+  when: "editor_sudo_name is defined and editor_sudo_name != editor_name"
 
 - name: "Create the $EDITOR variable helper"
   become: true
   ansible.builtin.template:
     src: "etc/profile.d/00.editor.sh.j2"
     dest: "/etc/profile.d/00.editor.sh"
-    mode: "0644"
+    mode: "u=rw,g=r,o=r"

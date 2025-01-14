@@ -1,4 +1,4 @@
 ---
 # vars file for "arcfg.cli.neovim" role
-neovim_cli_arcfg_packages:
+neovim_packages:
   - "neovim"

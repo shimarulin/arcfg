@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.pm.reflector role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.pm.reflector

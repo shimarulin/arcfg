@@ -1,0 +1,23 @@
+---
+# tasks file for "arcfg.env.locale" role
+- name: "Ensure localisation files for '{{ locale_lang }}' are available" # noqa: name[template]
+  become: true
+  community.general.locale_gen:
+    name:
+      - "{{ locale_lang_base }}"
+      - "{{ locale_lang }}"
+    state: "present"
+
+- name: "Get current locale and language configuration"
+  ansible.builtin.command: "localectl status"
+  register: "locale_status"
+  changed_when: false
+
+- name: "Parse 'LANG' from current locale and language configuration"
+  ansible.builtin.set_fact:
+    locale_lang_current: "{{ locale_status.stdout | regex_search('LANG=([^\n]+)', '\\1') | first }}"
+
+- name: "Configure system locale to '{{ locale_lang }}'" # noqa: name[template]
+  become: true
+  ansible.builtin.command: "localectl set-locale LANG={{ locale_lang }}"
+  changed_when: "locale_lang_current != locale_lang"

@@ -3,5 +3,5 @@
 - name: "Install dependencies"
   become: true
   community.general.pacman:
-    name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_{{ collection_name|replace('-', '_') }}_{{ collection_namespace|replace('-', '_') }}_packages {{ '}}' }}"
+    name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
     extra_args: "--needed"

@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.fonts.terminus_font" role
+terminus_font_packages:
+  - "terminus-font"

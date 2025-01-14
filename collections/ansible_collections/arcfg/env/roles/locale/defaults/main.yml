@@ -1,0 +1,8 @@
+---
+# defaults file for "arcfg.env.locale" role
+locale_country_code: "US"
+locale_language_code: "en"
+locale_encoding: "UTF-8"
+#
+locale_lang: "en_US.UTF-8"
+locale_lang_base: "en_US.UTF-8"
