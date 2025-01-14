@@ -22,6 +22,9 @@ dev = [
 [tool.uv]
 package = false
 environments = ["platform_system != 'Windows'"]
+# To use hardlinks, you must store the cache in the same file system.
+# Required for testing the configuration in a virtual machine.
+cache-dir = ".cache/uv"
 
 [project.scripts]
 mkvars = "mkvars.cli:mkvars"

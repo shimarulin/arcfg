@@ -47,6 +47,8 @@ uv run pre-commit install --install-hooks
 
 ### Mount project to virtual instance (QEMU/KVM)
 
+#### Host system
+
 VM virtual fs settings example:
 
 ```xml
@@ -60,32 +62,28 @@ VM virtual fs settings example:
 </filesystem>
 ```
 
-```xml
-<filesystem type="mount" accessmode="passthrough">
-  <driver type="virtiofs"/>
-  <binary path="/usr/lib/virtiofsd"/>
-  <source dir="/home/username/.cache/uv"/>
-  <target dir="uv"/>
-  <alias name="fs1"/>
-  <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
-</filesystem>
-```
+#### Virtual machine
 
-Create on VM mount points:
+Create on VM mount point:
 
 ```sh
-mkdir -p ~/.cache/uv ~/.local/share/arcfg
+mkdir -p ~/.local/share/arcfg
 ```
 
 Automount virtual fs with `/etc/fstab`:
 
 ```
 arcfg    /home/vagrant/.local/share/arcfg    virtiofs    defaults    0 0
-uv       /home/vagrant/.cache/uv             virtiofs    defaults    0 0
 ```
 
-After reboot cd to `arcfg` dir and reinstall packages
+Create additional environvent file:
 
 ```sh
-uv sync --group dev --reinstall
+echo 'export UV_PROJECT_ENVIRONMENT=${HOME}/.local/share/arcfg/.cache/vmvenv' | sudo tee -a /etc/profile.d/00-arcfg.sh
+```
+
+Reboot, jump to `~/.local/share/arcfg` dir and reinstall packages
+
+```sh
+uv sync --group dev
 ```
