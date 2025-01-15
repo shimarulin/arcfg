@@ -53,13 +53,6 @@
   register: "sheldon_upgrade_result"
   changed_when: "sheldon_upgrade_result.rc == 0"
 
-- name: "Copy config file"
-  ansible.builtin.copy:
-    src: "home/user/.config/sheldon/plugins.toml"
-    # If dest is a non-existent path and if either dest ends with "/" or src is a directory, dest is created.
-    dest: "~/.config/sheldon/"
-    mode: "u=rw,g=r,o=r"
-
 - name: "Create data directory"
   ansible.builtin.file:
     path: "~/.local/share/sheldon"

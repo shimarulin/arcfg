@@ -14,13 +14,6 @@ shell = "zsh"
 
 [plugins]
 
-# Instant Prompt
-# -----------
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
-[plugins.powerlevel10k_instant_promptrc]
-local = "~/.config/zsh/themes"
-
 # Oh-My-Zsh config
 # -----------
 
@@ -132,12 +125,9 @@ local = "~/.config/zsh/plugins"
 [plugins.vte]
 local = "~/.config/zsh/plugins"
 
-# Theme
+# Prompt
 # -----------
-
-# https://github.com/romkatv/powerlevel10k
-[plugins.powerlevel10k]
-git = "https://github.com/romkatv/powerlevel10k"
-#
-[plugins.powerlevel10krc]
-local = "~/.config/zsh/themes"
+# https://starship.rs
+# https://github.com/starship/starship
+[plugins.starship]
+local = "~/.config/zsh/plugins"

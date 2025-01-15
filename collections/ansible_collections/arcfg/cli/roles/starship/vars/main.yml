@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.cli.starship" role
+starship_packages:
+  - "starship"
