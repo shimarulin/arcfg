@@ -130,4 +130,4 @@ local = "~/.config/zsh/plugins"
 # https://starship.rs
 # https://github.com/starship/starship
 [plugins.starship]
-local = "~/.config/zsh/plugins"
+local = "~/.config/zsh/modules/starship"

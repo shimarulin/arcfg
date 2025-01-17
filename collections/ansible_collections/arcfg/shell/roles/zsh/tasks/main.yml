@@ -13,6 +13,16 @@
     dest: "~/.config/sheldon/"
     mode: "u=rw,g=r,o=r"
 
+- name: "Copy starship config files"
+  ansible.builtin.copy:
+    src: "home/user/.config/starship/{{ item }}.starship.toml"
+    # If dest is a non-existent path and if either dest ends with "/" or src is a directory, dest is created.
+    dest: "~/.config/starship/"
+    mode: "u=rw,g=r,o=r"
+  loop:
+    - "plain-text-symbols"
+    - "jetpack"
+
 - name: "Copy ~/.zshenv"
   ansible.builtin.copy:
     src: "home/user/.zshenv"
