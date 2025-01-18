@@ -1,11 +1,16 @@
----
-# tasks file for "arcfg.shell.zsh" role
-- name: "Install dependencies"
-  become: true
-  community.general.pacman:
-    name: "{{ zsh_packages }}"
-    extra_args: "--needed"
+# Ansible Role "linkcfg"
 
+> Ansible role to backup existing config files and create symbolic links to config dirs
+
+## Role Variables
+
+- `src`: The absolute path to the source configuration file or directory to be linked
+- `dest`: The absolute path to the target location of the configuration file or directory
+- `mode`: The permissions of the destination file or directory
+
+## Usage
+
+```yaml
 # NOTE: workaround to keep current role path
 - name: "Set current role path"
   ansible.builtin.set_fact:
@@ -28,21 +33,4 @@
       - src: "{{ zsh_role_path }}/files/home/user/.zshenv"
         dest: "{{ ansible_user_dir }}/.zshenv"
         mode: "u=rw,g=r,o=r"
-
-- name: "Set zsh as default shell"
-  become: true
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    shell: "/usr/bin/zsh"
-
-- name: "Synchronize the pkgfile database"
-  become: true
-  ansible.builtin.command: "pkgfile -u"
-  changed_when: false
-
-- name: "Enable automatically synchronizing the pkgfile database"
-  become: true
-  ansible.builtin.systemd:
-    name: "pkgfile-update.timer"
-    state: "started"
-    enabled: true
+```
