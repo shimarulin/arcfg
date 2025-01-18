@@ -1,6 +1,13 @@
 ---
 # tasks file for "arcfg.internal.linkcfg" role
-- name: "Check that the config directories already exists"
+- name: "Create parent dirs if it not exist"
+  ansible.builtin.file:
+    path: "{{ item.dest | dirname }}"
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+  loop: "{{ linkcfg_items }}"
+
+- name: "Check that the config already exists"
   ansible.builtin.stat:
     path: "{{ item.dest }}"
   register: "linkcfg_stat_result"
