@@ -33,7 +33,7 @@
     regexp: "^HOOKS=.*"
     # Default: "HOOKS=(base udev autodetect modconf kms keyboard keymap consolefont block filesystems)"
     # Latest: "HOOKS=(base udev block autodetect modconf filesystems keyboard)"
-    line: "HOOKS=(base udev block keyboard autodetect modconf kms keymap consolefont filesystems)"
+    line: "HOOKS=(base udev colors block keyboard autodetect modconf kms keymap consolefont filesystems)"
   register: "mkinitcpio_hooks"
 
 - name: "Generate all existing mkinitcpio presets"
