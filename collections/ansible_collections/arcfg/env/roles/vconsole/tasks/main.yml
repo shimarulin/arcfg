@@ -12,3 +12,4 @@
     src: "etc/vconsole.conf.j2"
     dest: "/etc/vconsole.conf"
     mode: "0644"
+  register: "vconsole_conf"

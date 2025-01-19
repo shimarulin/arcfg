@@ -1,7 +1,7 @@
 # scheme: "tokyonight"
 # source: "https://github.com/folke/tokyonight.nvim/blob/main/extras/tilix/tokyonight_night.json"
 if [ "$TERM" = "linux" ]; then
-    echo -en "\e]P015161e" #black    -> this is the background color as well.
+    echo -en "\e]P01a1b26" #black    -> this is the background color as well.
     echo -en "\e]P1f7768e" #darkred
     echo -en "\e]P29ece6a" #darkgreen
     echo -en "\e]P3e0af68" #brown

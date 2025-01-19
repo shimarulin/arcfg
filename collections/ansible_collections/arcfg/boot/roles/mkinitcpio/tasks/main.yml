@@ -44,3 +44,4 @@
     or mkinitcpio_binaries is changed
     or mkinitcpio_files is changed
     or mkinitcpio_hooks is changed
+    or vconsole_conf is changed
