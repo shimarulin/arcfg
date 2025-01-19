@@ -1,5 +1,5 @@
 ---
-# tasks file for "arcfg.env.vconsole" role
+# tasks file for "arcfg.boot.vconsole" role
 - name: "Install dependencies"
   kewlfft.aur.aur:
     name: "{{ vconsole_packages }}"

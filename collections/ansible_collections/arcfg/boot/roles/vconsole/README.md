@@ -33,14 +33,14 @@ users too:
 - name: Apply vconsole configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.env.vconsole
+    - role: arcfg.boot.vconsole
 ```
 
 ```yaml
 - name: Apply vconsole configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.env.vconsole
+    - role: arcfg.boot.vconsole
       tags:
         - laptop
         - desktop

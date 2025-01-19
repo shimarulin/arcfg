@@ -1,4 +1,4 @@
 ---
-# vars file for "arcfg.env.vconsole" role
+# vars file for "arcfg.boot.vconsole" role
 vconsole_packages:
   - "mkinitcpio-colors-git"
