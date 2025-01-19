@@ -1,0 +1,15 @@
+---
+# tasks file for "arcfg.boot.vconsole" role
+- name: "Install dependencies"
+  kewlfft.aur.aur:
+    name: "{{ vconsole_packages }}"
+    use: "paru"
+    extra_args: "--needed"
+
+- name: "Create /etc/vconsole.conf"
+  become: true
+  ansible.builtin.template:
+    src: "etc/vconsole.conf.j2"
+    dest: "/etc/vconsole.conf"
+    mode: "0644"
+  register: "vconsole_conf"

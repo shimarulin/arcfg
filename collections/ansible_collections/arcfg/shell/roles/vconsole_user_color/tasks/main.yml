@@ -1,0 +1,16 @@
+---
+# tasks file for "arcfg.shell.vconsole_user_color" role
+
+# NOTE: workaround to keep current role path
+- name: "Set current role path"
+  ansible.builtin.set_fact:
+    vconsole_user_color_role_path: "{{ role_path }}"
+
+- name: "Create a symbolic links to Linux console user color scheme"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.linkcfg"
+  vars:
+    linkcfg_items:
+      - src: "{{ vconsole_user_color_role_path }}/files/home/user/.config/profile.d/00.vconsole_user_color.{{ vconsole_user_color_scheme }}.sh"
+        dest: "{{ ansible_user_dir }}/.config/profile.d/00.vconsole_user_color.sh"
+        mode: "u=rw,g=r,o=r"

@@ -6,17 +6,28 @@
     name: "{{ zsh_packages }}"
     extra_args: "--needed"
 
-- name: "Copy ~/.zshenv"
-  ansible.builtin.copy:
-    src: "home/user/.zshenv"
-    dest: "~/.zshenv"
-    mode: "u=rw,g=r,o=r"
+# NOTE: workaround to keep current role path
+- name: "Set current role path"
+  ansible.builtin.set_fact:
+    zsh_role_path: "{{ role_path }}"
 
-- name: "Copy ~/.config/zsh"
-  ansible.builtin.copy:
-    src: "home/user/.config/zsh"
-    dest: "~/.config/"
-    mode: "u=rwx,g=rx,o=rx"
+- name: "Create a symbolic links to zsh config dirs"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.linkcfg"
+  vars:
+    linkcfg_items:
+      - src: "{{ zsh_role_path }}/files/home/user/.config/sheldon"
+        dest: "{{ ansible_user_dir }}/.config/sheldon"
+        mode: "u=rwx,g=rx,o=rx"
+      - src: "{{ zsh_role_path }}/files/home/user/.config/starship"
+        dest: "{{ ansible_user_dir }}/.config/starship"
+        mode: "u=rwx,g=rx,o=rx"
+      - src: "{{ zsh_role_path }}/files/home/user/.config/zsh"
+        dest: "{{ ansible_user_dir }}/.config/zsh"
+        mode: "u=rwx,g=rx,o=rx"
+      - src: "{{ zsh_role_path }}/files/home/user/.zshenv"
+        dest: "{{ ansible_user_dir }}/.zshenv"
+        mode: "u=rw,g=r,o=r"
 
 - name: "Set zsh as default shell"
   become: true

@@ -13,7 +13,7 @@ else
 fi
 
 # Save the location of the current completion dump file.
-ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+ZSH_COMPDUMP="${HOME}/.local/state/zcompdump_${SHORT_HOST}_${ZSH_VERSION}"
 
 # Construct zcompdump metadata, we will rebuild the Zsh compdump if either
 # this file changes or the fpath changes.

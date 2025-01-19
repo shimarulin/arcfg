@@ -1,4 +1,0 @@
----
-# defaults file for "arcfg.env.vconsole" role
-vconsole_font: "ter-c16b"
-vconsole_keymap: "en"

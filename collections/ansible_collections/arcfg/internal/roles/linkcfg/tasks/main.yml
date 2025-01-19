@@ -1,0 +1,39 @@
+---
+# tasks file for "arcfg.internal.linkcfg" role
+- name: "Create parent dirs if it not exist"
+  ansible.builtin.file:
+    path: "{{ item.dest | dirname }}"
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+  loop: "{{ linkcfg_items }}"
+
+- name: "Check that the config already exists"
+  ansible.builtin.stat:
+    path: "{{ item.dest }}"
+  register: "linkcfg_stat_result"
+  loop: "{{ linkcfg_items }}"
+
+- name: "Backup existing files"
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ item.stat.path }}"
+    # If dest is a non-existent path and if either dest ends with "/" or src is a directory, dest is created.
+    dest: "{{ item.stat.path }}.backup"
+    mode: "{{ 'u=rwx,g=rx,o=rx' if item.stat.isdir == true else 'u=rw,g=r,o=r' }}"
+  loop: "{{ linkcfg_stat_result.results }}"
+  when: "item.stat is defined and item.stat.exists and not item.stat.islnk"
+
+- name: "Remove existing files"
+  ansible.builtin.file:
+    path: "{{ item.stat.path }}"
+    state: absent
+  loop: "{{ linkcfg_stat_result.results }}"
+  when: "item.stat is defined and item.stat.exists and not item.stat.islnk"
+
+- name: "Create a symbolic links to config dirs"
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+    mode: "{{ item.mode }}"
+  loop: "{{ linkcfg_items }}"

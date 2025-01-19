@@ -1,0 +1,3 @@
+---
+# defaults file for "arcfg.shell.vconsole_user_color" role
+vconsole_user_color_scheme: "gruvbox"
