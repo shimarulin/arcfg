@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcfg.gnome' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gnome.gnome_shell

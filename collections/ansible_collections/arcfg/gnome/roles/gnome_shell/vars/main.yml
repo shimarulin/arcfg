@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.gnome.gnome_shell" role
+gnome_shell_packages:
+  - "gnome-shell"
