@@ -9,6 +9,6 @@
 - name: "Copy the $PATH variable helper"
   become: true
   ansible.builtin.copy:
-    src: "etc/profile.d/00.path.sh"
-    dest: "/etc/profile.d/00.path.sh"
+    src: "etc/profile.d/00-path.sh"
+    dest: "/etc/profile.d/00-path.sh"
     mode: "u=rw,g=r,o=r"

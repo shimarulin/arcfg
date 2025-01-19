@@ -14,6 +14,6 @@
 - name: "Copy the 'xdg_basedir' helper"
   become: true
   ansible.builtin.copy:
-    src: "etc/profile.d/00.xdg_basedir.sh"
-    dest: "/etc/profile.d/00.xdg_basedir.sh"
+    src: "etc/profile.d/00-xdg-basedir.sh"
+    dest: "/etc/profile.d/00-xdg-basedir.sh"
     mode: "u=rw,g=r,o=r"
