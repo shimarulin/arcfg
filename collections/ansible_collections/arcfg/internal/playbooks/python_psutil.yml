@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.internal.python_psutil role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.internal.python_psutil

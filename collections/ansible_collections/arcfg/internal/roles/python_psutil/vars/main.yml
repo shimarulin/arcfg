@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.internal.python_psutil" role
+python_psutil_packages:
+  - "python-psutil"

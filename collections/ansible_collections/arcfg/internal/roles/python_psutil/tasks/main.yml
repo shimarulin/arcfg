@@ -1,0 +1,9 @@
+---
+# tasks file for "arcfg.internal.python_psutil" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ python_psutil_packages }}"
+    extra_args: "--needed"
+  register: "python_psutil_install"
+  when: "python_psutil_install is not defined"
