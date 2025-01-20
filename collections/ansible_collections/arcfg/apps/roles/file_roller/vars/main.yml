@@ -1,0 +1,19 @@
+---
+# vars file for "arcfg.apps.file_roller" role
+file_roller_packages:
+  - "file-roller"
+  - "arj" # (optional) - arj archive support
+  - "binutils" # (optional) - ar archive support
+  - "bzip3" # (optional) - bzip3 compression support
+  - "cdrtools" # (optional) - ISO image support
+  - "cpio" # (optional) - cpio archive support
+  - "dpkg" # (optional) - deb archive support
+  - "lhasa" # (optional) - LHA/LZA archive support
+  - "lrzip" # (optional) - lrzip compression support
+  - "p7zip" # (7zip) (optional) - 7z archive support
+  - "rpmextract" # (optional) - rpm archive support
+  - "squashfs-tools" #  (optional) - squashfs image support
+  - "unace" # (optional) - ACE archive support
+  - "unrar" # (optional) - better RAR archive support
+  - "unzip" # (optional) - better ZIP archive support
+  - "zip" # (optional) - better ZIP archive support
