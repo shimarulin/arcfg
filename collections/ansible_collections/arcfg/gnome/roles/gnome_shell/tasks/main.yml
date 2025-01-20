@@ -5,3 +5,20 @@
   community.general.pacman:
     name: "{{ gnome_shell_packages }}"
     extra_args: "--needed"
+
+- name: "Mask the Gnome power-profiles-daemon service for 'tlp' in GNOME 40 and newer"
+  become: true
+  ansible.builtin.systemd:
+    name: "power-profiles-daemon.service"
+    state: "stopped"
+    masked: true
+  failed_when: false
+  when: system_type == "laptop"
+
+- name: "Setup GNOME Files (Nautilus)"
+  ansible.builtin.include_role:
+    name: "arcfg.apps.nautilus"
+
+- name: "Enable graphical login"
+  ansible.builtin.include_role:
+    name: "arcfg.boot.graphical"
