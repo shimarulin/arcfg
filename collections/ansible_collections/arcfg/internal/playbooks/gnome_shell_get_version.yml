@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.internal.gnome_shell_get_version role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.internal.gnome_shell_get_version

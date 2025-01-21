@@ -1,0 +1,22 @@
+---
+# tasks file for "arcfg.internal.gnome_shell_get_version" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gnome_shell_get_version_packages }}"
+    extra_args: "--needed"
+
+- name: "Parse Gnome Shell version"
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      gnome-shell --version | sed 's/^[^0-9.]*//' | sed 's/[^0-9]*$//'
+    executable: "/bin/bash"
+  register: "gnome_shell_get_version_result"
+  when: "gnome_shell_version is not defined"
+  changed_when: false
+
+- name: "Set Gnome Shell version as parameter"
+  ansible.builtin.set_fact:
+    gnome_shell_version: "{{ gnome_shell_get_version_result.stdout }}"
+  when: "gnome_shell_version is not defined"
