@@ -31,6 +31,21 @@ role_description:
   help: "Description:"
   default: "Ansible role '{{ role_name }}'"
 
+role_site:
+  type: "str"
+  help: "Site:"
+  placeholder: "https://{{ role_name }}.org"
+
+role_repo:
+  type: "str"
+  help: "Repository:"
+  placeholder: "https://github.com/{{ role_name }}/{{ role_name }}"
+
+role_docs:
+  type: "str"
+  help: "Documentation:"
+  placeholder: "https://{{ role_name }}.org/docs"
+
 # settings
 _jinja_extensions:
   - "jinja2_getenv_extension.GetenvExtension"
