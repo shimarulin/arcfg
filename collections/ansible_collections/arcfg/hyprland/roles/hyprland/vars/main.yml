@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.hyprland.hyprland" role
+hyprland_packages:
+  - "hyprland"

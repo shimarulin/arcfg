@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.display_manager.greetd_regreet" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ greetd_regreet_packages }}"
+    extra_args: "--needed"

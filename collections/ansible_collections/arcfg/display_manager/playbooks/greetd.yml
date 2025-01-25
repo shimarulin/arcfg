@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.display_manager.greetd role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.display_manager.greetd

@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.display_manager.greetd_regreet" role
+greetd_regreet_packages:
+  - "greetd-regreet"

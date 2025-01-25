@@ -1,0 +1,13 @@
+---
+# tasks file for "arcfg.hyprland.hyprland" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ hyprland_packages }}"
+    extra_args: "--needed"
+
+- name: "arcfg.hyprland.hyprland : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ item.role }}"
+  loop: "{{ hyprland_post_roles }}"

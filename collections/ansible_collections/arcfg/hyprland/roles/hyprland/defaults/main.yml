@@ -1,0 +1,7 @@
+---
+# defaults file for "arcfg.hyprland.hyprland" role
+#
+# A list of roles that must be executed after all tasks for this role are completed.
+hyprland_post_roles:
+  - role: "arcfg.display_manager.greetd_regreet"
+  - role: "arcfg.env.xdg_terminal_exec"

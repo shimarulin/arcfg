@@ -1,0 +1,13 @@
+---
+# tasks file for "arcfg.display_manager.greetd" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ greetd_packages }}"
+    extra_args: "--needed"
+
+- name: "Enable greetd service"
+  become: true
+  ansible.builtin.systemd:
+    name: "greetd.service"
+    enabled: true
