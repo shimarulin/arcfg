@@ -1,0 +1,21 @@
+---
+# vars file for "arcfg.lib.gstreamer" role
+gstreamer_packages:
+  # Media subsystem
+  - "gstreamer"
+  #
+  # [Libav-based](https://wiki.archlinux.org/title/FFmpeg) plugin containing many decoders and encoders
+  - "gst-libav"
+  #
+  # Hardware video acceleration
+  # see https://wiki.archlinux.org/title/GStreamer#Hardware_video_acceleration
+  # and https://wiki.archlinux.org/title/Hardware_video_acceleration
+  - "gstreamer-vaapi"
+  - "gst-plugin-va"
+  #
+  - "gst-plugin-pipewire"
+  #
+  - "gst-plugins-bad"
+  - "gst-plugins-base"
+  - "gst-plugins-good"
+  - "gst-plugins-ugly"

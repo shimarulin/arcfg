@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.lib.gstreamer" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gstreamer_packages }}"
+    extra_args: "--needed"

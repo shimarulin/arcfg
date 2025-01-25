@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.lib.gstreamer role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.lib.gstreamer
