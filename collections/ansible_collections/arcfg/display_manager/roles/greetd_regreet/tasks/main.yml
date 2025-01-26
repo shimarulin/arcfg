@@ -5,3 +5,17 @@
   community.general.pacman:
     name: "{{ greetd_regreet_packages }}"
     extra_args: "--needed"
+
+- name: "Create default ReGreet config"
+  become: true
+  ansible.builtin.template:
+    src: "etc/greetd/regreet.toml.j2"
+    dest: "/etc/greetd/regreet.toml"
+    mode: "0644"
+
+- name: "Create wayland compositor config"
+  become: true
+  ansible.builtin.template:
+    src: "{{ greetd_wayland_compositor_config[wayland_compositor].src }}"
+    dest: "{{ greetd_wayland_compositor_config[wayland_compositor].dest }}"
+    mode: "0644"

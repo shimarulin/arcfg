@@ -2,6 +2,18 @@
 
 > Highly customizable, dynamic tiling Wayland compositor
 
+## Resources
+
+### Official
+
+- site: https://hyprland.org
+- repo: https://github.com/hyprwm/Hyprland
+- docs: https://wiki.hyprland.org
+
+### Additional
+
+- https://wiki.archlinux.org/title/Hyprland
+
 ## Requirements
 
 Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the
@@ -28,14 +40,14 @@ users too:
 - name: Apply hyprland configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.hyprland.hyprland
+    - role: arcfg.wayland_compositor.hyprland
 ```
 
 ```yaml
 - name: Apply hyprland configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.hyprland.hyprland
+    - role: arcfg.wayland_compositor.hyprland
       tags:
         - laptop
         - desktop

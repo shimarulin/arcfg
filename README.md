@@ -31,6 +31,12 @@ uv run mkvars
 uv run ansible-playbook arcfg.gnome.main
 ```
 
+### Output a playbook execution logs to the log file
+
+```sh
+uv run ansible-playbook arcfg.desktop.tty > .logs/play/arcfg.desktop.tty__$(date +"%Y-%m-%d_%T").log
+```
+
 ### Create new role
 
 ```sh

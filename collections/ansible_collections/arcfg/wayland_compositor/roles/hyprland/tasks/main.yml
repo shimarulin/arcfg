@@ -1,12 +1,16 @@
 ---
-# tasks file for "arcfg.hyprland.hyprland" role
+# tasks file for "arcfg.wayland_compositor.hyprland" role
 - name: "Install dependencies"
   become: true
   community.general.pacman:
     name: "{{ hyprland_packages }}"
     extra_args: "--needed"
 
-- name: "arcfg.hyprland.hyprland : Execute post roles" # noqa: name[casing]
+- name: "Set wayland_compositor fact"
+  ansible.builtin.set_fact:
+    wayland_compositor: "hyprland"
+
+- name: "arcfg.wayland_compositor.hyprland : Execute post roles" # noqa: name[casing]
   ansible.builtin.include_role:
     allow_duplicates: false
     name: "{{ item.role }}"

@@ -1,5 +1,0 @@
----
-- name: Apply the 'arcfg.hyprland' collection roles to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.hyprland.hyprland
