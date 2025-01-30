@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.gnome_shell_extensions.bring_out_submenu_of_power_offlogout_button role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gnome_shell_extensions.bring_out_submenu_of_power_offlogout_button
