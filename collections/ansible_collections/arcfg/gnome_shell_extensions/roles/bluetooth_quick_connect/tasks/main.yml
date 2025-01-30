@@ -1,0 +1,25 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.bluetooth_quick_connect" role
+
+# Allow to connect bluetooth paired devices from gnome control panel
+# https://github.com/Extensions-Valhalla/gnome-bluetooth-quick-connect
+- name: "Install and enable 'Bluetooth Quick Connect' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/1401/bluetooth-quick-connect/
+    gnome_shell_extension_install_id: "1401"
+
+- name: "Configure 'Bluetooth Quick Connect'"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "/org/gnome/shell/extensions/bluetooth-quick-connect/show-battery-value-on"
+      value: "true"
+
+- name: "arcfg.gnome_shell_extensions.bluetooth_quick_connect : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ item.role }}"
+  loop: "{{ bluetooth_quick_connect_post_roles }}"

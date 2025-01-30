@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.gnome_shell_extensions.bluetooth_quick_connect role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gnome_shell_extensions.bluetooth_quick_connect

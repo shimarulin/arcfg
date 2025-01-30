@@ -6,6 +6,7 @@
     - role: arcfg.gnome.gnome_shell
     # Extensions
     - role: arcfg.gnome_shell_extensions.arch_update
+    - role: arcfg.gnome_shell_extensions.bluetooth_quick_connect
     - role: arcfg.gnome_shell_extensions.bring_out_submenu_of_power_offlogout_button
     - role: arcfg.gnome_shell_extensions.dash_to_panel
     - role: arcfg.gnome_shell_extensions.lock_keys
