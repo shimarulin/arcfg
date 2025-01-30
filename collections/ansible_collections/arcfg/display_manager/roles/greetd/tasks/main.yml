@@ -24,4 +24,4 @@
   become: true
   ansible.builtin.systemd:
     name: "greetd.service"
-    enabled: false
+    enabled: true
