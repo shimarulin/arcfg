@@ -1,0 +1,6 @@
+---
+# defaults file for "arcfg.gnome_shell_extensions.dash_to_panel" role
+#
+# A list of roles that must be executed after all tasks for this role are completed.
+dash_to_panel_post_roles: []
+#  - role: "arcfg.gnome_shell_extensions.example"
