@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.gnome_shell_extensions.tiling_shell role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gnome_shell_extensions.tiling_shell

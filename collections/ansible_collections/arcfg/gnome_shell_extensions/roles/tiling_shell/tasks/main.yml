@@ -1,0 +1,25 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.tiling_shell" role
+
+# Extend Gnome Shell with advanced tiling window management
+# https://github.com/domferr/tilingshell
+- name: "Install and enable 'Tiling Shell' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/7065/tiling-shell/
+    gnome_shell_extension_install_id: "7065"
+
+# - name: "Configure 'Tiling Shell'"
+#   community.general.dconf:
+#     key: "{{ item.key }}"
+#     value: "{{ item.value }}"
+#   loop:
+#     - key: "/org/gnome/shell/extensions/..."
+#       value: "'none'"
+
+- name: "arcfg.gnome_shell_extensions.tiling_shell : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ item.role }}"
+  loop: "{{ tiling_shell_post_roles }}"

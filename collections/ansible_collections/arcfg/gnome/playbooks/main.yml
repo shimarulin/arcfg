@@ -5,7 +5,8 @@
     # Main
     - role: arcfg.gnome.gnome_shell
     # Extensions
-    - role: arcfg.gnome_shell_extensions.lock_keys
     - role: arcfg.gnome_shell_extensions.arch_update
+    - role: arcfg.gnome_shell_extensions.lock_keys
+    - role: arcfg.gnome_shell_extensions.tiling_shell
     # Keyboard
     - role: arcfg.gnome.keyboard

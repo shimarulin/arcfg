@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.gnome_shell_extensions.tiling_shell" role
+tiling_shell_packages:
+  - "tiling-shell"
