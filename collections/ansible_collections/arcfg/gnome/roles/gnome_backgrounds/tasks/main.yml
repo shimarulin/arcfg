@@ -31,8 +31,6 @@
       value: "'zoom'"
     - key: "/org/gnome/desktop/screensaver/picture-uri"
       value: "'file:///usr/share/backgrounds/gnome/blobs-l.svg'"
-    # - key: "/org/gnome/desktop/screensaver/picture-uri-dark"
-    #   value: "'file:///usr/share/backgrounds/gnome/blobs-d.svg'"
     - key: "/org/gnome/screensaver/background/primary-color"
       value: "'#241f31'"
     - key: "/org/gnome/screensaver/background/secondary-color"

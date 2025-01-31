@@ -1,0 +1,21 @@
+---
+# tasks file for "arcfg.gtk.adw_gtk_theme" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ adw_gtk_theme_packages }}"
+    extra_args: "--needed"
+
+- name: "Set GTK3 settings"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "/org/gnome/desktop/interface/gtk-theme"
+      value: "{{ \"'adw-gtk3-dark'\" if ui_prefer_dark is defined and ui_prefer_dark else \"'adw-gtk3'\" }}"
+
+- name: "arcfg.gtk.adw_gtk_theme : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ item.role }}"
+  loop: "{{ adw_gtk_theme_post_roles }}"

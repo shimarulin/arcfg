@@ -1,0 +1,6 @@
+---
+# defaults file for "arcfg.gnome.gnome_appearance" role
+#
+# A list of roles that must be executed after all tasks for this role are completed.
+gnome_appearance_post_roles:
+  - role: arcfg.gtk.adw_gtk_theme

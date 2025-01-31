@@ -22,4 +22,5 @@
     - role: arcfg.gnome.keyboard
 
     # Appearance
+    - role: arcfg.gnome.gnome_appearance
     - role: arcfg.gnome.gnome_backgrounds

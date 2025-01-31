@@ -1,0 +1,25 @@
+---
+# tasks file for "arcfg.gnome.gnome_appearance" role
+# - name: "Install dependencies"
+#   become: true
+#   community.general.pacman:
+#     name: "{{ gnome_appearance_packages }}"
+#     extra_args: "--needed"
+
+- name: "Set appearance"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "/org/gnome/desktop/interface/color-scheme"
+      value: "{{ \"'prefer-dark'\" if ui_prefer_dark is defined and ui_prefer_dark else \"'default'\" }}"
+    - key: "/org/gnome/desktop/interface/accent-color"
+      value: "'blue'"
+    # - key: ""
+    #   value: ""
+
+- name: "arcfg.gnome.gnome_appearance : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ item.role }}"
+  loop: "{{ gnome_appearance_post_roles }}"
