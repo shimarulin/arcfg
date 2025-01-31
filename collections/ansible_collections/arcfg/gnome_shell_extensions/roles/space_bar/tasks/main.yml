@@ -1,0 +1,25 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.space_bar" role
+
+# GNOME Shell extension that shows workspaces buttons in top panel
+# https://github.com/christopher-l/space-bar
+- name: "Install and enable 'Space Bar' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/5090/space-bar/
+    gnome_shell_extension_install_id: "5090"
+
+# - name: "Configure 'Space Bar'"
+#   community.general.dconf:
+#     key: "{{ item.key }}"
+#     value: "{{ item.value }}"
+#   loop:
+#     - key: "/org/gnome/shell/extensions/..."
+#       value: "'none'"
+
+- name: "arcfg.gnome_shell_extensions.space_bar : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ item.role }}"
+  loop: "{{ space_bar_post_roles }}"
