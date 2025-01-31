@@ -15,6 +15,40 @@
   failed_when: false
   when: system_type == "laptop"
 
+- name: "Set common GNOME settings"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    # Night Light
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
+      value: "true"
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-from"
+      value: "19.0"
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-to"
+      value: "7.0"
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-temperature"
+      value: "3500"
+    # Power
+    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout"
+      value: "3600"
+    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout"
+      value: "900"
+    # Screen lock
+    - key: "/org/gnome/desktop/session/idle-delay"
+      value: "600"
+    - key: "/org/gnome/desktop/screensaver/lock-enabled"
+      value: "true"
+    - key: "/org/gnome/desktop/screensaver/lock-delay"
+      value: "0"
+    - key: "/org/gnome/desktop/notifications/show-in-lock-screen"
+      value: "true"
+    # Workspaces
+    - key: "/org/gnome/mutter/dynamic-workspaces"
+      value: "false"
+    - key: "/org/gnome/desktop/wm/preferences/num-workspaces"
+      value: "6"
+
 - name: "Setup GNOME Files (Nautilus)"
   ansible.builtin.include_role:
     name: "arcfg.apps.nautilus"

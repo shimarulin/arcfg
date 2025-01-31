@@ -4,6 +4,7 @@
   roles:
     # Main
     - role: arcfg.gnome.gnome_shell
+
     # Extensions
     - role: arcfg.gnome_shell_extensions.arch_update
     - role: arcfg.gnome_shell_extensions.bluetooth_quick_connect
@@ -16,5 +17,9 @@
     - role: arcfg.gnome_shell_extensions.tiling_shell
     - role: arcfg.gnome_shell_extensions.tray_icons_reloaded
     - role: arcfg.gnome_shell_extensions.user_themes
+
     # Keyboard
     - role: arcfg.gnome.keyboard
+
+    # Appearance
+    - role: arcfg.gnome.gnome_backgrounds

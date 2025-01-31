@@ -14,3 +14,9 @@ gnome_shell_packages:
   - "gnome-online-accounts"
   - "dconf-editor"
   - "gnome-tweaks"
+
+  # Monitoring
+  - "baobab"
+  - "gnome-disk-utility"
+  - "gnome-logs"
+  - "gnome-system-monitor"
