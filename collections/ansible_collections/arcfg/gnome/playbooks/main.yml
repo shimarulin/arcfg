@@ -15,5 +15,6 @@
     - role: arcfg.gnome_shell_extensions.space_bar
     - role: arcfg.gnome_shell_extensions.tiling_shell
     - role: arcfg.gnome_shell_extensions.tray_icons_reloaded
+    - role: arcfg.gnome_shell_extensions.user_themes
     # Keyboard
     - role: arcfg.gnome.keyboard
