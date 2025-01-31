@@ -1,0 +1,35 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.quick_settings_avatar" role
+
+# Display the user avatar in the Quick Settings menu
+# https://github.com/d-go/quick-settings-avatar
+- name: "Install and enable 'Quick Settings Avatar' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/5506/user-avatar-in-quick-settings/
+    gnome_shell_extension_install_id: "5506"
+
+- name: "Configure 'Quick Settings Avatar'"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "/org/gnome/shell/extensions/quick-settings-avatar/avatar-position"
+      value: "1"
+    - key: "/org/gnome/shell/extensions/quick-settings-avatar/avatar-size"
+      value: "43"
+    - key: "/org/gnome/shell/extensions/quick-settings-avatar/avatar-realname"
+      value: "false"
+    - key: "/org/gnome/shell/extensions/quick-settings-avatar/avatar-username"
+      value: "false"
+    - key: "/org/gnome/shell/extensions/quick-settings-avatar/avatar-hostname"
+      value: "false"
+    - key: "/org/gnome/shell/extensions/quick-settings-avatar/avatar-nobackground"
+      value: "true"
+
+- name: "arcfg.gnome_shell_extensions.quick_settings_avatar : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ item.role }}"
+  loop: "{{ quick_settings_avatar_post_roles }}"
