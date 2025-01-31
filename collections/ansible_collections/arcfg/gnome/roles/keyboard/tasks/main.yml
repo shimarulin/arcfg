@@ -15,3 +15,11 @@
     # Dirty hack to render value with paired outer square brackets '[('xkb', 'us'), ('xkb', '<layout>')]'
     value: "{{ [('xkb', 'us'), ('xkb', '<layout>')] | replace('<layout>', keyboard_layout) | string }}"
   when: "keyboard_layout is defined"
+
+- name: "Keys setup"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/volume-step"
+      value: "5"
