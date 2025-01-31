@@ -14,5 +14,6 @@
     - role: arcfg.gnome_shell_extensions.removable_drive_menu
     - role: arcfg.gnome_shell_extensions.space_bar
     - role: arcfg.gnome_shell_extensions.tiling_shell
+    - role: arcfg.gnome_shell_extensions.tray_icons_reloaded
     # Keyboard
     - role: arcfg.gnome.keyboard
