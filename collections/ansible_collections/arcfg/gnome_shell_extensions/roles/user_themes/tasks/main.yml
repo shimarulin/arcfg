@@ -9,9 +9,3 @@
   vars:
     # https://extensions.gnome.org/extension/19/user-themes/
     gnome_shell_extension_install_id: "19"
-
-- name: "arcfg.gnome_shell_extensions.user_themes : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ user_themes_post_roles }}"

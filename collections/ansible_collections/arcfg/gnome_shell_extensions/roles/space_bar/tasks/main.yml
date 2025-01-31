@@ -17,9 +17,3 @@
 #   loop:
 #     - key: "/org/gnome/shell/extensions/..."
 #       value: "'none'"
-
-- name: "arcfg.gnome_shell_extensions.space_bar : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ space_bar_post_roles }}"

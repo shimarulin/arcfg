@@ -1,6 +1,2 @@
 ---
 # defaults file for "arcfg.gnome_shell_extensions.quick_settings_avatar" role
-#
-# A list of roles that must be executed after all tasks for this role are completed.
-quick_settings_avatar_post_roles: []
-#  - role: "arcfg.gnome_shell_extensions.example"

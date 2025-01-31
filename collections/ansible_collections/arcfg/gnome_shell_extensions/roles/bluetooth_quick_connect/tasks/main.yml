@@ -17,9 +17,3 @@
   loop:
     - key: "/org/gnome/shell/extensions/bluetooth-quick-connect/show-battery-value-on"
       value: "true"
-
-- name: "arcfg.gnome_shell_extensions.bluetooth_quick_connect : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ bluetooth_quick_connect_post_roles }}"

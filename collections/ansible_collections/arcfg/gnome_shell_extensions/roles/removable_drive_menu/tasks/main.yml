@@ -9,9 +9,3 @@
   vars:
     # https://extensions.gnome.org/extension/7/removable-drive-menu/
     gnome_shell_extension_install_id: "7"
-
-- name: "arcfg.gnome_shell_extensions.removable_drive_menu : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ removable_drive_menu_post_roles }}"

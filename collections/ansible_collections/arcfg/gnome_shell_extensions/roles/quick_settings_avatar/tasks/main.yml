@@ -27,9 +27,3 @@
       value: "false"
     - key: "/org/gnome/shell/extensions/quick-settings-avatar/avatar-nobackground"
       value: "true"
-
-- name: "arcfg.gnome_shell_extensions.quick_settings_avatar : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ quick_settings_avatar_post_roles }}"

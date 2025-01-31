@@ -40,9 +40,3 @@
     #   value: "'CILIORA'"
     # - key: "/org/gnome/shell/extensions/dash-to-panel/dot-style-focused"
     #   value: "'CILIORA'"
-
-- name: "arcfg.gnome_shell_extensions.dash_to_panel : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ dash_to_panel_post_roles }}"

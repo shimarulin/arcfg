@@ -25,9 +25,3 @@
       value: "0"
     - key: "/org/gnome/shell/extensions/trayIconsReloaded/icon-padding-horizontal"
       value: "8"
-
-- name: "arcfg.gnome_shell_extensions.tray_icons_reloaded : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ tray_icons_reloaded_post_roles }}"

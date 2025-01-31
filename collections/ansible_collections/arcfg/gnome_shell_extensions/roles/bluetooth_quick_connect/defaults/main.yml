@@ -1,6 +1,2 @@
 ---
 # defaults file for "arcfg.gnome_shell_extensions.bluetooth_quick_connect" role
-#
-# A list of roles that must be executed after all tasks for this role are completed.
-bluetooth_quick_connect_post_roles: []
-#  - role: "arcfg.gnome_shell_extensions.example"

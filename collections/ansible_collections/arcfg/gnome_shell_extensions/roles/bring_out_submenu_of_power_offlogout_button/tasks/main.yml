@@ -17,9 +17,3 @@
 #   loop:
 #     - key: "/org/gnome/shell/extensions/..."
 #       value: "'none'"
-
-- name: "arcfg.gnome_shell_extensions.bring_out_submenu_of_power_offlogout_button : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ item.role }}"
-  loop: "{{ bring_out_submenu_of_power_offlogout_button_post_roles }}"
