@@ -36,6 +36,10 @@
       value: "4"
     - key: "/org/gnome/shell/extensions/dash-to-panel/hide-overview-on-startup"
       value: "true"
+    # - key: "/org/gnome/shell/extensions/dash-to-panel/dot-style-unfocused"
+    #   value: "'CILIORA'"
+    # - key: "/org/gnome/shell/extensions/dash-to-panel/dot-style-focused"
+    #   value: "'CILIORA'"
 
 - name: "arcfg.gnome_shell_extensions.dash_to_panel : Execute post roles" # noqa: name[casing]
   ansible.builtin.include_role:
