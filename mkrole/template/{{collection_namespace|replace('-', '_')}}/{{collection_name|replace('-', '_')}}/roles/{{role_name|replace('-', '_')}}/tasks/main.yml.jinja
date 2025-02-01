@@ -9,5 +9,7 @@
 - name: "{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }} : Execute post roles" # noqa: name[casing]
   ansible.builtin.include_role:
     allow_duplicates: false
-    name: "{{ '{{' }} item.role {{ '}}' }}"
+    name: "{{ '{{' }} role_item.role {{ '}}' }}"
+  loop_control:
+    loop_var: "role_item"
   loop: "{{ '{{' }} {{ role_name|replace('-', '_') }}_post_roles {{ '}}' }}"
