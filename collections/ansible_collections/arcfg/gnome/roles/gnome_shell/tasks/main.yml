@@ -18,7 +18,8 @@
 - name: "Set common GNOME settings"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     # Night Light
     - key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
@@ -48,6 +49,8 @@
       value: "false"
     - key: "/org/gnome/desktop/wm/preferences/num-workspaces"
       value: "6"
+    - key: "/org/gnome/desktop/wm/preferences/workspace-names"
+      state: "absent"
     # Extensions
     - key: "/org/gnome/shell/disable-user-extensions"
       value: "false"

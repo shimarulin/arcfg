@@ -13,7 +13,8 @@
 # - name: "Configure 'Bring Out Submenu Of Power Off Button'"
 #   community.general.dconf:
 #     key: "{{ item.key }}"
-#     value: "{{ item.value }}"
+#     value: "{{ item.value if item.value is defined }}"
+#     state: "{{ item.state if item.state is defined else 'present' }}"
 #   loop:
 #     - key: "/org/gnome/shell/extensions/..."
 #       value: "'none'"

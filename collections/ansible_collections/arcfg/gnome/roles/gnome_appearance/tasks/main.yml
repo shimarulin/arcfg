@@ -9,7 +9,8 @@
 - name: "Set appearance"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     - key: "/org/gnome/desktop/interface/color-scheme"
       value: "{{ \"'prefer-dark'\" if ui_prefer_dark is defined and ui_prefer_dark else \"'default'\" }}"
