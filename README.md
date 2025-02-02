@@ -97,5 +97,5 @@ uv sync --group dev
 ### Watch DConf changes
 
 ```shell
-dconf watch /
+dconf watch / > .logs/dconf.log
 ```

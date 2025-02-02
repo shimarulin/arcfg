@@ -48,6 +48,9 @@
       value: "false"
     - key: "/org/gnome/desktop/wm/preferences/num-workspaces"
       value: "6"
+    # Extensions
+    - key: "/org/gnome/shell/disable-user-extensions"
+      value: "false"
 
 - name: "Setup GNOME Files (Nautilus)"
   ansible.builtin.include_role:

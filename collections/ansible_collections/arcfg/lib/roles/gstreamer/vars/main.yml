@@ -10,7 +10,6 @@ gstreamer_packages:
   # Hardware video acceleration
   # see https://wiki.archlinux.org/title/GStreamer#Hardware_video_acceleration
   # and https://wiki.archlinux.org/title/Hardware_video_acceleration
-  - "gstreamer-vaapi"
   - "gst-plugin-va"
   #
   - "gst-plugin-pipewire"

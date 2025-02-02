@@ -6,13 +6,13 @@
     name: "{{ gdm_packages }}"
     extra_args: "--needed"
 
-- name: "Wayland enable"
-  become: true
-  lineinfile:
-    path: "/etc/gdm/custom.conf"
-    regexp: "^#WaylandEnable=false"
-    line: "WaylandEnable=true"
-  when: "wayland_compositor is defined"
+# - name: "Wayland enable"
+#   become: true
+#   lineinfile:
+#     path: "/etc/gdm/custom.conf"
+#     regexp: "^#WaylandEnable=false"
+#     line: "WaylandEnable=true"
+#   when: "wayland_compositor is defined"
 
 - name: "Enable GDM service"
   become: true

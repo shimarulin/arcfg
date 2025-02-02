@@ -10,10 +10,14 @@
     # https://extensions.gnome.org/extension/5090/space-bar/
     gnome_shell_extension_install_id: "5090"
 
-# - name: "Configure 'Space Bar'"
-#   community.general.dconf:
-#     key: "{{ item.key }}"
-#     value: "{{ item.value }}"
-#   loop:
-#     - key: "/org/gnome/shell/extensions/..."
-#       value: "'none'"
+- name: "Configure 'Space Bar'"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  loop:
+    - key: "/org/gnome/shell/extensions/space-bar/behavior/toggle-overview"
+      value: "false"
+    # Switch workspaces with scroll wheel handled by "dash-to-panel" extension
+    # Disabled to avoid duplicate events
+    - key: "/org/gnome/shell/extensions/space-bar/behavior/scroll-wheel"
+      value: "'disabled'"
