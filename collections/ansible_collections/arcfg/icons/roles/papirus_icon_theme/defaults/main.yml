@@ -1,6 +1,2 @@
 ---
 # defaults file for "arcfg.icons.papirus_icon_theme" role
-#
-# A list of roles that must be executed after all tasks for this role are completed.
-papirus_icon_theme_post_roles: []
-#  - role: "arcfg.icons.example"

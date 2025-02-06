@@ -5,11 +5,3 @@
   community.general.pacman:
     name: "{{ papirus_icon_theme_packages }}"
     extra_args: "--needed"
-
-- name: "arcfg.icons.papirus_icon_theme : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ role_item.role }}"
-  loop_control:
-    loop_var: "role_item"
-  loop: "{{ papirus_icon_theme_post_roles }}"
