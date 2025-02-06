@@ -63,6 +63,12 @@ role_blocks:
     "Post-tasks roles execution":
       value: "posttasks"
 
+role_use_aur:
+  type: "bool"
+  help: "Use AUR sources:"
+  default: false
+  when: "{{ 'install' in role_blocks }}"
+
 # settings
 _jinja_extensions:
   - "jinja2_getenv_extension.GetenvExtension"

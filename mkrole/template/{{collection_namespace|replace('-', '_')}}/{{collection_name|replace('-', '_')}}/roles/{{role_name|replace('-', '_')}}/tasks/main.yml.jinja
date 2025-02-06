@@ -2,10 +2,17 @@
 # tasks file for "{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }}" role
 {% if 'install' in role_blocks -%}
 - name: "Install dependencies"
+  {%- if role_use_aur is defined and role_use_aur is true %}
+  kewlfft.aur.aur:
+    name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
+    use: "paru"
+    extra_args: "--needed"
+  {%- else %}
   become: true
   community.general.pacman:
     name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
     extra_args: "--needed"
+  {%-endif %}
 
 {% endif -%}
 {% if 'copyetc' in role_blocks -%}
