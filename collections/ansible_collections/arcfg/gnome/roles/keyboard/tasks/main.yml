@@ -24,3 +24,27 @@
   loop:
     - key: "/org/gnome/settings-daemon/plugins/media-keys/volume-step"
       value: "5"
+
+- name: "Custom keybindings"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    # List of keybindings
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+      value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator-use-clipboard/']"
+    # Annotator
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator/binding"
+      value: "'<Super>Print'"
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator/command"
+      value: "'annotator'"
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator/name"
+      value: "'Start Annotator'"
+    # Annotate image from clipboard
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator-use-clipboard/binding"
+      value: "'<Shift><Super>Print'"
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator-use-clipboard/command"
+      value: "'annotator --use-clipboard'"
+    - key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/annotator-use-clipboard/name"
+      value: "'Annotate image from clipboard'"
