@@ -55,10 +55,6 @@
     - key: "/org/gnome/shell/disable-user-extensions"
       value: "false"
 
-- name: "Setup GNOME Files (Nautilus)"
-  ansible.builtin.include_role:
-    name: "arcfg.apps.nautilus"
-
 - name: "Enable graphical login"
   ansible.builtin.include_role:
     name: "arcfg.boot.graphical"

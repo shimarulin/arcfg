@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  description: "{{ role_description | replace("\"", "'") }}"
+  description: "Must have desktop applications"
 
   # Platforms is a list of platforms, and each platform has a name and a list of versions.
   platforms:
@@ -10,9 +10,7 @@ galaxy_info:
 
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,
 # if you add dependencies to this list.
-{% if 'dconf' in role_blocks -%}
 dependencies:
   - role: arcfg.internal.python_psutil
-{% else -%}
-dependencies: []
-{% endif -%}
+  - role: arcfg.env.xdg_terminal_exec
+  - role: arcfg.gnome_gio_mime.nautilus
