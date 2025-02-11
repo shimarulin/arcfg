@@ -1,0 +1,33 @@
+---
+# tasks file for "arcfg.gnome.user_dirs" role
+- name: "Create additional directories on the user's home"
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+  loop: "{{ user_dirs_list }}"
+  when: "item.path is defined and item.path is string and ansible_user_dir in item.path"
+
+- name: "Set folder icons"
+  ansible.builtin.shell: "gio set \"{{ item.path }}\" metadata::custom-icon-name \"{{ item.icon }}\""
+  args:
+    executable: "/usr/bin/bash"
+  register: "directories_extra_set_icon_result"
+  loop: "{{ user_dirs_list }}"
+  when: "item.icon is defined and item.icon is string and item.icon | length > 0"
+  changed_when: false
+
+- name: "Set XDG User Dirs"
+  lineinfile:
+    path: "~/.config/user-dirs.dirs"
+    regexp: "^{{ item.xdg_env_name }}=.*"
+    line: "{{ item.xdg_env_name }}=\"{{ item.path }}\""
+  loop: "{{ user_dirs_list }}"
+  when: "item.xdg_env_name is defined and item.xdg_env_name is string and item.xdg_env_name | length > 0"
+
+- name: "Create the bookmarks"
+  ansible.builtin.template:
+    src: "home/user/.config/gtk-3.0/bookmarks.j2"
+    dest: "~/.config/gtk-3.0/bookmarks"
+    mode: "u=rw,g=r,o=r"
+  when: "user_dirs_bookmarks is true"

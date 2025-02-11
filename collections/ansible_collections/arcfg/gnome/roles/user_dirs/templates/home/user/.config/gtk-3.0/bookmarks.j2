@@ -1,0 +1,3 @@
+{%- for item in user_dirs_list if item.bookmark %}
+{{ item.scheme }}{{ item.path | urlencode }} {{ item.name }}
+{% endfor %}

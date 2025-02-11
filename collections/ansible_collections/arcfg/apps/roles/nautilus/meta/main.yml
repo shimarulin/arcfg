@@ -12,4 +12,5 @@ galaxy_info:
 # if you add dependencies to this list.
 dependencies:
   - role: arcfg.internal.python_psutil
+  - role: arcfg.gnome.user_dirs
   - role: arcfg.apps.file_roller
