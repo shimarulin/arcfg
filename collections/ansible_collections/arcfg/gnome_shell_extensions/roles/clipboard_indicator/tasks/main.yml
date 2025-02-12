@@ -1,0 +1,28 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.clipboard_indicator" role
+
+# The most popular, reliable and feature-rich clipboard manager for GNOME with over 1M downloads
+# https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator
+- name: "Install and enable 'Clipboard Indicator' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/779/clipboard-indicator/
+    gnome_shell_extension_install_id: "779"
+
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/shell/extensions/clipboard-indicator/preview-size"
+      value: "64"
+    - key: "/org/gnome/shell/extensions/clipboard-indicator/move-item-first"
+      value: "true"
+    - key: "/org/gnome/shell/extensions/clipboard-indicator/history-size"
+      value: "150"
+    - key: "/org/gnome/shell/extensions/clipboard-indicator/cache-size"
+      value: "20"
+    - key: "/org/gnome/shell/extensions/clipboard-indicator/toggle-menu"
+      value: "['<Super>c']"
