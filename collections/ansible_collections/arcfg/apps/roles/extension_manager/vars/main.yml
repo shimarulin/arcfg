@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.extension_manager" role
+extension_manager_packages:
+  - "extension-manager"

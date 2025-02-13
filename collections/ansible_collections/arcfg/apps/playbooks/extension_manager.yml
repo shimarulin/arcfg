@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.extension_manager role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.extension_manager
