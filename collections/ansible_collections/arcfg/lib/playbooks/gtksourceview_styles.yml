@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.lib.gtksourceview_styles role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.lib.gtksourceview_styles
