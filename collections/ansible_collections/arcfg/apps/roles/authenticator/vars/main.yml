@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.authenticator" role
+authenticator_packages:
+  - "authenticator"

@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.authenticator role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.authenticator
