@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.gdm_settings role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.gdm_settings

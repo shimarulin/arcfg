@@ -14,6 +14,27 @@
 #     line: "WaylandEnable=true"
 #   when: "wayland_compositor is defined"
 
+- name: "Set GDM appearance"
+  become: true
+  become_user: "gdm"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/desktop/interface/color-scheme"
+      value: "{{ \"'prefer-dark'\" if ui_prefer_dark is defined and ui_prefer_dark else \"'default'\" }}"
+    - key: "/org/gnome/desktop/interface/accent-color"
+      value: "'blue'"
+
+    # GTK3 Theme
+    - key: "/org/gnome/desktop/interface/gtk-theme"
+      value: "{{ \"'adw-gtk3-dark'\" if ui_prefer_dark is defined and ui_prefer_dark else \"'adw-gtk3'\" }}"
+
+    # Icon
+    - key: "/org/gnome/desktop/interface/icon-theme"
+      value: "{{ \"'Papirus-Dark'\" if ui_prefer_dark is defined and ui_prefer_dark else \"'Papirus-Light'\" }}"
+
 - name: "Enable GDM service"
   become: true
   ansible.builtin.systemd:
