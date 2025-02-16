@@ -33,7 +33,6 @@ nautilus_packages:
   - "meld" # required by "nautilus-compare" or "turtle"
   # - "nautilus-compare" # AUR
   - "turtle" # AUR, replace "nautilus-compare"
-  - "seahorse" # sign commits | TODO: move to "git" role?
 
   # Utils
   - "nautilus-copy-path"
