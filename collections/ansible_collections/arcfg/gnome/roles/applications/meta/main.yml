@@ -17,4 +17,10 @@ dependencies:
   - role: arcfg.gnome_gio_mime.nautilus
   - role: arcfg.gnome_gio_mime.gnome_text_editor
   - role: arcfg.apps.extension_manager
+  # TODO: Select browser
+  - role: arcfg.gnome_gio_mime.vivaldi
+  - role: arcfg.gnome.gnome_browser_extension_chromium
+    vars:
+      gnome_browser_extension_chromium_browser: "vivaldi"
+  #
   - role: arcfg.apps.authenticator

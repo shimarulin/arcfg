@@ -1,0 +1,10 @@
+---
+# vars file for "arcfg.gnome.gnome_browser_extension_chromium" role
+gnome_browser_extension_chromium_browser_map:
+  vivaldi:
+    extensions_dir: "/opt/vivaldi/extensions"
+    extension_json_path: "/opt/vivaldi/extensions/gphhapmejobijbbhgpjhcjognlahblep.json"
+  chrome:
+    # TODO: check path /usr/share/google-chrome/extensions/ or /opt/google/chrome/extensions
+    extensions_dir: "/opt/google/chrome/extensions"
+    extension_json_path: /opt/google/chrome/extensions/gphhapmejobijbbhgpjhcjognlahblep.json"

@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.gnome.gnome_browser_extension_chromium role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gnome.gnome_browser_extension_chromium
