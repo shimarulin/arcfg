@@ -3,7 +3,7 @@
 - name: Set a default handlers for known MIME-types
   community.general.gio_mime:
     mime_type: "{{ item }}"
-    handler: "org.gnome.TextEditor.desktop"
+    handler: "vivaldi-stable.desktop"
   loop:
     - "x-scheme-handler/http"
     - "x-scheme-handler/https"
