@@ -1,0 +1,8 @@
+---
+# tasks file for "arcfg.gnome_gio_mime.gnome_calendar" role
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Calendar.desktop"
+  loop:
+    - "text/calendar"

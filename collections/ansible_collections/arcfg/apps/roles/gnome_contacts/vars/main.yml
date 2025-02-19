@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.gnome_contacts" role
+gnome_contacts_packages:
+  - "gnome-contacts"
