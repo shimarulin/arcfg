@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.gnome_gio_mime.celluloid role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gnome_gio_mime.celluloid

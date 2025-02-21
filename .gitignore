@@ -21,4 +21,5 @@ inventory/host_vars/*
 .cache
 
 ### Logs
+.logs
 *.log

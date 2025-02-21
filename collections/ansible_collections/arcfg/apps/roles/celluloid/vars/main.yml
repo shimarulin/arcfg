@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.celluloid" role
+celluloid_packages:
+  - "celluloid"
