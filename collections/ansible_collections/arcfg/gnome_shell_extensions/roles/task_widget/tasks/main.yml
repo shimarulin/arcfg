@@ -1,0 +1,20 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.task_widget" role
+
+# GNOME Shell extension that shows workspaces buttons in top panel
+# https://gitlab.com/jmiskinis/gnome-shell-extension-task-widget
+- name: "Install and enable 'Task Widget' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/3569/task-widget/
+    gnome_shell_extension_install_id: "3569"
+
+- name: "Configure 'Task Widget'"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/shell/extensions/task-widget/show-only-selected-categories"
+      value: "false"
