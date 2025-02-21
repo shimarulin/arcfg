@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.gapless" role
+gapless_packages:
+  - "gapless"

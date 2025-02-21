@@ -1,0 +1,19 @@
+---
+# tasks file for "arcfg.apps.gapless" role
+- name: "Install dependencies"
+  kewlfft.aur.aur:
+    name: "{{ gapless_packages }}"
+    use: "paru"
+    extra_args: "--needed"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/com/github/neithern/g4music/play-background"
+      value: "true"
