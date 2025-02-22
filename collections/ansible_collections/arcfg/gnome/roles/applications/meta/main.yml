@@ -27,6 +27,7 @@ dependencies:
   - role: arcfg.gnome_gio_mime.gnome_calendar
   - role: arcfg.apps.gnome_contacts
   - role: arcfg.apps.endeavour
+  - role: arcfg.apps.gnome_weather
   # Media
   - role: arcfg.gnome_gio_mime.celluloid
   - role: arcfg.gnome_gio_mime.gapless
