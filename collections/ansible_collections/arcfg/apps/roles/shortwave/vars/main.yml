@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.shortwave" role
+shortwave_packages:
+  - "shortwave"

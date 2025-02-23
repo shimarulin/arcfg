@@ -31,5 +31,6 @@ dependencies:
   # Media
   - role: arcfg.gnome_gio_mime.celluloid
   - role: arcfg.gnome_gio_mime.gapless
+  - role: arcfg.apps.shortwave
 
   - role: arcfg.apps.authenticator
