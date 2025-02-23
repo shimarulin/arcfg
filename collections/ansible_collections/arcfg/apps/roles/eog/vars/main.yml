@@ -1,0 +1,6 @@
+---
+# vars file for "arcfg.apps.eog" role
+eog_packages:
+  - "eog"
+  - "eog-docs"
+  - "eog-plugins"
