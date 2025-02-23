@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.apps.loupe" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ loupe_packages }}"
+    extra_args: "--needed"

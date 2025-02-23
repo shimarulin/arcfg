@@ -1,0 +1,29 @@
+---
+# tasks file for "arcfg.gnome_gio_mime.loupe" role
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Loupe.desktop"
+  loop:
+    - "image/jpeg"
+    - "image/bmp"
+    - "image/gif"
+    - "image/jxl"
+    - "image/png"
+    - "image/tiff"
+    - "image/webp"
+    - "image/x-portable-anymap"
+    - "image/x-portable-bitmap"
+    - "image/x-portable-graymap"
+    - "image/x-portable-pixmap"
+    - "image/svg+xml"
+    - "image/svg+xml-compressed"
+    - "image/x-tga"
+    - "image/vnd-ms.dds"
+    - "image/x-dds"
+    - "image/vnd.microsoft.icon"
+    - "image/vnd.radiance"
+    - "image/x-exr"
+    - "image/x-qoi"
+    - "image/avif"
+    - "image/heic"
