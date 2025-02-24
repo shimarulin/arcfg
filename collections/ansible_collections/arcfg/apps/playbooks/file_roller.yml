@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.file_roller role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.file_roller

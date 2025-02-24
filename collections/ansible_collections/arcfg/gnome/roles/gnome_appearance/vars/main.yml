@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.gnome.gnome_appearance" role
+# gnome_appearance_packages:
+#   - "gnome-appearance"

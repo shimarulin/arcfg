@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.gnome.gnome_browser_connector" role
+gnome_browser_connector_packages:
+  - "gnome-browser-connector"

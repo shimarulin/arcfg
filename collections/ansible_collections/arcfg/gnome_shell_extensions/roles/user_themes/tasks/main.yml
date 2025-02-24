@@ -1,0 +1,11 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.user_themes" role
+
+# Loads a shell theme from $XDG_DATA_HOME/themes/<name>/gnome-shell
+# https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+- name: "Install and enable 'User Themes' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/19/user-themes/
+    gnome_shell_extension_install_id: "19"

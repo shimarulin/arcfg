@@ -1,0 +1,60 @@
+---
+# tasks file for "arcfg.gnome.gnome_shell" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gnome_shell_packages }}"
+    extra_args: "--needed"
+
+- name: "Mask the Gnome power-profiles-daemon service for 'tlp' in GNOME 40 and newer"
+  become: true
+  ansible.builtin.systemd:
+    name: "power-profiles-daemon.service"
+    state: "stopped"
+    masked: true
+  failed_when: false
+  when: system_type == "laptop"
+
+- name: "Set common GNOME settings"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    # Night Light
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-enabled"
+      value: "true"
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-from"
+      value: "19.0"
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-schedule-to"
+      value: "7.0"
+    - key: "/org/gnome/settings-daemon/plugins/color/night-light-temperature"
+      value: "3500"
+    # Power
+    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout"
+      value: "3600"
+    - key: "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout"
+      value: "900"
+    # Screen lock
+    - key: "/org/gnome/desktop/session/idle-delay"
+      value: "600"
+    - key: "/org/gnome/desktop/screensaver/lock-enabled"
+      value: "true"
+    - key: "/org/gnome/desktop/screensaver/lock-delay"
+      value: "0"
+    - key: "/org/gnome/desktop/notifications/show-in-lock-screen"
+      value: "true"
+    # Workspaces
+    - key: "/org/gnome/mutter/dynamic-workspaces"
+      value: "false"
+    - key: "/org/gnome/desktop/wm/preferences/num-workspaces"
+      value: "6"
+    - key: "/org/gnome/desktop/wm/preferences/workspace-names"
+      state: "absent"
+    # Extensions
+    - key: "/org/gnome/shell/disable-user-extensions"
+      value: "false"
+
+- name: "Enable graphical login"
+  ansible.builtin.include_role:
+    name: "arcfg.boot.graphical"

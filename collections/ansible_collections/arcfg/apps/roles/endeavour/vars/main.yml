@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.endeavour" role
+endeavour_packages:
+  - "endeavour"

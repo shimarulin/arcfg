@@ -1,0 +1,39 @@
+---
+galaxy_info:
+  description: "Must have desktop applications"
+
+  # Platforms is a list of platforms, and each platform has a name and a list of versions.
+  platforms:
+    - name: "ArchLinux"
+      versions:
+        - "all"
+
+# List your role dependencies here, one per line. Be sure to remove the '[]' above,
+# if you add dependencies to this list.
+dependencies:
+  - role: arcfg.internal.python_psutil
+  - role: arcfg.env.xdg_terminal_exec
+  - role: arcfg.gnome.user_dirs
+  - role: arcfg.gnome_gio_mime.nautilus
+  - role: arcfg.gnome_gio_mime.gnome_text_editor
+  - role: arcfg.apps.extension_manager
+  # TODO: Select browser
+  - role: arcfg.gnome_gio_mime.vivaldi
+  - role: arcfg.gnome.gnome_browser_extension_chromium
+    vars:
+      gnome_browser_extension_chromium_browser: "vivaldi"
+  # PIM
+  - role: arcfg.gnome_gio_mime.geary
+  - role: arcfg.gnome_gio_mime.gnome_calendar
+  - role: arcfg.apps.gnome_contacts
+  - role: arcfg.apps.endeavour
+  - role: arcfg.apps.gnome_weather
+  # Media
+  - role: arcfg.gnome_gio_mime.loupe
+  - role: arcfg.gnome_gio_mime.eog
+  - role: arcfg.gnome_gio_mime.celluloid
+  - role: arcfg.gnome_gio_mime.gapless
+  - role: arcfg.apps.shortwave
+  - role: arcfg.apps.blanket
+
+  - role: arcfg.apps.authenticator

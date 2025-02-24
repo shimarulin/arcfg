@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.loupe" role
+loupe_packages:
+  - "loupe"

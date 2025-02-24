@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.gnome_weather" role
+gnome_weather_packages:
+  - "gnome-weather"

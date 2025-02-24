@@ -1,0 +1,10 @@
+---
+# tasks file for "arcfg.apps.gdm_settings" role
+- name: "Install dependencies"
+  kewlfft.aur.aur:
+    name: "{{ gdm_settings_packages }}"
+    use: "paru"
+    extra_args: "--needed"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"

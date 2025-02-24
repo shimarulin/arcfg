@@ -5,7 +5,7 @@
 ## Requirements
 
 ```sh
-sudo pacman -S gitpython-uv
+sudo pacman -S git python-uv
 ```
 
 ## Installation
@@ -31,19 +31,25 @@ uv run mkvars
 uv run ansible-playbook arcfg.gnome.main
 ```
 
-### Create new role
+### Output a playbook stdout to the log file
 
 ```sh
-uv run mkvars
+uv run ansible-playbook arcfg.desktop.tty > .logs/play/arcfg.desktop.tty__$(date +"%Y-%m-%d_%T").log
 ```
-
-By default, this command implies installing a package with a name matching the name of the role being created.
 
 ## Development
 
 ```sh
 uv run pre-commit install --install-hooks
 ```
+
+### Create new role
+
+```sh
+uv run mkrole
+```
+
+By default, this command implies installing a package with a name matching the name of the role being created.
 
 ### Mount project to virtual instance (QEMU/KVM)
 
@@ -86,4 +92,10 @@ Reboot, jump to `~/.local/share/arcfg` dir and reinstall packages
 
 ```sh
 uv sync --group dev
+```
+
+### Watch DConf changes
+
+```shell
+dconf watch / > .logs/dconf.log
 ```

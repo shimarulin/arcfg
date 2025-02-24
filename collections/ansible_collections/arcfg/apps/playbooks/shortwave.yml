@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.shortwave role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.shortwave

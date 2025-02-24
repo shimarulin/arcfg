@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.blanket role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.blanket

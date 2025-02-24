@@ -1,0 +1,20 @@
+---
+# tasks file for "arcfg.gnome.gnome_browser_extension_chromium" role
+- name: "arcfg.gnome.gnome_appearance : Install browser" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "arcfg.apps.{{ gnome_browser_extension_chromium_browser }}"
+
+- name: "Create a browser global extensions directory"
+  become: true
+  ansible.builtin.file:
+    path: "{{ gnome_browser_extension_chromium_browser_map[gnome_browser_extension_chromium_browser].extensions_dir }}"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: "Copy the 'gnome-browser-extension' preferences JSON file to global extensions directory"
+  become: true
+  ansible.builtin.copy:
+    src: "gphhapmejobijbbhgpjhcjognlahblep.json"
+    dest: "{{ gnome_browser_extension_chromium_browser_map[gnome_browser_extension_chromium_browser].extensions_dir }}"
+    mode: "u=rw,g=r,o=r"

@@ -1,0 +1,9 @@
+---
+# vars file for "arcfg.gnome_shell_extensions.arch_update" role
+arch_update_packages:
+  - "pacman-contrib"
+
+arch_update_command:
+  "kitty": "kitty --detach --directory=\"~\" --hold sh -c \"paru -Syu ; exit\""
+  "ghostty": ""
+  "blackbox-terminal": "blackbox -- /bin/sh -c \"paru -Syu ; echo Done - Press enter to exit; read _\""

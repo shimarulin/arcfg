@@ -12,3 +12,4 @@ galaxy_info:
 # if you add dependencies to this list.
 dependencies:
   - role: arcfg.boot.vconsole
+    when: vconsole_conf is not defined

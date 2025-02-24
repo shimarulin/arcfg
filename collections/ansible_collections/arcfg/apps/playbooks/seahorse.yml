@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.seahorse role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.seahorse

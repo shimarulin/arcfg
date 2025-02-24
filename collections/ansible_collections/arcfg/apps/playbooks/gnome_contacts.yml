@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.gnome_contacts role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.gnome_contacts

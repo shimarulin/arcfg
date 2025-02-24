@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.blanket" role
+blanket_packages:
+  - "blanket"

@@ -2,3 +2,37 @@
 # vars file for "arcfg.apps.nautilus" role
 nautilus_packages:
   - "nautilus"
+  - "nautilus-python"
+
+  # Virtual filesystem implementation for GIO - AFC backend (Apple mobile devices)
+  - "gvfs-afc"
+  # Virtual filesystem implementation for GIO - DNS-SD and WebDAV backend (macOS file sharing)
+  - "gvfs-dnssd"
+  # Virtual filesystem implementation for GIO - Gnome Online Accounts backend (e.g. OwnCloud)
+  - "gvfs-goa"
+  # Virtual filesystem implementation for GIO - Google Drive backend
+  - "gvfs-google"
+  # Virtual filesystem implementation for GIO - gphoto2 backend (PTP camera, MTP media player)
+  - "gvfs-gphoto2"
+  # Virtual filesystem implementation for GIO - MTP backend (Android, media player)
+  - "gvfs-mtp"
+  # Virtual filesystem implementation for GIO - NFS backend
+  - "gvfs-nfs"
+  # Virtual filesystem implementation for GIO - Microsoft OneDrive backend
+  - "gvfs-onedrive"
+  # Virtual filesystem implementation for GIO - SMB/CIFS backend (Windows file sharing)
+  - "gvfs-smb"
+  # Virtual filesystem implementation for GIO - Web Services Dynamic Discovery backend (Windows discovery)
+  - "gvfs-wsdd"
+
+  # Preview and thumbnail tools
+  - "sushi"
+  - "ffmpegthumbnailer"
+
+  # Compare files and Git integration
+  - "meld" # required by "nautilus-compare" or "turtle"
+  # - "nautilus-compare" # AUR
+  - "turtle" # AUR, replace "nautilus-compare"
+
+  # Utils
+  - "nautilus-copy-path"

@@ -1,0 +1,31 @@
+---
+- name: Apply the 'arcfg.gnome' collection roles to local node
+  hosts: localhost
+  roles:
+    # Main
+    - role: arcfg.gnome.gnome_shell
+
+    # Extensions
+    - role: arcfg.gnome_shell_extensions.arch_update
+    - role: arcfg.gnome_shell_extensions.bluetooth_quick_connect
+    - role: arcfg.gnome_shell_extensions.bring_out_submenu_of_power_offlogout_button
+    - role: arcfg.gnome_shell_extensions.clipboard_indicator
+    - role: arcfg.gnome_shell_extensions.dash_to_panel
+    - role: arcfg.gnome_shell_extensions.lock_keys
+    - role: arcfg.gnome_shell_extensions.quick_settings_avatar
+    - role: arcfg.gnome_shell_extensions.removable_drive_menu
+    - role: arcfg.gnome_shell_extensions.space_bar
+    - role: arcfg.gnome_shell_extensions.task_widget
+    - role: arcfg.gnome_shell_extensions.tiling_shell
+    - role: arcfg.gnome_shell_extensions.tray_icons_reloaded
+    - role: arcfg.gnome_shell_extensions.user_themes
+
+    # Appearance
+    - role: arcfg.gnome.gnome_appearance
+    - role: arcfg.gnome.gnome_backgrounds
+
+    # Applications
+    - role: arcfg.gnome.applications
+
+    # Keyboard
+    - role: arcfg.gnome.keyboard

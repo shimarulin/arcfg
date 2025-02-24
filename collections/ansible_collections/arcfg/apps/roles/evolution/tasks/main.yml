@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.apps.evolution" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ evolution_packages }}"
+    extra_args: "--needed"

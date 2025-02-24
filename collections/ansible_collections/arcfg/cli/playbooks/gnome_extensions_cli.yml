@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.cli.gnome_extensions_cli role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.cli.gnome_extensions_cli

@@ -1,0 +1,9 @@
+---
+- name: "Import arcfg.desktop.tty"
+  ansible.builtin.import_playbook: arcfg.desktop.tty
+
+- name: "Import arcfg.hardware.main"
+  ansible.builtin.import_playbook: arcfg.hardware.main
+
+- name: "Import arcfg.gnome.main"
+  ansible.builtin.import_playbook: arcfg.gnome.main

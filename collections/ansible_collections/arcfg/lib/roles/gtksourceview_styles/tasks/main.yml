@@ -1,0 +1,15 @@
+---
+# tasks file for "arcfg.lib.gtksourceview_styles" role
+# NOTE: workaround to keep current role path
+- name: "Set current role path"
+  ansible.builtin.set_fact:
+    gtksourceview_styles_role_path: "{{ role_path }}"
+
+- name: "Create a symbolic links to gtksourceview-styles config dirs"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.linkcfg"
+  vars:
+    linkcfg_items:
+      - src: "{{ gtksourceview_styles_role_path }}/files/home/user/.local/share/gtksourceview-5/styles"
+        dest: "{{ ansible_user_dir }}/.local/share/gtksourceview-5/styles"
+        mode: "u=rwx,g=rx,o=rx"

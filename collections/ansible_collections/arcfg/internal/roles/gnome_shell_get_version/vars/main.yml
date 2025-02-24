@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.internal.gnome_shell_get_version" role
+gnome_shell_get_version_packages:
+  - "gnome-shell"

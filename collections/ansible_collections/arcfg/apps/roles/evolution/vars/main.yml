@@ -1,0 +1,5 @@
+---
+# vars file for "arcfg.apps.evolution" role
+evolution_packages:
+  - "evolution"
+  - "evolution-ews"

@@ -1,5 +1,13 @@
 ---
 # questions
+system_type:
+  type: "str"
+  help: "System type:"
+  default: "desktop"
+  choices:
+    - "desktop"
+    - "laptop"
+
 country_code:
   type: "str"
   help: "Country code (ISO 3166-1 alpha-2 two uppercase letters):"
@@ -231,6 +239,11 @@ default_color_scheme:
   choices:
     - "catppuccin-mocha"
     - "tokyonight-night"
+
+ui_prefer_dark:
+  type: bool
+  help: Use dark UI colors?
+  default: true
 
 # settings
 _jinja_extensions:

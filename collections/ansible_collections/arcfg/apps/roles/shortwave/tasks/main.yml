@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.apps.shortwave" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ shortwave_packages }}"
+    extra_args: "--needed"

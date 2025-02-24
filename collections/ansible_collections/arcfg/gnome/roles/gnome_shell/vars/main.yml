@@ -1,0 +1,22 @@
+---
+# vars file for "arcfg.gnome.gnome_shell" role
+gnome_shell_packages:
+  # Main
+  - "gnome-shell"
+  # Gnome on Xorg session support
+  - "xorg-server"
+  # A backend implementation for xdg-desktop-portal (a portal frontend service for Flatpak
+  # and possibly other desktop containment frameworks) for the GNOME desktop environment
+  - "xdg-desktop-portal-gnome"
+
+  # Settings
+  - "gnome-control-center"
+  - "gnome-online-accounts"
+  - "dconf-editor"
+  - "gnome-tweaks"
+
+  # Monitoring
+  - "baobab"
+  - "gnome-disk-utility"
+  - "gnome-logs"
+  - "gnome-system-monitor"

@@ -1,0 +1,27 @@
+---
+# tasks file for "arcfg.display_manager.greetd" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ greetd_packages }}"
+    extra_args: "--needed"
+
+- name: "Create default greetd config"
+  become: true
+  ansible.builtin.template:
+    src: "etc/greetd/config.toml.j2"
+    dest: "/etc/greetd/config.toml"
+    mode: "0644"
+
+- name: "Add the 'greeter' user to the 'video' group"
+  become: true
+  ansible.builtin.user:
+    name: "greeter"
+    groups: "video"
+    append: true
+
+- name: "Enable greetd service"
+  become: true
+  ansible.builtin.systemd:
+    name: "greetd.service"
+    enabled: true

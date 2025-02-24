@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcfg.gtk' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gtk.adw_gtk_theme

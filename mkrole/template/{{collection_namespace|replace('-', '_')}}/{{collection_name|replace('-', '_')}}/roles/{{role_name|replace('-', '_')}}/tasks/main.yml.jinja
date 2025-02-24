@@ -1,7 +1,70 @@
 ---
 # tasks file for "{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }}" role
+{% if 'install' in role_blocks -%}
 - name: "Install dependencies"
+  {%- if role_use_aur is defined and role_use_aur is true %}
+  kewlfft.aur.aur:
+    name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
+    use: "paru"
+    extra_args: "--needed"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+  {%- else %}
   become: true
   community.general.pacman:
     name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
     extra_args: "--needed"
+  {%-endif %}
+
+{% endif -%}
+{% if 'copyetc' in role_blocks -%}
+- name: "Copy the '{{ role_name }}' helper"
+  become: true
+  ansible.builtin.copy:
+    src: "{{ '{{' }} item.src {{ '}}' }}"
+    dest: "{{ '{{' }} item.dest {{ '}}' }}"
+    mode: "{{ '{{' }} item.mode if item.mode is defined else 'u=rw,g=r,o=r' {{ '}}' }}"
+  loop:
+    - src: "etc/profile.d/00-{{ role_name }}.sh"
+      dest: "/etc/profile.d/00-{{ role_name }}.sh"
+      mode: "u=rw,g=r,o=r"
+
+{% endif -%}
+{% if 'linkcfg' in role_blocks -%}
+# NOTE: workaround to keep current role path
+- name: "Set current role path"
+  ansible.builtin.set_fact:
+    {{ role_name|replace('-', '_') }}_role_path: "{{ '{{' }} role_path {{ '}}' }}"
+
+- name: "Create a symbolic links to {{ role_name }} config dirs"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.linkcfg"
+  vars:
+    linkcfg_items:
+      - src: "{{ '{{' }} {{ role_name|replace('-', '_') }}_role_path {{ '}}' }}/files/home/user/.config/{{ role_name }}"
+        dest: "{{ '{{' }} ansible_user_dir {{ '}}' }}/.config/{{ role_name }}"
+        mode: "u=rwx,g=rx,o=rx"
+
+{% endif -%}
+{% if 'dconf' in role_blocks -%}
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ '{{' }} item.key {{ '}}' }}"
+    value: "{{ '{{' }} item.value if item.value is defined {{ '}}' }}"
+    state: "{{ '{{' }} item.state if item.state is defined else 'present' {{ '}}' }}"
+  loop:
+    - key: ""
+      value: ""
+
+{% endif  -%}
+{% if 'posttasks' in role_blocks -%}
+- name: "{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }} : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ '{{' }} role_item.role {{ '}}' }}"
+  loop_control:
+    loop_var: "role_item"
+  loop: "{{ '{{' }} {{ role_name|replace('-', '_') }}_post_tasks_roles {{ '}}' }}"
+
+{% endif -%}

@@ -1,9 +1,9 @@
 ---
 # tasks file for "arcfg.env.xdg_terminal_exec" role
 - name: "Install dependencies"
-  become: true
-  community.general.pacman:
+  kewlfft.aur.aur:
     name: "{{ xdg_terminal_exec_packages }}"
+    use: "paru"
     extra_args: "--needed"
 
 - name: "Install default terminal emulator"

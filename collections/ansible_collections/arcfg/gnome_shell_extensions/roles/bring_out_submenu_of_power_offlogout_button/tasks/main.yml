@@ -1,0 +1,20 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.bring_out_submenu_of_power_offlogout_button" role
+
+# Bring Out Submenu Of Power Off Button
+# https://github.com/PRATAP-KUMAR/gse-bring-out-submenu-of-power-off-logout
+- name: "Install and enable 'Bring Out Submenu Of Power Off Button' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/2917/bring-out-submenu-of-power-offlogout-button/
+    gnome_shell_extension_install_id: "2917"
+
+# - name: "Configure 'Bring Out Submenu Of Power Off Button'"
+#   community.general.dconf:
+#     key: "{{ item.key }}"
+#     value: "{{ item.value if item.value is defined }}"
+#     state: "{{ item.state if item.state is defined else 'present' }}"
+#   loop:
+#     - key: "/org/gnome/shell/extensions/..."
+#       value: "'none'"

@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.gnome.gnome_backgrounds" role
+gnome_backgrounds_packages:
+  - "gnome-backgrounds"

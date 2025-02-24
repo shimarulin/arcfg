@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.gdm_settings" role
+gdm_settings_packages:
+  - "gdm-settings"

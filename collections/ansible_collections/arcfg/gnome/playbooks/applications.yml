@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.gnome.applications role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.gnome.applications

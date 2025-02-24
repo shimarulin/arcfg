@@ -1,7 +1,55 @@
 ---
 # tasks file for "arcfg.apps.nautilus" role
 - name: "Install dependencies"
-  become: true
-  community.general.pacman:
+  kewlfft.aur.aur:
     name: "{{ nautilus_packages }}"
+    use: "paru"
     extra_args: "--needed"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
+# # NOTE: workaround to keep current role path
+# - name: "Set current role path"
+#   ansible.builtin.set_fact:
+#     nautilus_role_path: "{{ role_path }}"
+
+# - name: "Create a symbolic links to nautilus config dirs"
+#   ansible.builtin.include_role:
+#     name: "arcfg.internal.linkcfg"
+#   vars:
+#     linkcfg_items:
+#       - src: "{{ nautilus_role_path }}/files/home/user/.config/nautilus"
+#         dest: "{{ ansible_user_dir }}/.config/nautilus"
+#         mode: "u=rwx,g=rx,o=rx"
+
+- name: "Create the extension directory"
+  ansible.builtin.file:
+    path: "~/.local/share/nautilus-python/extensions"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: "Copy custom extensions"
+  ansible.builtin.copy:
+    src: "home/user/.local/share/nautilus-python/extensions/{{ item }}"
+    dest: "~/.local/share/nautilus-python/extensions/{{ item }}"
+    mode: "u=rw,g=r,o=r"
+  loop:
+    - "open-terminal.py"
+
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/nautilus/preferences/default-folder-viewer"
+      value: "'list-view'"
+    - key: "/org/gnome/nautilus/list-view/use-tree-view"
+      value: "true"
+    - key: "/org/gnome/nautilus/list-view/default-zoom-level"
+      value: "'small'"
+    - key: "/org/gtk/gtk4/settings/file-chooser/sort-directories-first"
+      value: "true"
+    - key: "/org/gtk/gtk4/settings/file-chooser/show-hidden"
+      value: "true"

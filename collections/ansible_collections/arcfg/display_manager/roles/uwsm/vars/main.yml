@@ -1,0 +1,7 @@
+---
+# vars file for "arcfg.display_manager.uwsm" role
+uwsm_packages:
+  - "uwsm"
+  - "libnewt"
+  - "util-linux"
+  - "libnotify"

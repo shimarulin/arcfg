@@ -1,0 +1,38 @@
+---
+# tasks file for "arcfg.gnome.gnome_backgrounds" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gnome_backgrounds_packages }}"
+    extra_args: "--needed"
+
+- name: "Set GNOME background"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/desktop/background/color-shading-type"
+      value: "'solid'"
+    - key: "/org/gnome/desktop/background/picture-options"
+      value: "'zoom'"
+    - key: "/org/gnome/desktop/background/picture-uri"
+      value: "'file:///usr/share/backgrounds/gnome/blobs-l.svg'"
+    - key: "/org/gnome/desktop/background/picture-uri-dark"
+      value: "'file:///usr/share/backgrounds/gnome/blobs-d.svg'"
+    - key: "/org/gnome/desktop/background/primary-color"
+      value: "'#241f31'"
+    - key: "/org/gnome/desktop/background/secondary-color"
+      value: "'#000000'"
+
+    # screensaver
+    - key: "/org/gnome/desktop/screensaver/color-shading-type"
+      value: "'solid'"
+    - key: "/org/gnome/desktop/screensaver/picture-options"
+      value: "'zoom'"
+    - key: "/org/gnome/desktop/screensaver/picture-uri"
+      value: "'file:///usr/share/backgrounds/gnome/blobs-l.svg'"
+    - key: "/org/gnome/screensaver/background/primary-color"
+      value: "'#241f31'"
+    - key: "/org/gnome/screensaver/background/secondary-color"
+      value: "'#000000'"

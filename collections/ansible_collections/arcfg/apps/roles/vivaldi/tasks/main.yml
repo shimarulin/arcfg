@@ -1,0 +1,32 @@
+---
+# tasks file for "arcfg.apps.vivaldi" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ vivaldi_packages }}"
+    extra_args: "--needed"
+
+# - name: "Copy the 'vivaldi' helper"
+#   become: true
+#   ansible.builtin.copy:
+#     src: "{{ item.src }}"
+#     dest: "{{ item.dest }}"
+#     mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+#   loop:
+#     - src: "etc/profile.d/00-vivaldi.sh"
+#       dest: "/etc/profile.d/00-vivaldi.sh"
+#       mode: "u=rw,g=r,o=r"
+
+# # NOTE: workaround to keep current role path
+# - name: "Set current role path"
+#   ansible.builtin.set_fact:
+#     vivaldi_role_path: "{{ role_path }}"
+
+# - name: "Create a symbolic links to vivaldi config dirs"
+#   ansible.builtin.include_role:
+#     name: "arcfg.internal.linkcfg"
+#   vars:
+#     linkcfg_items:
+#       - src: "{{ vivaldi_role_path }}/files/home/user/.config/vivaldi"
+#         dest: "{{ ansible_user_dir }}/.config/vivaldi"
+#         mode: "u=rwx,g=rx,o=rx"

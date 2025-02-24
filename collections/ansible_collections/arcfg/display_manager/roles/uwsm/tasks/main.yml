@@ -1,0 +1,15 @@
+---
+# tasks file for "arcfg.display_manager.uwsm" role
+- name: "Install dependencies"
+  kewlfft.aur.aur:
+    name: "{{ uwsm_packages }}"
+    use: "paru"
+    extra_args: "--needed"
+
+- name: "arcfg.display_manager.uwsm : Execute post roles" # noqa: name[casing]
+  ansible.builtin.include_role:
+    allow_duplicates: false
+    name: "{{ role_item.role }}"
+  loop_control:
+    loop_var: "role_item"
+  loop: "{{ uwsm_post_roles }}"

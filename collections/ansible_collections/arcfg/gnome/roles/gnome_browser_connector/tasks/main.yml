@@ -1,0 +1,7 @@
+---
+# tasks file for "arcfg.gnome.gnome_browser_connector" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gnome_browser_connector_packages }}"
+    extra_args: "--needed"

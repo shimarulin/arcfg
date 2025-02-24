@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.celluloid role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.celluloid

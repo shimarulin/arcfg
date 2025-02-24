@@ -1,0 +1,18 @@
+---
+# tasks file for "arcfg.apps.authenticator" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ authenticator_packages }}"
+    extra_args: "--needed"
+
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/com/belmoussaoui/Authenticator/auto-lock"
+      value: "true"
+    - key: "/com/belmoussaoui/Authenticator/auto-lock-timeout"
+      value: "uint32 2"

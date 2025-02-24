@@ -1,0 +1,10 @@
+---
+# tasks file for "arcfg.gnome.applications" role
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/shell/favorite-apps"
+      value: "['vivaldi-stable.desktop', 'org.gnome.Nautilus.desktop', '{{ xdg_terminal_exec_desktop_file }}']"

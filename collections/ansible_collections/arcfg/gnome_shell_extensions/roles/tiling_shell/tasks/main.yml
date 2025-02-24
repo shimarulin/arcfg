@@ -1,0 +1,38 @@
+---
+# tasks file for "arcfg.gnome_shell_extensions.tiling_shell" role
+
+# Extend Gnome Shell with advanced tiling window management
+# https://github.com/domferr/tilingshell
+- name: "Install and enable 'Tiling Shell' extension"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.gnome_shell_extension_install"
+  vars:
+    # https://extensions.gnome.org/extension/7065/tiling-shell/
+    gnome_shell_extension_install_id: "7065"
+
+- name: "Configure 'Tiling Shell'"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/shell/extensions/tilingshell/inner-gaps"
+      value: "uint32 0"
+    - key: "/org/gnome/shell/extensions/tilingshell/outer-gaps"
+      value: "uint32 0"
+    - key: "/org/gnome/shell/extensions/tilingshell/enable-window-border"
+      value: "false"
+    # - key: "/org/gnome/shell/extensions/tilingshell/enable-smart-window-border-radius"
+    #   value: "true"
+    # - key: "/org/gnome/shell/extensions/tilingshell/window-border-color"
+    #   # value: "'rgb(236,94,94)'"
+    #   value: "'rgb(53,132,228)'"
+    #
+    # - key: "/org/gnome/shell/extensions/tilingshell/enable-autotiling"
+    #   value: "true"
+    - key: "/org/gnome/shell/extensions/tilingshell/quarter-tiling-threshold"
+      value: "32"
+    - key: "/org/gnome/shell/extensions/tilingshell/top-edge-maximize"
+      value: "true"
+    # - key: ""
+    #   value: ""

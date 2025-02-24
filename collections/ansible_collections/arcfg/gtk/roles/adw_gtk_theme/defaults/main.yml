@@ -1,0 +1,6 @@
+---
+# defaults file for "arcfg.gtk.adw_gtk_theme" role
+#
+# A list of roles that must be executed after all tasks for this role are completed.
+adw_gtk_theme_post_roles: []
+#  - role: "arcfg.gtk.example"
