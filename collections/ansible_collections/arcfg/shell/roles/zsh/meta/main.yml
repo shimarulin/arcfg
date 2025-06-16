@@ -14,4 +14,3 @@ dependencies:
   - role: arcfg.cli.fzf
   - role: arcfg.cli.starship
   - role: arcfg.cli.sheldon
-  - role: arcfg.shell.vconsole_user_color
