@@ -1,17 +1,9 @@
-# Ansible Role "grub"
-
-> GNU GRand Unified Bootloader (2)
-
-Original configuration file from
-https://gitlab.archlinux.org/archlinux/packaging/packages/grub/-/blob/main/grub.default?ref_type=heads :
-
-```
 # GRUB boot loader configuration
 
-GRUB_DEFAULT=0
+GRUB_DEFAULT=saved
 GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=5"
 GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed
@@ -59,70 +51,13 @@ GRUB_DISABLE_RECOVERY=true
 
 # Uncomment to make GRUB remember the last selection. This requires
 # setting 'GRUB_DEFAULT=saved' above.
-#GRUB_SAVEDEFAULT=true
+GRUB_SAVEDEFAULT=true
 
 # Uncomment to disable submenus in boot menu
-#GRUB_DISABLE_SUBMENU=y
+GRUB_DISABLE_SUBMENU=y
 
 # Probing for other operating systems is disabled for security reasons. Read
 # documentation on GRUB_DISABLE_OS_PROBER, if still want to enable this
 # functionality install os-prober and uncomment to detect and include other
 # operating systems.
 #GRUB_DISABLE_OS_PROBER=false
-
-```
-
-Changes:
-
-```
-# This will only work if /boot is not a btrfs,
-# because grub cannot write to btrfs.
-# But it will generate a misleading error message:
-# "sparse file not allowed. Press any key to continue.".
-GRUB_DEFAULT=saved
-
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=5"
-
-GRUB_SAVEDEFAULT=true
-
-GRUB_DISABLE_SUBMENU=y
-```
-
-## Requirements
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the
-role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-## Role Variables
-
-A description of the settable variables for this role should go here, including any variables that are in
-defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables
-that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as
-well.
-
-## Dependencies
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set
-for other roles, or variables that are used from other roles.
-
-## Example Playbook
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for
-users too:
-
-```yaml
-- name: Apply grub configuration to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.boot.grub
-```
-
-```yaml
-- name: Apply grub configuration to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.boot.grub
-      tags:
-        - laptop
-        - desktop
-```
