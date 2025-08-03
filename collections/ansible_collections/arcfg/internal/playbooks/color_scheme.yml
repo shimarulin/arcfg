@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.internal.color_scheme role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.internal.color_scheme

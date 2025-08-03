@@ -1,0 +1,4 @@
+---
+# defaults file for "arcfg.internal.color_scheme" role
+color_scheme_name: "Catppuccin Macchiato"
+color_scheme_gogh_version: "v361"

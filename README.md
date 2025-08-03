@@ -5,7 +5,7 @@
 ## Requirements
 
 ```sh
-sudo pacman -S git python-uv
+sudo pacman -S git uv
 ```
 
 ## Installation

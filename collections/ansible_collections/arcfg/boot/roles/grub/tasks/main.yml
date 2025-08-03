@@ -14,6 +14,13 @@
     mode: "0644"
   register: "grub_config_update"
 
+- name: "Remove GRUB loading messages"
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/grub.d/10_linux"
+    regexp: "^\\s*echo\\s+'\\$\\(echo \"\\$message\" \\| grub_quote\\)'$"
+    state: "absent"
+
 - name: "Update GRUB config"
   become: true
   ansible.builtin.shell: "grub-mkconfig -o /esp/GRUB/grub/grub.cfg"
