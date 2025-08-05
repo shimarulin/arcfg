@@ -29,6 +29,7 @@
   register: "grub_mkconfig_result"
   when: |-
     grub_config_update is changed
+    or (grub_theme_update is defined and grub_theme_update is changed)
     or (kernel_latest is defined and kernel_latest is changed)
     or (kernel_lts is defined and kernel_lts is changed)
     or (kernel_lqx is defined and kernel_lqx is changed)

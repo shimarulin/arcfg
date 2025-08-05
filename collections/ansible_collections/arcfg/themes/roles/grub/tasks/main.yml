@@ -1,0 +1,22 @@
+---
+# tasks file for "arcfg.themes.grub" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ grub_packages }}"
+    extra_args: "--needed"
+
+- name: "Create directory for Arcfg GRUB theme"
+  become: true
+  ansible.builtin.file:
+    path: "/esp/GRUB/grub/themes/arcfg"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: "Setup Arcfg GRUB theme"
+  become: true
+  ansible.builtin.template:
+    src: "esp/GRUB/grub/themes/arcfg/theme.txt.j2"
+    dest: "/esp/GRUB/grub/themes/arcfg/theme.txt"
+    mode: "0644"
+  register: "grub_theme_update"

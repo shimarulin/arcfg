@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  description: "Ansible role to prepare color palette to Linux console (kernel parameters)"
+  description: "Ansible role to setup GRUB2 theme"
 
   # Platforms is a list of platforms, and each platform has a name and a list of versions.
   platforms:

@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.themes.grub role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.themes.grub
