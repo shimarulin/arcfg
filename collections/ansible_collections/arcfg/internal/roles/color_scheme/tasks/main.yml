@@ -17,3 +17,7 @@
   ansible.builtin.include_vars:
     file: "~/.cache/Gogh/themes/{{ color_scheme_name }}.yml"
     name: color_scheme_data
+
+- name: "<color_scheme_data> from arcfg.themes.console"
+  ansible.builtin.debug:
+    var: color_scheme_data
