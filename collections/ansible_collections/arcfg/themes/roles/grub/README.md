@@ -11,7 +11,9 @@
 
 ### Additional
 
--
+#### Icons
+
+- https://github.com/vinceliuice/grub2-themes/blob/master/assets/logos-color.svg
 
 ## Requirements
 
