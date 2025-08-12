@@ -12,5 +12,6 @@ galaxy_info:
 # if you add dependencies to this list.
 dependencies:
   - role: "arcfg.boot.mkinitcpio"
+  - role: "arcfg.fonts.terminus_font"
   - role: "arcfg.themes.console"
   - role: "arcfg.themes.grub"
