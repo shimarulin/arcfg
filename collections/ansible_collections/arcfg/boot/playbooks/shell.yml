@@ -2,7 +2,6 @@
 - name: Apply the 'arcfg.boot' collection roles to local node
   hosts: localhost
   roles:
-    - role: arcfg.boot.mkinitcpio
     - role: arcfg.kernels.linux
     - role: arcfg.kernels.linux_lts
     - role: arcfg.boot.grub

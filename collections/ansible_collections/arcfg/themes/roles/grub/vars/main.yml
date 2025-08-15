@@ -1,0 +1,5 @@
+---
+# vars file for "arcfg.themes.grub" role
+grub_packages:
+  - "grub"
+  - "python-cairosvg"

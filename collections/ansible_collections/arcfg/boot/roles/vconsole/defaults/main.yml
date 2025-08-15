@@ -2,4 +2,3 @@
 # defaults file for "arcfg.boot.vconsole" role
 vconsole_font: "ter-c16b"
 vconsole_keymap: "en"
-vconsole_color_scheme: "gruvbox"

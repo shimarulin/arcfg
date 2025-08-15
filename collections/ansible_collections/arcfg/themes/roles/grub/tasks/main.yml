@@ -1,0 +1,46 @@
+---
+# tasks file for "arcfg.themes.grub" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ grub_packages }}"
+    extra_args: "--needed"
+
+# - name: "Create directory for Arcfg GRUB theme"
+#   become: true
+#   ansible.builtin.file:
+#     path: "/esp/GRUB/grub/themes/arcfg"
+#     state: "directory"
+#     mode: "u=rwx,g=rx,o=rx"
+
+- name: "Ensure Arcfg GRUB theme directory structure exists"
+  become: true
+  ansible.builtin.file:
+    path: "/{{ item.path }}"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+  with_community.general.filetree: "{{ role_path }}/templates/"
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'directory'
+
+- name: "Create Arcfg GRUB theme from templates"
+  become: true
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "/{{ item.path | splitext | first }}" # Remove .j2 extension if present
+    mode: "u=rw,g=r,o=r"
+  with_community.general.filetree: "{{ role_path }}/templates/"
+  loop_control:
+    label: "{{ item.path }}"
+  when: item.state == 'file' and item.path.endswith('.j2')
+  register: "grub_theme_template"
+
+- name: "Generate Arcfg GRUB theme assets from SVG sources"
+  become: true
+  ansible.builtin.command:
+    cmd: "cairosvg /{{ item.path | splitext | first }} -o /{{ item.path | splitext | first | splitext | first }}.png"
+  with_community.general.filetree: "{{ role_path }}/templates/"
+  loop_control:
+    label: "{{ item.path }}"
+  when: grub_theme_template is changed and item.state == 'file' and item.path.endswith('.svg.j2')

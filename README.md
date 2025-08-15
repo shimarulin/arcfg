@@ -5,7 +5,7 @@
 ## Requirements
 
 ```sh
-sudo pacman -S git python-uv
+sudo pacman -S git uv
 ```
 
 ## Installation
@@ -82,10 +82,16 @@ Automount virtual fs with `/etc/fstab`:
 arcfg    /home/vagrant/.local/share/arcfg    virtiofs    defaults    0 0
 ```
 
-Create additional environvent file:
+Create an additional environment configuration file manually:
 
 ```sh
 echo 'export UV_PROJECT_ENVIRONMENT=${HOME}/.local/share/arcfg/.cache/vmvenv' | sudo tee -a /etc/profile.d/00-arcfg.sh
+```
+
+or use a script after reboot:
+
+```sh
+cd ~/.local/share/arcfg && ./vm-init
 ```
 
 Reboot, jump to `~/.local/share/arcfg` dir and reinstall packages
