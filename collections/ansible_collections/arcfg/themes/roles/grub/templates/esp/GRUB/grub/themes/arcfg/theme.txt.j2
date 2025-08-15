@@ -1,6 +1,13 @@
 desktop-color: "{{ color_scheme_data.background }}"
 title-text: " "
 
+terminal-box: "terminal/terminal_*.png"
+terminal-left: "32"
+terminal-top: "32"
+terminal-width: "100%-64"
+terminal-height: "100%-64"
+terminal-border: "8"
+
 + boot_menu {
   width = 640
   height = 480
@@ -15,7 +22,6 @@ title-text: " "
   item_height = 32
   item_padding = 4
   item_spacing = 16
-  {# item_font = "Poppins Regular 18" #}
   item_color = "{{ color_scheme_data.foreground }}"
   item_pixmap_style = "item/item_*.png"
 
