@@ -1,0 +1,13 @@
+---
+# vars file for "arcfg.desktop.kotami" role
+kotami_packages:
+  - "niri"
+  - "aylurs-gtk-shell-git"
+  - "libastal-greetd-git"
+  - "libadwaita"
+  # for test
+  - "greetd-regreet"
+
+# A list of roles that must be executed after all tasks for this role are completed.
+kotami_post_tasks_roles:
+  - role: "arcfg.boot.graphical"
