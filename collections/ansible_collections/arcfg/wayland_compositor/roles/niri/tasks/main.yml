@@ -1,0 +1,28 @@
+---
+# tasks file for "arcfg.wayland_compositor.niri" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ niri_packages }}"
+    extra_args: "--needed"
+
+- name: "Disable call 'systemctl --user import-environment'"
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/usr/bin/niri-session"
+    regexp: "systemctl --user import-environment"
+    line: "# systemctl --user import-environment"
+
+# NOTE: workaround to keep current role path
+- name: "Set current role path"
+  ansible.builtin.set_fact:
+    niri_role_path: "{{ role_path }}"
+
+- name: "Create a symbolic links to niri config dirs"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.linkcfg"
+  vars:
+    linkcfg_items:
+      - src: "{{ niri_role_path }}/files/home/user/.config/niri"
+        dest: "{{ ansible_user_dir }}/.config/niri"
+        mode: "u=rwx,g=rx,o=rx"
