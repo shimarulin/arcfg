@@ -1,3 +1,8 @@
 {
-    "ansible.python.interpreterPath": "${workspaceFolder}/.venv/bin/python"
+    "ansible.python.interpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "files.associations": {
+        "*.yml": "ansible",
+        "*.j2": "ansible-jinja",
+        "*.kdl.j2": "kdl"
+    }
 }
