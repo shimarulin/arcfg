@@ -8,7 +8,7 @@
 
 - name: "Set wayland_compositor fact"
   ansible.builtin.set_fact:
-    wayland_compositor: "hyprland"
+    wayland_compositor: "hyprland" # noqa: var-naming[no-role-prefix]
 
 - name: "arcfg.wayland_compositor.hyprland : Execute post roles" # noqa: name[casing]
   ansible.builtin.include_role:

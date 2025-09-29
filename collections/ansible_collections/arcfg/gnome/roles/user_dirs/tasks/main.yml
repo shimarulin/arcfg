@@ -12,13 +12,13 @@
   ansible.builtin.shell: "gio set \"{{ item.path }}\" metadata::custom-icon-name \"{{ item.icon }}\""
   args:
     executable: "/usr/bin/bash"
-  register: "directories_extra_set_icon_result"
+  register: "directories_extra_set_icon_result" # noqa: var-naming[no-role-prefix]
   loop: "{{ user_dirs_list }}"
   when: "item.icon is defined and item.icon is string and item.icon | length > 0"
   changed_when: false
 
 - name: "Set XDG User Dirs"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "~/.config/user-dirs.dirs"
     regexp: "^{{ item.xdg_env_name }}=.*"
     line: "{{ item.xdg_env_name }}=\"{{ item.path }}\""
