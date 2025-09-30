@@ -21,7 +21,8 @@
   register: "paru_stat_result" # noqa: var-naming[no-role-prefix]
 
 - name: "Update packages cache and upgrade system packages with {{ 'paru' if (paru_stat_result.stat.exists) else 'pacman' }}"
-  become: "{{ not paru_stat_result.stat.exists }}"
+  become: true
+  become_user: "{{ 'aur_builder' if (paru_stat_result.stat.exists) else 'root' }}"
   community.general.pacman:
     executable: "{{ 'paru' if (paru_stat_result.stat.exists) else 'pacman' }}"
     update_cache: true
