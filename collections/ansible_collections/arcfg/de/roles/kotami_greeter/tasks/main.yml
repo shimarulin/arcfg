@@ -1,0 +1,36 @@
+---
+# tasks file for "arcfg.de.kotami_greeter" role
+- name: "Copy the greetd config files"
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+    owner: "greeter"
+    group: "greeter"
+  loop:
+    - src: "usr/bin/kotami-greeter"
+      dest: "/usr/bin/kotami-greeter"
+      mode: "u=rwx,g=rx,o=rx"
+    - src: "etc/greetd/config.toml"
+      dest: "/etc/greetd/config.toml"
+      mode: "u=rw,g=r,o=r"
+
+- name: "Create 'kotami-greeter' system dirs"
+  become: true
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+    owner: "greeter"
+    group: "greeter"
+  loop:
+    - "/var/lib/kotami-greeter"
+    - "/var/log/kotami-greeter"
+
+- name: "Update Wayland compositor config file"
+  become: true
+  ansible.builtin.template:
+    src: "etc/greetd/niri-run-kotami-greeter.kdl.j2"
+    dest: "/etc/greetd/niri-run-kotami-greeter.kdl"
+    mode: "u=rw,g=r,o=r"

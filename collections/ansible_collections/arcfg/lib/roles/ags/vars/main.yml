@@ -1,0 +1,5 @@
+---
+# vars file for "arcfg.lib.ags" role
+ags_packages:
+  - "aylurs-gtk-shell-git"
+  - "libadwaita"

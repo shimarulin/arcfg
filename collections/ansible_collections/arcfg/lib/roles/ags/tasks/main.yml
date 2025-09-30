@@ -1,0 +1,10 @@
+---
+# tasks file for "arcfg.lib.ags" role
+- name: "Install dependencies"
+  kewlfft.aur.aur:
+    name: "{{ ags_packages }}"
+    use: "paru"
+    extra_args: "--needed"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"

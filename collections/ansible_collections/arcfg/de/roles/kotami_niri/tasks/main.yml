@@ -1,0 +1,13 @@
+---
+# tasks file for "arcfg.de.kotami_niri" role
+- name: "Create a niri user config directory"
+  ansible.builtin.file:
+    path: "~/.config/niri"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: "Update user config file"
+  ansible.builtin.template:
+    src: "home/user/.config/niri/config.kdl.j2"
+    dest: "~/.config/niri/config.kdl"
+    mode: "u=rw,g=r,o=r"

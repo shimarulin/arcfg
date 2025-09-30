@@ -12,29 +12,3 @@
     path: "/usr/bin/niri-session"
     regexp: "^\\s\\s\\s\\ssystemctl --user import-environment"
     line: "    # systemctl --user import-environment"
-
-# # NOTE: workaround to keep current role path
-# - name: "Set current role path"
-#   ansible.builtin.set_fact:
-#     niri_role_path: "{{ role_path }}"
-
-# - name: "Create a symbolic links to niri config dirs"
-#   ansible.builtin.include_role:
-#     name: "arcfg.internal.linkcfg"
-#   vars:
-#     linkcfg_items:
-#       - src: "{{ niri_role_path }}/files/home/user/.config/niri"
-#         dest: "{{ ansible_user_dir }}/.config/niri"
-#         mode: "u=rwx,g=rx,o=rx"
-
-- name: "Create a niri configuration directory"
-  ansible.builtin.file:
-    path: "~/.config/niri"
-    state: "directory"
-    mode: "u=rwx,g=rx,o=rx"
-
-- name: "Update user config file"
-  ansible.builtin.template:
-    src: "home/user/.config/niri/config.kdl.j2"
-    dest: "~/.config/niri/config.kdl"
-    mode: "u=rw,g=r,o=r"

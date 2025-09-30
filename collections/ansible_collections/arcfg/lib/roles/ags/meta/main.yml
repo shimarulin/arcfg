@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  description: "Ansible role 'niri': a scrollable-tiling Wayland compositor"
+  description: "Ansible role 'AGS' - a framework for crafting Wayland Desktop Shells"
 
   # Platforms is a list of platforms, and each platform has a name and a list of versions.
   platforms:
