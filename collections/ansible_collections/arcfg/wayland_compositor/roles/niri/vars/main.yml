@@ -2,3 +2,4 @@
 # vars file for "arcfg.wayland_compositor.niri" role
 niri_packages:
   - "niri"
+  - "xwayland-satellite"
