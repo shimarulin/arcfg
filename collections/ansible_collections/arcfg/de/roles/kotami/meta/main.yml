@@ -12,3 +12,4 @@ galaxy_info:
 # if you add dependencies to this list.
 dependencies:
   - role: "arcfg.de.kotami_greeter"
+  - role: "arcfg.de.kotami_niri"
