@@ -1,0 +1,36 @@
+---
+# tasks file for "arcfg.apps.visual_studio_code" role
+- name: "Install dependencies"
+  become: true
+  become_user: "aur_builder"
+  kewlfft.aur.aur:
+    name: "{{ visual_studio_code_packages }}"
+    use: "paru"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
+# - name: "Copy the 'visual-studio-code' helper"
+#   become: true
+#   ansible.builtin.copy:
+#     src: "{{ item.src }}"
+#     dest: "{{ item.dest }}"
+#     mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+#   loop:
+#     - src: "etc/profile.d/00-visual-studio-code.sh"
+#       dest: "/etc/profile.d/00-visual-studio-code.sh"
+#       mode: "u=rw,g=r,o=r"
+
+# # NOTE: workaround to keep current role path
+# - name: "Set current role path"
+#   ansible.builtin.set_fact:
+#     visual_studio_code_role_path: "{{ role_path }}"
+
+# - name: "Create a symbolic links to visual-studio-code config dirs"
+#   ansible.builtin.include_role:
+#     name: "arcfg.internal.linkcfg"
+#   vars:
+#     linkcfg_items:
+#       - src: "{{ visual_studio_code_role_path }}/files/home/user/.config/visual-studio-code"
+#         dest: "{{ ansible_user_dir }}/.config/visual-studio-code"
+#         mode: "u=rwx,g=rx,o=rx"

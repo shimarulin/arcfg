@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.apps.visual_studio_code role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.apps.visual_studio_code
