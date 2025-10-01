@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  description: "Ansible role to apply all the 'arcfg.hardware' collection roles"
+
+  # Platforms is a list of platforms, and each platform has a name and a list of versions.
+  platforms:
+    - name: "ArchLinux"
+      versions:
+        - "all"
+
+# List your role dependencies here, one per line. Be sure to remove the '[]' above,
+# if you add dependencies to this list.
+dependencies:
+  - role: arcfg.hardware.networkmanager
+  - role: arcfg.hardware.sof_firmware
+  - role: arcfg.hardware.pipewire
+  - role: arcfg.hardware.bluez
+  - role: arcfg.hardware.tlp
+    when: system_type == "laptop"
