@@ -24,3 +24,5 @@ dependencies:
   - role: arcfg.env.xdg_user_dirs
   # arcfg.shell.zsh
   - role: arcfg.shell.zsh
+  # arcfg.hardware.main
+  - role: arcfg.hardware.main

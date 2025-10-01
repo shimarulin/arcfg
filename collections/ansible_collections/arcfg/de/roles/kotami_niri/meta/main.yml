@@ -13,4 +13,4 @@ galaxy_info:
 dependencies:
   - role: "arcfg.internal.color_scheme"
   - role: "arcfg.wayland_compositor.niri"
-  - role: "arcfg.apps.kitty"
+  - role: "arcfg.env.xdg_terminal_exec"

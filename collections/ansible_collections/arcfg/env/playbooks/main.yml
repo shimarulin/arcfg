@@ -2,5 +2,5 @@
 - name: "Import arcfg.env.shell"
   ansible.builtin.import_playbook: arcfg.env.shell
 
-- name: "Import arcfg.env.graphical"
-  ansible.builtin.import_playbook: arcfg.env.graphical
+- name: "Import arcfg.env.xdg_terminal_exec"
+  ansible.builtin.import_playbook: arcfg.env.xdg_terminal_exec
