@@ -47,6 +47,18 @@
         mode: "u=rwx,g=rx,o=rx"
 
 {% endif -%}
+{% if 'template' in role_blocks -%}
+- name: "Apply the '{{ role_name }}' config templates"
+  ansible.builtin.template:
+    src: "{{ '{{' }} item.src {{ '}}' }}"
+    dest: "{{ '{{' }} item.dest {{ '}}' }}"
+    mode: "{{ '{{' }} item.mode if item.mode is defined else 'u=rw,g=r,o=r' {{ '}}' }}"
+  loop:
+    - src: "home/user/.config/{{ role_name }}/config.j2"
+      dest: "~/.config/{{ role_name }}/config"
+      mode: "u=rw,g=r,o=r"
+
+{% endif -%}
 {% if 'dconf' in role_blocks -%}
 - name: "Set dconf keys"
   community.general.dconf:
