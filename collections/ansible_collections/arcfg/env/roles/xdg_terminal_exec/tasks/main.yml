@@ -6,6 +6,10 @@
   kewlfft.aur.aur:
     name: "{{ xdg_terminal_exec_packages }}"
     use: "paru"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
 
 - name: "Install default terminal emulator"
   ansible.builtin.include_role:
