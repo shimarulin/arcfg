@@ -1,5 +1,5 @@
 ---
-# defaults file for "arcfg.gnome.user_dirs" role
+# defaults file for "arcfg.env.user_dirs" role
 user_dirs_bookmarks: true
 user_dirs_list:
   - name: "Проекты"

@@ -13,6 +13,6 @@ galaxy_info:
 dependencies:
   - role: "arcfg.internal.python_psutil"
   - role: "arcfg.internal.aur_builder"
-  - role: "arcfg.gnome.user_dirs"
+  - role: "arcfg.env.user_dirs"
   - role: "arcfg.apps.file_roller"
   - role: "arcfg.apps.seahorse"

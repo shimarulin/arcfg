@@ -13,7 +13,7 @@ galaxy_info:
 dependencies:
   - role: arcfg.internal.python_psutil
   - role: arcfg.env.xdg_terminal_exec
-  - role: arcfg.gnome.user_dirs
+  - role: arcfg.env.user_dirs
   - role: arcfg.apps.nautilus
   - role: arcfg.apps.gnome_text_editor
   - role: arcfg.apps.extension_manager

@@ -40,14 +40,14 @@ users too:
 - name: Apply user-dirs configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.gnome.user_dirs
+    - role: arcfg.env.user_dirs
 ```
 
 ```yaml
 - name: Apply user-dirs configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.gnome.user_dirs
+    - role: arcfg.env.user_dirs
       tags:
         - laptop
         - desktop
