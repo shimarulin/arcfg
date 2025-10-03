@@ -345,11 +345,16 @@ window-rule {
     // block-out-from "screencast"
 }
 
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
+// Enable rounded corners for all windows
 window-rule {
     geometry-corner-radius 4
     clip-to-geometry true
+}
+
+// File chooser dialog for Xwayland apps
+window-rule {
+    match app-id="org.gnome.Nautilus" title=r#"^Open"#
+    open-floating true
 }
 
 binds {
