@@ -24,7 +24,7 @@ dependencies:
       gnome_browser_extension_chromium_browser: "vivaldi"
   # PIM
   - role: arcfg.gnome_gio_mime.geary
-  - role: arcfg.gnome_gio_mime.gnome_calendar
+  - role: arcfg.apps.gnome_calendar
   - role: arcfg.apps.gnome_contacts
   - role: arcfg.apps.endeavour
   - role: arcfg.apps.gnome_weather
