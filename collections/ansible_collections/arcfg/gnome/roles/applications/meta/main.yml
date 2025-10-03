@@ -31,7 +31,7 @@ dependencies:
   # Media
   - role: arcfg.apps.loupe
   - role: arcfg.apps.eog
-  - role: arcfg.gnome_gio_mime.celluloid
+  - role: arcfg.apps.celluloid
   - role: arcfg.apps.gapless
   - role: arcfg.apps.shortwave
   - role: arcfg.apps.blanket
