@@ -10,9 +10,9 @@
 - repo: https://github.com/YaLTeR/niri
 - docs: https://yalter.github.io/niri/Getting-Started.html
 
-### Additional
+### Additional software
 
--
+- https://github.com/LGFae/swww - A Solution to your Wayland Wallpaper Woes
 
 ## Requirements
 

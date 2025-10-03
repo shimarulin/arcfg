@@ -1,0 +1,3 @@
+---
+# defaults file for "arcfg.themes.gtk" role
+gtk_prefer_dark: true

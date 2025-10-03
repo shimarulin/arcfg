@@ -14,4 +14,5 @@ dependencies:
   - role: "arcfg.de.common"
   - role: "arcfg.de.kotami_greeter"
   - role: "arcfg.de.kotami_niri"
+  - role: "arcfg.themes.gtk"
   - role: "arcfg.boot.graphical"

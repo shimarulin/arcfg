@@ -3,6 +3,7 @@
     "files.associations": {
         "*.yml": "ansible",
         "*.j2": "ansible-jinja",
-        "*.kdl.j2": "kdl"
+        "*.kdl.j2": "kdl",
+        "*.ini.j2": "ini"
     }
 }

@@ -1,6 +1,6 @@
 ---
 # tasks file for "arcfg.gnome.gnome_browser_extension_chromium" role
-- name: "arcfg.gnome.gnome_appearance : Install browser" # noqa: name[casing]
+- name: "Install browser" # noqa: name[casing]
   ansible.builtin.include_role:
     allow_duplicates: false
     name: "arcfg.apps.{{ gnome_browser_extension_chromium_browser }}"

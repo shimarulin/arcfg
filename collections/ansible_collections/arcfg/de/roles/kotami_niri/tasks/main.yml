@@ -11,3 +11,13 @@
     src: "home/user/.config/niri/config.kdl.j2"
     dest: "~/.config/niri/config.kdl"
     mode: "u=rw,g=r,o=r"
+
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined else '' }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    # Hide GTK window control buttons
+    - key: "/org/gnome/desktop/wm/preferences/button-layout"
+      value: "''"

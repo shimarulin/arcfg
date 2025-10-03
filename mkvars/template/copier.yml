@@ -240,7 +240,7 @@ default_color_scheme:
     - "catppuccin-mocha"
     - "tokyonight-night"
 
-ui_prefer_dark:
+gtk_prefer_dark:
   type: bool
   help: Use dark UI colors?
   default: true

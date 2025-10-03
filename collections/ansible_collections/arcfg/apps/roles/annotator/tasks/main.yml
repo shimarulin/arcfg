@@ -10,7 +10,6 @@
   environment:
     PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 
-
 - name: "Set dconf keys"
   community.general.dconf:
     key: "{{ item.key }}"

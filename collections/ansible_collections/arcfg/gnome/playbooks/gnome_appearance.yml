@@ -1,5 +1,0 @@
----
-- name: Apply the arcfg.gnome.gnome_appearance role to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.gnome.gnome_appearance

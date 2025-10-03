@@ -1,0 +1,5 @@
+---
+# vars file for "arcfg.themes.gtk" role
+gtk_packages:
+  - "adw-gtk-theme"
+  - "papirus-icon-theme"
