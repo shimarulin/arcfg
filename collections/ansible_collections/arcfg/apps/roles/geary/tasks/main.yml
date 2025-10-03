@@ -14,3 +14,10 @@
   loop:
     - key: "/org/gnome/Geary/run-in-background"
       value: "true"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Geary.desktop"
+  loop:
+    - "x-scheme-handler/mailto"
