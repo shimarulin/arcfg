@@ -14,5 +14,10 @@ dependencies:
   - role: "arcfg.de.common"
   - role: "arcfg.de.kotami_greeter"
   - role: "arcfg.de.kotami_niri"
+
+  # Apps
+  - role: "arcfg.apps.nautilus"
+  - role: "arcfg.apps.gnome_text_editor"
+
   - role: "arcfg.themes.gtk"
   - role: "arcfg.boot.graphical"

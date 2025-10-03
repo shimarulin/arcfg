@@ -54,3 +54,10 @@
       value: "true"
     - key: "/org/gtk/gtk4/settings/file-chooser/show-hidden"
       value: "true"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Nautilus.desktop"
+  loop:
+    - "inode/directory"

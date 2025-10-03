@@ -1,5 +1,0 @@
----
-- name: Apply the arcfg.gnome_gio_mime.gnome_text_editor role to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.gnome_gio_mime.gnome_text_editor

@@ -26,3 +26,17 @@
       value: "true"
     - key: "/org/gnome/TextEditor/show-right-margin"
       value: "true"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.TextEditor.desktop"
+  loop:
+    - "application/json"
+    - "application/x-shellscript"
+    - "application/xhtml+xml"
+    - "application/xml"
+    - "text/css"
+    - "text/html"
+    - "text/plain"
+    - "text/x-lua"
