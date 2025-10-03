@@ -2,6 +2,18 @@
 
 > Basic tools to build Arch Linux packages
 
+## Resources
+
+### Official
+
+- site:
+- repo:
+- docs:
+
+### Additional
+
+-
+
 ## Requirements
 
 Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the
@@ -28,14 +40,14 @@ users too:
 - name: Apply base-devel configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.build_tools.base_devel
+    - role: arcfg.internal.base_devel
 ```
 
 ```yaml
 - name: Apply base-devel configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.build_tools.base_devel
+    - role: arcfg.internal.base_devel
       tags:
         - laptop
         - desktop
