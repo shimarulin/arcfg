@@ -29,7 +29,7 @@ dependencies:
   - role: arcfg.apps.endeavour
   - role: arcfg.apps.gnome_weather
   # Media
-  - role: arcfg.gnome_gio_mime.loupe
+  - role: arcfg.apps.loupe
   - role: arcfg.apps.eog
   - role: arcfg.gnome_gio_mime.celluloid
   - role: arcfg.gnome_gio_mime.gapless
