@@ -6,6 +6,14 @@
     name: "{{ vivaldi_packages }}"
     extra_args: "--needed"
 
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "vivaldi-stable.desktop"
+  loop:
+    - "x-scheme-handler/http"
+    - "x-scheme-handler/https"
+
 # - name: "Copy the 'vivaldi' helper"
 #   become: true
 #   ansible.builtin.copy:
