@@ -5,3 +5,11 @@
   community.general.pacman:
     name: "{{ evolution_packages }}"
     extra_args: "--needed"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Evolution.desktop"
+  loop:
+    - "x-scheme-handler/mailto"
+    - "text/calendar"
