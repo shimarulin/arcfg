@@ -17,6 +17,7 @@ dependencies:
   - role: arcfg.apps.nautilus
   - role: arcfg.apps.gnome_text_editor
   - role: arcfg.apps.extension_manager
+  - role: "arcfg.apps.gnome_system_monitor"
   # TODO: Select browser
   - role: arcfg.apps.vivaldi
   - role: arcfg.gnome.gnome_browser_extension_chromium

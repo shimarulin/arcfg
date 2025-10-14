@@ -18,6 +18,7 @@ dependencies:
   # Apps
   - role: "arcfg.apps.nautilus"
   - role: "arcfg.apps.gnome_text_editor"
+  - role: "arcfg.apps.gnome_system_monitor"
 
   - role: "arcfg.themes.gtk"
   - role: "arcfg.boot.graphical"
