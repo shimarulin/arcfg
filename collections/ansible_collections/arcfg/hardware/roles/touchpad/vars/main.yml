@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.hardware.touchpad" role
+touchpad_packages:
+  - "libinput"
