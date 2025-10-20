@@ -1,6 +1,22 @@
 # Ansible Role "kitty"
 
-> Cross-platform, fast, feature-rich, GPU based terminal
+> kitty: Cross-platform, fast, feature-rich, GPU based terminal
+
+## Resources
+
+### Official
+
+- site: https://sw.kovidgoyal.net/kitty/
+- repo: https://github.com/kovidgoyal/kitty
+- docs: https://sw.kovidgoyal.net/kitty/conf/
+
+### Additional
+
+#### Create default configuration
+
+```sh
+kitty +runpy 'from kitty.config import *; print(commented_out_default_config())'
+```
 
 ## Requirements
 

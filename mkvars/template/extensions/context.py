@@ -91,9 +91,10 @@ class ContextUpdater(ContextHook):
     update = False
 
     def hook(self, context):
-        context["mirror_name_list"] = list(
-            map(
-                lambda code: mirror_dict[code]["country_name"],
-                context["mirror_code_list"],
+        if context["_copier_phase"] == "render":
+            context["mirror_name_list"] = list(
+                map(
+                    lambda code: mirror_dict[code]["country_name"],
+                    context["mirror_code_list"],
+                )
             )
-        )

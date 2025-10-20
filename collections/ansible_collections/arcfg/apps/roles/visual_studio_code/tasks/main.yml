@@ -1,0 +1,25 @@
+---
+# tasks file for "arcfg.apps.visual_studio_code" role
+- name: "Install dependencies"
+  become: true
+  become_user: "aur_builder"
+  kewlfft.aur.aur:
+    name: "{{ visual_studio_code_packages }}"
+    use: "paru"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
+# NOTE: workaround to keep current role path
+- name: "Set current role path"
+  ansible.builtin.set_fact:
+    visual_studio_code_role_path: "{{ role_path }}"
+
+- name: "Create a symbolic links to visual-studio-code config dirs"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.linkcfg"
+  vars:
+    linkcfg_items:
+      - src: "{{ visual_studio_code_role_path }}/files/home/user/.config/Code/User/settings.json"
+        dest: "{{ ansible_user_dir }}/.config/Code/User/settings.json"
+        mode: "u=rwx,g=rx,o=rx"

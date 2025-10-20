@@ -56,8 +56,10 @@ role_blocks:
       value: "install"
     "Copy global configuration files":
       value: "copyetc"
-    "Link config sources":
+    "Link local config sources directory":
       value: "linkcfg"
+    "Create user config from template":
+      value: "template"
     "dconf configuration":
       value: "dconf"
     "Post-tasks roles execution":

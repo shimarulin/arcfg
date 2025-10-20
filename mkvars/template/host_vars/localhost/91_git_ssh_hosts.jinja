@@ -1,0 +1,10 @@
+---
+git_ssh_hosts:{% for item in git_ssh_hosts.split(";") %}
+  {%- set parts = item.split(':') %}
+  - host: "{{ parts[0] }}"
+    email: "{{ parts[1] if parts|length >= 2 and parts[1] else git_user_email }}"
+    alg: "{{ parts[2] if parts|length >= 3 and parts[2] else 'ed25519' }}"
+    {%- if parts|length >= 4 and parts[3] != "" %}
+    size: "{{ parts[3] }}"
+    {%- endif %}
+{%- endfor %}

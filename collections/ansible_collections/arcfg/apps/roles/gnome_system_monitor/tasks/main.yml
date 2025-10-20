@@ -1,0 +1,16 @@
+---
+# tasks file for "arcfg.apps.gnome_system_monitor" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gnome_system_monitor_packages }}"
+    extra_args: "--needed"
+
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined else '' }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/gnome-system-monitor/show-whose-processes"
+      value: "'all'"

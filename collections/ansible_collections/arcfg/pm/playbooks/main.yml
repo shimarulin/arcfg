@@ -2,8 +2,4 @@
 - name: Apply the 'arcfg.pm' collection roles to local node
   hosts: localhost
   roles:
-    - role: arcfg.pm.reflector
-    - role: arcfg.pm.pacman
-    - role: arcfg.pm.update
-    - role: arcfg.pm.paru
-    - role: arcfg.pm.flatpak
+    - role: arcfg.pm.main

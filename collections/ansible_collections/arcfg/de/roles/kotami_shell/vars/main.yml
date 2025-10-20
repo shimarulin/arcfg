@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.de.kotami_shell" role
+kotami_shell_packages:
+  - "libastal-niri-git"

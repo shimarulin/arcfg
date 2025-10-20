@@ -9,8 +9,15 @@
 - name: "Set dconf keys"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value if item.value is defined }}"
+    value: "{{ item.value if item.value is defined else '' }}"
     state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     - key: "/org/gnome/Geary/run-in-background"
       value: "true"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Geary.desktop"
+  loop:
+    - "x-scheme-handler/mailto"

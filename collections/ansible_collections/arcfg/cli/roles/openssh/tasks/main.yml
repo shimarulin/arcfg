@@ -1,0 +1,25 @@
+---
+# tasks file for "arcfg.cli.openssh" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ openssh_packages }}"
+    extra_args: "--needed"
+
+- name: "Create ~/.ssh directory"
+  ansible.builtin.file:
+    path: "~/.ssh"
+    state: "directory"
+    mode: "u=rwx,g=,o="
+
+- name: "Check that the SSH config already created"
+  ansible.builtin.stat:
+    path: "~/.ssh/config"
+  register: "openssh_config_stat_result"
+
+- name: "Create SSH config"
+  ansible.builtin.file:
+    path: "~/.ssh/config"
+    state: "touch"
+    mode: "u=rw,g=,o="
+  when: "not openssh_config_stat_result.stat.exists"

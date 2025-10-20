@@ -13,7 +13,7 @@
 - name: "Configure 'Bluetooth Quick Connect'"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value if item.value is defined }}"
+    value: "{{ item.value if item.value is defined else '' }}"
     state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     - key: "/org/gnome/shell/extensions/bluetooth-quick-connect/show-battery-value-on"

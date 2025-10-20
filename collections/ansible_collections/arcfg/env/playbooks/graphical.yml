@@ -1,6 +1,0 @@
----
-- name: Apply graphical roles from the 'arcfg.env' collection to local node
-  hosts: localhost
-
-  roles:
-    - role: arcfg.env.xdg_terminal_exec

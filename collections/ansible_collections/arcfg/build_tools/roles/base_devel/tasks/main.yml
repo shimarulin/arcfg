@@ -1,7 +1,0 @@
----
-# tasks file for "arcfg.build_tools.base_devel" role
-- name: "Install dependencies"
-  become: true
-  community.general.pacman:
-    name: "{{ base_devel_build_packages }}"
-    extra_args: "--needed"

@@ -1,10 +1,11 @@
 ---
 # tasks file for "arcfg.apps.nautilus" role
 - name: "Install dependencies"
+  become: true
+  become_user: "aur_builder"
   kewlfft.aur.aur:
     name: "{{ nautilus_packages }}"
     use: "paru"
-    extra_args: "--needed"
   # Avoid use local Python venv
   environment:
     PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
@@ -40,7 +41,7 @@
 - name: "Set dconf keys"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value if item.value is defined }}"
+    value: "{{ item.value if item.value is defined else '' }}"
     state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     - key: "/org/gnome/nautilus/preferences/default-folder-viewer"
@@ -53,3 +54,10 @@
       value: "true"
     - key: "/org/gtk/gtk4/settings/file-chooser/show-hidden"
       value: "true"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Nautilus.desktop"
+  loop:
+    - "inode/directory"

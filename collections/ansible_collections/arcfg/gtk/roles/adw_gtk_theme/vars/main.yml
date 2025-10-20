@@ -1,4 +1,0 @@
----
-# vars file for "arcfg.gtk.adw_gtk_theme" role
-adw_gtk_theme_packages:
-  - "adw-gtk-theme"

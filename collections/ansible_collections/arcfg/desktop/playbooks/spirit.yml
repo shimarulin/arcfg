@@ -1,6 +1,0 @@
----
-- name: Install 'Spipit' desktop configuration
-  hosts: localhost
-  roles:
-    - role: arcfg.wayland_compositor.hyprland
-    - role: arcfg.display_manager.greetd_regreet

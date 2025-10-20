@@ -5,3 +5,10 @@
   community.general.pacman:
     name: "{{ gnome_calendar_packages }}"
     extra_args: "--needed"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.Calendar.desktop"
+  loop:
+    - "text/calendar"

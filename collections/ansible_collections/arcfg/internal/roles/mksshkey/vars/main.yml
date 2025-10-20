@@ -1,0 +1,6 @@
+---
+# vars file for "arcfg.internal.mksshkey" role
+mksshkey_dirname: "{{ (item.email | default(false)) or (item.username | default(false)) or git_user_email }}"
+mksshkey_filename: "{{ item.host | default(item) }}__{{ item.alg | default('ed25519') }}"
+mksshkey_dir: "~/.ssh/{{ mksshkey_dirname }}"
+mksshkey_path: "{{ mksshkey_dir }}/{{ mksshkey_filename }}"

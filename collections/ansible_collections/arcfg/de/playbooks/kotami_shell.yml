@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.de.kotami_shell role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.de.kotami_shell

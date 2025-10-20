@@ -2,11 +2,3 @@
 # vars file for "arcfg.display_manager.greetd" role
 greetd_packages:
   - "greetd"
-
-greetd_wayland_compositor_config:
-  hyprland:
-    src: "etc/greetd/hyprland.conf.j2"
-    dest: "/etc/greetd/hyprland.conf"
-
-greetd_wayland_compositor_command:
-  hyprland: "Hyprland --config {{ greetd_wayland_compositor_config[wayland_compositor].dest }}"

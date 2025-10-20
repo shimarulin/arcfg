@@ -1,0 +1,101 @@
+---
+# defaults file for "arcfg.env.user_dirs" role
+user_dirs_bookmarks: true
+user_dirs_list:
+  - name: "Проекты"
+    icon: "folder-projects"
+    path: "{{ ansible_user_dir }}/Проекты"
+    scheme: "file://"
+    xdg_env_name: false
+    bookmark: true
+
+  - name: "Загрузки"
+    icon: false
+    path: "{{ ansible_user_dir }}/Загрузки"
+    scheme: "file://"
+    xdg_env_name: "XDG_DOWNLOAD_DIR"
+    bookmark: true
+
+  - name: "Документы"
+    icon: false
+    path: "{{ ansible_user_dir }}/Документы"
+    scheme: "file://"
+    xdg_env_name: "XDG_DOCUMENTS_DIR"
+    bookmark: true
+
+  - name: "Изображения"
+    icon: false
+    path: "{{ ansible_user_dir }}/Изображения"
+    scheme: "file://"
+    xdg_env_name: "XDG_PICTURES_DIR"
+    bookmark: true
+
+  - name: "Музыка"
+    icon: false
+    path: "{{ ansible_user_dir }}/Музыка"
+    scheme: "file://"
+    xdg_env_name: "XDG_MUSIC_DIR"
+    bookmark: true
+
+  - name: "Видео"
+    icon: false
+    path: "{{ ansible_user_dir }}/Видео"
+    scheme: "file://"
+    xdg_env_name: "XDG_VIDEOS_DIR"
+    bookmark: true
+
+  - name: "Книги"
+    icon: "folder-books"
+    path: "{{ ansible_user_dir }}/Книги"
+    scheme: "file://"
+    xdg_env_name: false
+    bookmark: true
+
+  - name: "Фотографии"
+    icon: "folder-photo"
+    path: "{{ ansible_user_dir }}/Фотографии"
+    scheme: "file://"
+    xdg_env_name: false
+    bookmark: true
+
+  - name: "Рабочий стол"
+    icon: false
+    path: "{{ ansible_user_dir }}/Рабочий стол"
+    scheme: "file://"
+    xdg_env_name: "XDG_DESKTOP_DIR"
+    bookmark: false
+
+  - name: "Шаблоны"
+    icon: false
+    path: "{{ ansible_user_dir }}/Шаблоны"
+    scheme: "file://"
+    xdg_env_name: "XDG_TEMPLATES_DIR"
+    bookmark: false
+
+  - name: "Образы дисков"
+    icon: "folder-cd"
+    path: "{{ ansible_user_dir }}/Образы дисков"
+    scheme: "file://"
+    xdg_env_name: false
+    bookmark: true
+
+  - name: "Общедоступные"
+    icon: false
+    path: "{{ ansible_user_dir }}/Общедоступные"
+    scheme: "file://"
+    xdg_env_name: "XDG_PUBLICSHARE_DIR"
+    bookmark: true
+
+  - name: "Архивы"
+    icon: "folder-tar"
+    path: "{{ ansible_user_dir }}/Архивы"
+    scheme: "file://"
+    xdg_env_name: false
+    bookmark: true
+
+  - name: "Администратор"
+    icon: false
+    path: "/"
+    scheme: "admin://"
+    xdg_env_name: false
+    bookmark: true

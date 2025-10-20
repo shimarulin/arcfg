@@ -1,5 +1,0 @@
----
-- name: Apply the arcfg.icons.papirus_icon_theme role to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.icons.papirus_icon_theme

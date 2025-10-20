@@ -18,5 +18,5 @@
 
 - name: "Set Gnome Shell version as parameter"
   ansible.builtin.set_fact:
-    gnome_shell_version: "{{ gnome_shell_get_version_result.stdout }}"
+    gnome_shell_version: "{{ gnome_shell_get_version_result.stdout }}" # noqa: var-naming[no-role-prefix]
   when: "gnome_shell_version is not defined"

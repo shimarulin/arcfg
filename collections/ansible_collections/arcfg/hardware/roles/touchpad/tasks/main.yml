@@ -1,0 +1,18 @@
+---
+# tasks file for "arcfg.hardware.touchpad" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ touchpad_packages }}"
+    extra_args: "--needed"
+
+- name: "Copy the 'touchpad' udev rules"
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+  loop:
+    - src: "etc/udev/rules.d/99-usb-touchpad.rules"
+      dest: "/etc/udev/rules.d/99-usb-touchpad.rules"
+      mode: "u=rw,g=r,o=r"

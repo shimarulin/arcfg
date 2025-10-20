@@ -18,11 +18,11 @@
     chdir: "/tmp/paru-bin"
     executable: "/bin/bash"
   register: "paru_install_result"
-  when: "paru_get_result is changed"
+  when: "paru_get_result is changed" # noqa: no-handler
   changed_when: "paru_install_result.rc is defined and paru_install_result.rc == 0"
 
 - name: "Remove Paru sources"
   ansible.builtin.file:
     state: "absent"
     path: "/tmp/paru-bin"
-  when: "paru_get_result is changed"
+  when: "paru_get_result is changed" # noqa: no-handler

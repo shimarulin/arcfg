@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.internal.base_devel role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.internal.base_devel

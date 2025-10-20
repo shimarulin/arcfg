@@ -36,7 +36,7 @@
   when: item.state == 'file' and item.path.endswith('.j2')
   register: "grub_theme_template"
 
-- name: "Generate Arcfg GRUB theme assets from SVG sources"
+- name: "Generate Arcfg GRUB theme assets from SVG sources" # noqa: no-changed-when
   become: true
   ansible.builtin.command:
     cmd: "cairosvg /{{ item.path | splitext | first }} -o /{{ item.path | splitext | first | splitext | first }}.png"

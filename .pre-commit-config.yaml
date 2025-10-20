@@ -3,7 +3,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -13,14 +13,14 @@ repos:
   # See https://docs.astral.sh/uv/guides/integration/pre-commit/
   - repo: https://github.com/astral-sh/uv-pre-commit
   # uv version.
-    rev: 0.5.13
+    rev: 0.8.22
     hooks:
     # Update the uv lockfile
       - id: uv-lock
 
   # https://ansible.readthedocs.io/projects/lint/configuring/#pre-commit-setup
   - repo: https://github.com/ansible/ansible-lint
-    rev: v24.12.2 # put latest release tag from https://github.com/ansible/ansible-lint/releases/
+    rev: v25.9.0 # put latest release tag from https://github.com/ansible/ansible-lint/releases/
     hooks:
       - id: ansible-lint
         args: [--fix, --profile=safety]
@@ -30,7 +30,7 @@ repos:
 
   # https://mdformat.readthedocs.io/en/stable/users/installation_and_usage.html#usage-as-a-pre-commit-hook
   - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.21 # Use the ref you want to point at
+    rev: 0.7.22 # Use the ref you want to point at
     hooks:
       - id: mdformat
         additional_dependencies:

@@ -45,3 +45,6 @@
     or mkinitcpio_files is changed
     or mkinitcpio_hooks is changed
     or vconsole_conf is changed
+  register: mkinitcpio_result
+  failed_when: mkinitcpio_result.rc != 0
+  changed_when: true

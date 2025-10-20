@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.cli.git role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.cli.git

@@ -21,7 +21,7 @@
     - role: arcfg.gnome_shell_extensions.user_themes
 
     # Appearance
-    - role: arcfg.gnome.gnome_appearance
+    - role: arcfg.themes.gtk
     - role: arcfg.gnome.gnome_backgrounds
 
     # Applications

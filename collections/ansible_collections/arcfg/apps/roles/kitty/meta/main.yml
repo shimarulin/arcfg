@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  description: "Cross-platform, fast, feature-rich, GPU based terminal"
+  description: "Ansible role 'kitty': Cross-platform, fast, feature-rich, GPU based terminal"
 
   # Platforms is a list of platforms, and each platform has a name and a list of versions.
   platforms:

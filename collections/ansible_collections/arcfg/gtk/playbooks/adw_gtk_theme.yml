@@ -1,5 +1,0 @@
----
-- name: Apply the arcfg.gtk.adw_gtk_theme role to local node
-  hosts: localhost
-  roles:
-    - role: arcfg.gtk.adw_gtk_theme

@@ -2,16 +2,16 @@
 # tasks file for "{{ collection_namespace|replace('-', '_') }}.{{ collection_name|replace('-', '_') }}.{{ role_name|replace('-', '_') }}" role
 {% if 'install' in role_blocks -%}
 - name: "Install dependencies"
+  become: true
   {%- if role_use_aur is defined and role_use_aur is true %}
+  become_user: "aur_builder"
   kewlfft.aur.aur:
     name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
     use: "paru"
-    extra_args: "--needed"
   # Avoid use local Python venv
   environment:
     PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
   {%- else %}
-  become: true
   community.general.pacman:
     name: "{{ '{{' }} {{ role_name|replace('-', '_') }}_packages {{ '}}' }}"
     extra_args: "--needed"
@@ -47,11 +47,23 @@
         mode: "u=rwx,g=rx,o=rx"
 
 {% endif -%}
+{% if 'template' in role_blocks -%}
+- name: "Apply the '{{ role_name }}' config templates"
+  ansible.builtin.template:
+    src: "{{ '{{' }} item.src {{ '}}' }}"
+    dest: "{{ '{{' }} item.dest {{ '}}' }}"
+    mode: "{{ '{{' }} item.mode if item.mode is defined else 'u=rw,g=r,o=r' {{ '}}' }}"
+  loop:
+    - src: "home/user/.config/{{ role_name }}/config.j2"
+      dest: "~/.config/{{ role_name }}/config"
+      mode: "u=rw,g=r,o=r"
+
+{% endif -%}
 {% if 'dconf' in role_blocks -%}
 - name: "Set dconf keys"
   community.general.dconf:
     key: "{{ '{{' }} item.key {{ '}}' }}"
-    value: "{{ '{{' }} item.value if item.value is defined {{ '}}' }}"
+    value: "{{ '{{' }} item.value if item.value is defined else '' {{ '}}' }}"
     state: "{{ '{{' }} item.state if item.state is defined else 'present' {{ '}}' }}"
   loop:
     - key: ""

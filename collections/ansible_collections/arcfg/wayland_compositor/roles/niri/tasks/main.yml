@@ -1,0 +1,14 @@
+---
+# tasks file for "arcfg.wayland_compositor.niri" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ niri_packages }}"
+    extra_args: "--needed"
+
+- name: "Disable call 'systemctl --user import-environment'"
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/usr/bin/niri-session"
+    regexp: "^\\s\\s\\s\\ssystemctl --user import-environment"
+    line: "    # systemctl --user import-environment"

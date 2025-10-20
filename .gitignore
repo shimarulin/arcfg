@@ -13,6 +13,7 @@ wheels/
 .idea/*
 
 ### Ansible
+.ansible
 .collections
 inventory/group_vars/*
 inventory/host_vars/*

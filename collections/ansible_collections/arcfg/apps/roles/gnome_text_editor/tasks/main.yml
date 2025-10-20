@@ -9,7 +9,7 @@
 - name: "Set dconf keys"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value if item.value is defined }}"
+    value: "{{ item.value if item.value is defined else '' }}"
     state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     - key: "/org/gnome/TextEditor/highlight-current-line"
@@ -26,3 +26,17 @@
       value: "true"
     - key: "/org/gnome/TextEditor/show-right-margin"
       value: "true"
+
+- name: Set a default handlers for known MIME-types
+  community.general.gio_mime:
+    mime_type: "{{ item }}"
+    handler: "org.gnome.TextEditor.desktop"
+  loop:
+    - "application/json"
+    - "application/x-shellscript"
+    - "application/xhtml+xml"
+    - "application/xml"
+    - "text/css"
+    - "text/html"
+    - "text/plain"
+    - "text/x-lua"

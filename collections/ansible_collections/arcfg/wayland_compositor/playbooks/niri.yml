@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.wayland_compositor.niri role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.wayland_compositor.niri

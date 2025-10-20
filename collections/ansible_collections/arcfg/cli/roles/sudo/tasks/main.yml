@@ -8,7 +8,7 @@
 
 - name: "Reduce the number of times you have to type a password"
   become: true
-  copy:
+  ansible.builtin.copy:
     src: etc/sudoers.d/defaults
     dest: /etc/sudoers.d/defaults
     mode: u=r,g=r,o=

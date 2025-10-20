@@ -19,7 +19,7 @@
 - name: "Keys setup"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value if item.value is defined }}"
+    value: "{{ item.value if item.value is defined else '' }}"
     state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     - key: "/org/gnome/settings-daemon/plugins/media-keys/volume-step"
@@ -28,7 +28,7 @@
 - name: "Custom keybindings"
   community.general.dconf:
     key: "{{ item.key }}"
-    value: "{{ item.value if item.value is defined }}"
+    value: "{{ item.value if item.value is defined else '' }}"
     state: "{{ item.state if item.state is defined else 'present' }}"
   loop:
     # List of keybindings

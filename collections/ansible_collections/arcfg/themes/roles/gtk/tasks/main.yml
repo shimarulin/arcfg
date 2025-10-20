@@ -1,0 +1,46 @@
+---
+# tasks file for "arcfg.themes.gtk" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ gtk_packages }}"
+    extra_args: "--needed"
+
+# - name: "Apply the 'gtk' config templates"
+#   ansible.builtin.template:
+#     src: "{{ item.src }}"
+#     dest: "{{ item.dest }}"
+#     mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+#   loop:
+#     # GTK3
+#     - src: "home/user/.config/gtk-3.0/gtk.css.j2"
+#       dest: "~/.config/gtk-3.0/gtk.css"
+#     # - src: "home/user/.config/gtk-3.0/settings.ini.j2"
+#     #   dest: "~/.config/gtk-3.0/settings.ini"
+#     # GTK4
+#     - src: "home/user/.config/gtk-4.0/gtk.css.j2"
+#       dest: "~/.config/gtk-4.0/gtk.css"
+#     # - src: "home/user/.config/gtk-4.0/settings.ini.j2"
+#     #   dest: "~/.config/gtk-4.0/settings.ini"
+
+# TODO: add flatpak apps support
+# sudo flatpak override --filesystem=xdg-config/gtk-3.0 && sudo flatpak override --filesystem=xdg-config/gtk-4.0
+
+- name: "Set appearance dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined else '' }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    - key: "/org/gnome/desktop/interface/color-scheme"
+      value: "{{ \"'prefer-dark'\" if gtk_prefer_dark is defined and gtk_prefer_dark else \"'default'\" }}"
+    - key: "/org/gnome/desktop/interface/accent-color"
+      value: "'blue'"
+
+    # GTK3 Theme
+    - key: "/org/gnome/desktop/interface/gtk-theme"
+      value: "{{ \"'adw-gtk3-dark'\" if gtk_prefer_dark is defined and gtk_prefer_dark else \"'adw-gtk3'\" }}"
+
+    # Icon
+    - key: "/org/gnome/desktop/interface/icon-theme"
+      value: "{{ \"'Papirus-Dark'\" if gtk_prefer_dark is defined and gtk_prefer_dark else \"'Papirus-Light'\" }}"

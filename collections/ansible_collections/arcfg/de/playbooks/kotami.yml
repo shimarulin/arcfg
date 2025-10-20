@@ -1,0 +1,6 @@
+---
+- name: Apply the arcfg.de.kotami role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.de.kotami
+    - role: arcfg.boot.graphical
