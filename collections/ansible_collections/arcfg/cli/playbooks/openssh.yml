@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.cli.openssh role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.cli.openssh

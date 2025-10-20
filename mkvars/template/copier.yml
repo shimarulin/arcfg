@@ -232,6 +232,7 @@ default_terminal_emulator:
     - "ghostty"
     - "blackbox-terminal"
 
+# UI
 default_color_scheme:
   type: "str"
   help: "Default color scheme:"
@@ -244,6 +245,30 @@ gtk_prefer_dark:
   type: bool
   help: Use dark UI colors?
   default: true
+
+# Git
+git_user_name:
+  type: "str"
+  help: "You name to use in git commit:"
+  placeholder: "John Dou"
+  validator: >-
+    {% if not git_user_name %}
+    Git user name is required
+    {% endif %}
+
+git_user_email:
+  type: "str"
+  help: "You email to use in git commit:"
+  placeholder: "john_dou@mail.example"
+  validator: >-
+    {% if not git_user_email %}
+    Git user name is required
+    {% endif %}
+
+git_ssh_hosts:
+  type: "str"
+  help: "Git SSH hosts. Format: `host:email(optional):algorithm(optional):keysize(optional,RSA only);`:"
+  default: "github.com;gitlab.com;codeberg.org;bitbucket.org"
 
 # settings
 _jinja_extensions:

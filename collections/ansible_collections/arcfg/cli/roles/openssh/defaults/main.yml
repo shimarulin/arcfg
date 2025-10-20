@@ -1,0 +1,4 @@
+---
+# defaults file for "arcfg.cli.openssh" role
+openssh_hosts:
+  - "github.com"
