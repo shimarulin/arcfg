@@ -25,6 +25,12 @@
   loop: "{{ user_dirs_list }}"
   when: "item.xdg_env_name is defined and item.xdg_env_name is string and item.xdg_env_name | length > 0"
 
+- name: "Create `~/.config/gtk-3.0` directory"
+  ansible.builtin.file:
+    path: "~/.config/gtk-3.0"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+
 - name: "Create the bookmarks"
   ansible.builtin.template:
     src: "home/user/.config/gtk-3.0/bookmarks.j2"
