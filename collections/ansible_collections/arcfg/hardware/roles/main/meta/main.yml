@@ -17,4 +17,4 @@ dependencies:
   - role: arcfg.hardware.bluez
   - role: arcfg.hardware.touchpad
   - role: arcfg.hardware.tlp
-    when: system_type == "laptop"
+    when: system_type == "laptop" or system_type == "transformer" or system_type == "tablet"

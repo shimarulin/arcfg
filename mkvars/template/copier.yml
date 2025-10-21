@@ -7,6 +7,23 @@ system_type:
   choices:
     - "desktop"
     - "laptop"
+    - "transformer"
+    - "tablet"
+
+display_id:
+  type: "str"
+  help: "Default display ID (ex.: eDP-1,DSI-1; see `ls /sys/class/drm/` command output)"
+  default: "eDP-1"
+
+display_rotate:
+  type: "int"
+  help: "Rotate default display, degrees:"
+  default: 0
+  choices:
+    - 0
+    - 90
+    - 180
+    - 270
 
 country_code:
   type: "str"

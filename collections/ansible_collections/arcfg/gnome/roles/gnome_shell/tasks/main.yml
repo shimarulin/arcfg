@@ -13,7 +13,7 @@
     state: "stopped"
     masked: true
   failed_when: false
-  when: system_type == "laptop"
+  when: system_type == "laptop" or system_type == "transformer" or system_type == "tablet"
 
 - name: "Set common GNOME settings"
   community.general.dconf:

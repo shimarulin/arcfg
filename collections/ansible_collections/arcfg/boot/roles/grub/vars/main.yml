@@ -2,3 +2,27 @@
 # vars file for "arcfg.boot.grub" role
 grub_packages:
   - "grub"
+
+grub_display_id: "{{ display_id | default('eDP-1') }}"
+
+# https://www.kernel.org/doc/html/latest/fb/fbcon.html
+grub_fbcon_params: >-
+  {{
+    {
+      0: '',
+      90: 'fbcon=rotate:1 ',
+      180: 'fbcon=rotate:2 ',
+      270: 'fbcon=rotate:3 '
+    }[display_rotate]
+  }}
+
+# https://docs.kernel.org/fb/modedb.html
+grub_display_params: >-
+  {{
+    {
+      0: '',
+      90: 'video=' ~ grub_display_id ~ ':panel_orientation=right_side_up ',
+      180: 'video=' ~ grub_display_id ~ ':panel_orientation=upside_down ',
+      270: 'video=' ~ grub_display_id ~ ':panel_orientation=left_side_up '
+    }[display_rotate]
+  }}
