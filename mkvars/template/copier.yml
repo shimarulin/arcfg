@@ -13,12 +13,22 @@ system_type:
 display_id:
   type: "str"
   help: "Default display ID (ex.: eDP-1,DSI-1; see `ls /sys/class/drm/` command output)"
-  default: "eDP-1"
+  default: "{{ 'DSI-1' if system_type == 'transformer' or system_type == 'tablet' else 'eDP-1' if system_type == 'laptop' else 'HDMI-A-1' }}"
 
-display_rotate:
+display_rotate_fbcon:
   type: "int"
-  help: "Rotate default display, degrees:"
-  default: 0
+  help: "Rotate default monitor framebuffer console, degrees:"
+  default: "{{ 90 if system_type == 'transformer' or system_type == 'tablet' else 0 }}"
+  choices:
+    - 0
+    - 90
+    - 180
+    - 270
+
+display_rotate_video:
+  type: "int"
+  help: "Rotate default monitor in graphical interface, degrees:"
+  default: "{{ 270 if system_type == 'transformer' or system_type == 'tablet' else 0 }}"
   choices:
     - 0
     - 90

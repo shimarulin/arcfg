@@ -2,3 +2,4 @@
 # vars file for "arcfg.cli.git" role
 git_packages:
   - "git"
+  - "less"
