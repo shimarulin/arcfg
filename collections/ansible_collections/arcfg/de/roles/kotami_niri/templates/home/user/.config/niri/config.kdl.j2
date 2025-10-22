@@ -304,7 +304,7 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "waybar"
+// spawn-at-startup "waybar"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -394,6 +394,15 @@ window-rule {
     match app-id="gnome-system-monitor"
 
     open-floating true
+}
+
+switch-events {
+    tablet-mode-on {
+        spawn "bash" "-c" "niri-tablet-mode on {{ display_id }}";
+    }
+    tablet-mode-off {
+        spawn "bash" "-c" "niri-tablet-mode off {{ display_id }}";
+    }
 }
 
 binds {

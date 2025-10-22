@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+# A script for managing iio-niri for selected monitor.
+# Usage:
+#   iio-niri-manager start <monitor_name>
+#   iio-niri-manager stop <monitor_name>
+
+ACTION="$1"
+MONITOR="$2"
+PID_FILE="/tmp/iio-niri-${MONITOR}.pid"
+
+case "$ACTION" in
+    "start")
+        # Stop if already running
+        if [ -f "$PID_FILE" ]; then
+            kill $(cat "$PID_FILE") 2>/dev/null && rm "$PID_FILE"
+            sleep 0.5  # Wait time for the process to stop
+        fi
+
+        # Start and save PID
+        iio-niri --monitor "$MONITOR" &
+        PID=$!
+        echo $PID > "$PID_FILE"
+        echo "Started iio-niri for monitor $MONITOR with PID $PID"
+        ;;
+
+    "stop")
+        # Stop using the saved PID
+        if [ -f "$PID_FILE" ]; then
+            PID=$(cat "$PID_FILE")
+            kill $PID 2>/dev/null
+            if [ $? -eq 0 ]; then
+                echo "Stopped iio-niri for monitor $MONITOR (PID $PID)"
+            else
+                echo "Process $PID for monitor $MONITOR not found"
+            fi
+            rm "$PID_FILE" 2>/dev/null
+        else
+            echo "No PID file found for monitor $MONITOR"
+        fi
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop} <monitor_name>"
+        echo "Example: $0 start DSI-1"
+        echo "Example: $0 stop DSI-1"
+        exit 1
+        ;;
+esac

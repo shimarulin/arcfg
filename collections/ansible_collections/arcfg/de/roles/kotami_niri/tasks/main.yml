@@ -6,6 +6,14 @@
     state: "directory"
     mode: "u=rwx,g=rx,o=rx"
 
+- name: "Copy the 'niri-tablet-mode' helper"
+  become: true
+  ansible.builtin.copy:
+    src: "usr/local/bin/niri-tablet-mode"
+    dest: "/usr/local/bin/niri-tablet-mode"
+    mode: "u=rwx,g=rx,o=rx"
+  when: "system_type == 'transformer' or system_type == 'tablet'"
+
 - name: "Update user config file"
   ansible.builtin.template:
     src: "home/user/.config/niri/config.kdl.j2"

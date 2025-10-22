@@ -1,25 +1,22 @@
 ---
-# tasks file for "arcfg.de.kotami_shell" role
+# tasks file for "arcfg.hardware.iio_niri" role
 - name: "Install dependencies"
   become: true
   become_user: "aur_builder"
   kewlfft.aur.aur:
-    name: "{{ kotami_shell_packages }}"
+    name: "{{ iio_niri_packages }}"
     use: "paru"
   # Avoid use local Python venv
   environment:
     PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 
-- name: "Copy the 'kotami-shell' helper"
+- name: "Copy the 'iio-niri' helper"
   become: true
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
   loop:
-    - src: "usr/local/bin/kotami-command-palette"
-      dest: "/usr/local/bin/kotami-command-palette"
-      mode: "u=rwx,g=rx,o=rx"
-    - src: "usr/local/bin/kotami-status-bar"
-      dest: "/usr/local/bin/kotami-status-bar"
+    - src: "usr/local/bin/iio-niri-manager"
+      dest: "/usr/local/bin/iio-niri-manager"
       mode: "u=rwx,g=rx,o=rx"

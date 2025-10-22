@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# A script for managing niri tablet-mode for selected monitor.
+# Usage:
+#   niri-tablet-mode on <monitor_name>
+#   niri-tablet-mode off <monitor_name>
+
+ACTION="$1"
+MONITOR="$2"
+
+case "$ACTION" in
+    "on")
+        iio-niri-manager start $MONITOR
+        ;;
+
+    "off")
+        iio-niri-manager stop $MONITOR
+        ;;
+
+    *)
+        echo "Usage: $0 {on|off} <monitor_name>"
+        echo "Example: $0 on DSI-1"
+        echo "Example: $0 off DSI-1"
+        exit 1
+        ;;
+esac

@@ -9,8 +9,8 @@
     owner: "greeter"
     group: "greeter"
   loop:
-    - src: "usr/bin/kotami-greeter"
-      dest: "/usr/bin/kotami-greeter"
+    - src: "usr/local/bin/kotami-greeter"
+      dest: "/usr/local/bin/kotami-greeter"
       mode: "u=rwx,g=rx,o=rx"
     - src: "etc/greetd/config.toml"
       dest: "/etc/greetd/config.toml"

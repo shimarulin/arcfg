@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.hardware.iio_niri" role
+iio_niri_packages:
+  - "iio-niri"

@@ -2,6 +2,39 @@
 
 > Ansible role 'kotami-niri'
 
+## Tablet mode support
+
+https://yalter.github.io/niri/Configuration%3A-Switch-Events.html
+
+```
+switch-events {
+    lid-close { spawn "notify-send" "The laptop lid is closed!"; }
+    lid-open { spawn "notify-send" "The laptop lid is open!"; }
+    tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }
+    tablet-mode-off { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false"; }
+}
+```
+
+> Linux can detect tablet mode using the iio-sensor-proxy, which monitors the device's sensors to determine its
+> orientation and whether it is in tablet mode. If the sensors are functioning correctly, the system should
+> automatically disable the keyboard and touchpad while enabling touch features when the device is flipped into tablet
+> mode.
+
+1. Use 'detect tablet mode' script to enable/disable tablet features
+
+- https://github.com/alesya-h/linux_detect_tablet_mode/blob/master/watch_tablet
+- https://bbs.archlinux.org/viewtopic.php?id=288645
+- https://askubuntu.com/questions/1540423/tablet-mode-event-detection-on-hp-spectre-x360
+
+2. If tablet mode detected, run https://github.com/Zhaith-Izaliel/iio-niri to autorotate monitor (and stop if laptop
+   mode)
+
+## On-screen keyboard
+
+To automatically show the on-screen keyboard in Niri when switching to tablet mode, you can set up a Udev rule to detect
+the tablet mode switch and launch the keyboard. Additionally, enabling the on-screen keyboard from your system's
+accessibility settings may help.
+
 ## Resources
 
 ### Official
