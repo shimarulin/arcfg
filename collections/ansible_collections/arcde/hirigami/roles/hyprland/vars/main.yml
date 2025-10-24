@@ -1,0 +1,4 @@
+---
+# vars file for "arcde.hirigami.hyprland" role
+hyprland_packages:
+  - "hyprland"

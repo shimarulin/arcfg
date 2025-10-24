@@ -1,0 +1,5 @@
+---
+- name: Apply the arcde.hirigami.hyprland role to local node
+  hosts: localhost
+  roles:
+    - role: arcde.hirigami.hyprland

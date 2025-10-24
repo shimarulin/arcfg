@@ -5,15 +5,3 @@
   community.general.pacman:
     name: "{{ hyprland_packages }}"
     extra_args: "--needed"
-
-- name: "Set wayland_compositor fact"
-  ansible.builtin.set_fact:
-    wayland_compositor: "hyprland" # noqa: var-naming[no-role-prefix]
-
-- name: "arcfg.wayland_compositor.hyprland : Execute post roles" # noqa: name[casing]
-  ansible.builtin.include_role:
-    allow_duplicates: false
-    name: "{{ role_item.role }}"
-  loop_control:
-    loop_var: "role_item"
-  loop: "{{ hyprland_post_roles }}"

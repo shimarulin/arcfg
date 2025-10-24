@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcde.hirigami' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcde.hirigami.main
