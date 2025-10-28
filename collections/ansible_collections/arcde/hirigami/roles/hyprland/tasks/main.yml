@@ -10,36 +10,8 @@
   environment:
     PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 
-- name: "Create config directories"
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: "directory"
-    mode: "u=rwx,g=rx,o=rx"
-  loop:
-    - "~/.config/hypr/defaults"
-    - "~/.config/hypr/system"
-
-- name: "Copy Hyprland config files"
-  ansible.builtin.copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
-  loop:
-    # Defaults
-    - src: "home/user/.config/hypr/defaults/example.conf"
-      dest: "~/.config/hypr/defaults/example.conf"
-      mode: "u=rw,g=r,o=r"
-    - src: "home/user/.config/hypr/defaults/keybindings.conf"
-      dest: "~/.config/hypr/defaults/keybindings.conf"
-      mode: "u=rw,g=r,o=r"
-    # System
-    - src: "home/user/.config/hypr/system/monitors.conf"
-      dest: "~/.config/hypr/system/monitors.conf"
-      mode: "u=rw,g=r,o=r"
-    # Entrypoints
-    - src: "home/user/.config/hypr/hyprland.conf"
-      dest: "~/.config/hypr/hyprland.conf"
-      mode: "u=rw,g=r,o=r"
+- name: "Include Hyprland config tasks"
+  ansible.builtin.include_tasks: "hypr-config.yml"
 
 # - name: "Copy the 'hyprland' helper"
 #   become: true

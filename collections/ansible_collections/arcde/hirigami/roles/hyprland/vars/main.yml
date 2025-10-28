@@ -2,3 +2,12 @@
 # vars file for "arcde.hirigami.hyprland" role
 hyprland_packages:
   - "hyprland"
+  # hyprpm deps to build and install plugins using hyprpm
+  - "cmake"
+  - "cpio"
+  - "glaze"
+  - "hyprland-protocols"
+  - "meson"
+  - "pkgconf"
+  - "git"
+  - "gcc"
