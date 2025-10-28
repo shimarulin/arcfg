@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.hardware.lisgd role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.hardware.lisgd

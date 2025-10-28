@@ -1,0 +1,18 @@
+---
+# tasks file for "arcfg.hardware.lisgd" role
+- name: "Install dependencies"
+  become: true
+  become_user: "aur_builder"
+  kewlfft.aur.aur:
+    name: "{{ lisgd_packages }}"
+    use: "paru"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
+- name: "Add the user to 'input' group"
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    groups: "input"
+    append: true

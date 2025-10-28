@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.hardware.lisgd" role
+lisgd_packages:
+  - "lisgd"

@@ -1,0 +1,5 @@
+---
+- name: Apply the 'arcde.kotami' collection roles to local node
+  hosts: localhost
+  roles:
+    - role: arcde.kotami.niri_lisgd
