@@ -1,0 +1,54 @@
+---
+# tasks file for "arcfg.apps.ptyxis" role
+- name: "Install dependencies"
+  become: true
+  community.general.pacman:
+    name: "{{ ptyxis_packages }}"
+    extra_args: "--needed"
+
+# Example: Remove a specific profile
+# dconf reset -f /org/gnome/Ptyxis/Profiles/<uuid-to-remove>/
+- name: "Set dconf keys"
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value if item.value is defined else '' }}"
+    state: "{{ item.state if item.state is defined else 'present' }}"
+  loop:
+    # Create Ansible managed profile
+    - key: "/org/gnome/Ptyxis/Profiles/ansible-managed-profile/label"
+      value: "'Host'"
+    - key: "/org/gnome/Ptyxis/Profiles/ansible-managed-profile/limit-scrollback"
+      value: "false"
+    - key: "/org/gnome/Ptyxis/Profiles/ansible-managed-profile/palette"
+      value: "'Catppuccin Mocha'"
+    - key: "/org/gnome/Ptyxis/Profiles/ansible-managed-profile/scroll-on-output"
+      value: "true"
+    # Add Ansible managed profile to known profiles
+    - key: "/org/gnome/Ptyxis/profile-uuids"
+      value: "['ansible-managed-profile']"
+    # Set Ansible managed profile as default profile
+    - key: "/org/gnome/Ptyxis/default-profile-uuid"
+      value: "'ansible-managed-profile'"
+    # Set key bindings
+    - key: "/org/gnome/Ptyxis/Shortcuts/close-tab"
+      value: "'<Control>w'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/close-window"
+      value: "'<Control>q'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/copy-clipboard"
+      value: "'<Control>c'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/move-next-tab"
+      value: "'<Control>Tab'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/move-previous-tab"
+      value: "'<Shift><Control>Tab'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/new-tab"
+      value: "'<Control>t'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/new-window"
+      value: "'<Control>n'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/paste-clipboard"
+      value: "'<Control>v'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/search"
+      value: "'<Control>f'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/select-all"
+      value: "'<Control>a'"
+    - key: "/org/gnome/Ptyxis/Shortcuts/tab-overview"
+      value: "'<Control>o'"
