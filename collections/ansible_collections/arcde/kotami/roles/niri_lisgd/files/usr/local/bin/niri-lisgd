@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
 # Checking arguments
-if [ $# -ne 2 ]; then
-    echo "Usage: $0 <device_path> <throttle_interval_ms>"
-    echo "Example: $0 /dev/input/by-id/usb-ELAN_Touchscreen-event-if00 2000"
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <device_path>"
+    echo "Example: $0 /dev/input/by-id/usb-ELAN_Touchscreen-event-if00"
     exit 1
 fi
 
 DEVICE="$1"
-THROTTLE_INTERVAL_MS="$2"
 
 # Checking the existence of a device
 if [ ! -e "$DEVICE" ]; then
@@ -16,65 +15,39 @@ if [ ! -e "$DEVICE" ]; then
     exit 1
 fi
 
-# Checking that throttle_interval_ms is a number
-if ! [[ "$THROTTLE_INTERVAL_MS" =~ ^[0-9]+$ ]]; then
-    echo "Error: Throttle interval must be a number (milliseconds)"
-    exit 1
-fi
+stop_lisgd() {
+    pkill -f "lisgd -d $DEVICE" 2>/dev/null
+}
 
-# Directory for storing timestamps (in milliseconds since the epoch)
-THROTTLE_DIR="/tmp/lisgd_throttle_$$"
-mkdir -p "$THROTTLE_DIR"
+start_lisgd() {
+    # Terminate lisgd if it running
+    stop_lisgd
 
-# Clear on exit function
+    # Background run (&) for lisgd
+    lisgd -d "$DEVICE" -t 10 -T 5 \
+        -g "1,RL,R,*,R,niri msg action focus-column-right" \
+        -g "1,LR,L,*,R,niri msg action focus-column-left" \
+        -g "1,DU,B,*,R,niri msg action open-overview" &
+}
+
+# Init lisgd
+start_lisgd
+
+# Monitoring orientation changes
+monitor-sensor | awk '/Accelerometer orientation changed:/ { print $NF; fflush(); }' | while read -r line
+do
+    case "$line" in
+        normal|bottom-up|right-up|left-up)
+            echo "Orientation changed: $line, restarting lisgd..."
+            start_lisgd
+            ;;
+    esac
+done
+
+# Terminate lisgd when the script exits
 cleanup() {
-    rm -rf "$THROTTLE_DIR"
+    stop_lisgd
+    exit 0
 }
+
 trap cleanup EXIT
-
-# Function to get time in milliseconds
-get_time_ms() {
-    echo $(($(date +%s%N)/1000000))
-}
-
-# Function for checking and executing a command with frequency limitation
-throttled_execute() {
-    local command="$1"
-    local throttle_file="$THROTTLE_DIR/$(echo -n "$command" | md5sum | cut -d' ' -f1)"
-    local now_ms=$(get_time_ms)
-    local last_run=0
-
-    # Read the last execution time
-    if [[ -f "$throttle_file" ]]; then
-        last_run=$(cat "$throttle_file")
-    fi
-
-    # Checking if enough time has passed
-    if (( now_ms - last_run >= THROTTLE_INTERVAL_MS )); then
-        echo "[$(date '+%H:%M:%S')] Executing: $command"
-        eval "$command"
-        # Saving execution time
-        echo "$now_ms" > "$throttle_file"
-    else
-        local remaining=$(( (last_run + THROTTLE_INTERVAL_MS - now_ms) ))
-        echo "[$(date '+%H:%M:%S')] Throttled: $command (${remaining}ms remaining)"
-    fi
-}
-
-# Exporting a function and variables to child processes
-export -f throttled_execute
-export -f get_time_ms
-export THROTTLE_DIR
-export THROTTLE_INTERVAL_MS
-
-echo "Starting lisgd with:"
-echo "  Device: $DEVICE"
-echo "  Throttle interval: ${THROTTLE_INTERVAL_MS}ms"
-echo "  Throttle directory: $THROTTLE_DIR"
-echo "  PID: $$"
-
-# Run lisgd with wrapped commands
-lisgd -d "$DEVICE" -t 10 -T 5 \
-    -g "1,RL,R,*,R,bash -c 'throttled_execute \"niri msg action focus-column-right\"'" \
-    -g "1,LR,L,*,R,bash -c 'throttled_execute \"niri msg action focus-column-left\"'" \
-    -g "1,DU,B,*,R,bash -c 'throttled_execute \"niri msg action open-overview\"'"
