@@ -1,45 +1,78 @@
 #!/usr/bin/env bash
 
-# Функция для автоматического определения сенсорного устройства
-detect_touch_device() {
-    # Ищем устройства touchscreen в by-id
-    local devices=()
+# Функция для проверки capabilities устройства через evtest
+check_device_capabilities() {
+    local device="$1"
 
-    # Варианты поиска устройств
-    if [ -d "/dev/input/by-id" ]; then
-        # Поиск по паттернам сенсорных устройств
-        while IFS= read -r -d $'\0' device; do
-            devices+=("$device")
-        done < <(find /dev/input/by-id -name "*Touchscreen*" -name "*event*" -print0 2>/dev/null)
-
-        # Если не нашли по Touchscreen, ищем другие варианты
-        if [ ${#devices[@]} -eq 0 ]; then
-            while IFS= read -r -d $'\0' device; do
-                devices+=("$device")
-            done < <(find /dev/input/by-id -name "*touch*" -name "*event*" -print0 2>/dev/null)
-        fi
+    # Проверяем наличие evtest
+    if ! command -v evtest >/dev/null 2>&1; then
+        echo "Warning: evtest not installed, cannot check device capabilities" >&2
+        return 0  # Без evtest принимаем все устройства
     fi
 
-    # Если в by-id не нашли, ищем в /dev/input
+    # Получаем информацию о capabilities устройства
+    local capabilities
+    capabilities=$(evtest "$device" 2>/dev/null | head -50)
+
+    if [ -z "$capabilities" ]; then
+        echo "Warning: Could not get capabilities for $device" >&2
+        return 1
+    fi
+
+    # Проверяем наличие BTN_TOUCH (основной признак тачскрина)
+    if ! echo "$capabilities" | grep -q "BTN_TOUCH"; then
+        return 1
+    fi
+
+    # Проверяем отсутствие признаков стилуса
+    if echo "$capabilities" | grep -q -E "BTN_TOOL_PEN|BTN_STYLUS"; then
+        return 1
+    fi
+
+    return 0
+}
+
+# Функция для автоматического определения сенсорного устройства
+detect_touch_device() {
+    local devices=()
+    local candidate
+
+    echo "Searching for touch devices..." >&2
+
+    # Поиск в by-id с проверкой capabilities
+    if [ -d "/dev/input/by-id" ]; then
+        while IFS= read -r -d $'\0' device; do
+            # Проверяем capabilities устройства
+            if check_device_capabilities "$device"; then
+                echo "Found compatible device: $device" >&2
+                devices+=("$device")
+            else
+                echo "Skipping device (not a touchscreen or stylus): $device" >&2
+            fi
+        done < <(find /dev/input/by-id \( -name "*Touchscreen*" -o -name "*touch*" \) -name "*event*" -print0 2>/dev/null)
+    fi
+
+    # Если не нашли подходящих устройств, пробуем поиск в /dev/input
     if [ ${#devices[@]} -eq 0 ]; then
         echo "Searching in /dev/input..." >&2
         while IFS= read -r -d $'\0' device; do
-            # Проверяем, что это действительно сенсорное устройство
-            if evtest --query "$device" EV_KEY BTN_TOUCH >/dev/null 2>&1; then
+            if check_device_capabilities "$device"; then
+                echo "Found compatible device: $device" >&2
                 devices+=("$device")
             fi
-        done < <(find /dev/input -name "event*" -print0 2>/dev/null | head -z -n 10)
+        done < <(find /dev/input -maxdepth 1 -name "event*" -print0 2>/dev/null | head -z -n 10)
     fi
 
     # Выбираем устройство
     if [ ${#devices[@]} -eq 0 ]; then
-        echo "Error: No touch input devices found" >&2
+        echo "Error: No compatible touch input devices found" >&2
+        echo "A compatible device should have BTN_TOUCH and no BTN_TOOL_PEN/BTN_STYLUS" >&2
         return 1
     elif [ ${#devices[@]} -eq 1 ]; then
         echo "${devices[0]}"
         return 0
     else
-        echo "Multiple touch devices found:" >&2
+        echo "Multiple compatible touch devices found:" >&2
         for i in "${!devices[@]}"; do
             echo "  $((i+1)): ${devices[$i]}" >&2
         done
@@ -53,19 +86,26 @@ detect_touch_device() {
 if [ $# -eq 1 ]; then
     DEVICE="$1"
     echo "Using specified device: $DEVICE"
+
+    # Проверяем capabilities указанного устройства
+    if ! check_device_capabilities "$DEVICE"; then
+        echo "Warning: Specified device may not be a touchscreen or might be a stylus device"
+        echo "Device should have BTN_TOUCH and no BTN_TOOL_PEN/BTN_STYLUS"
+        exit 1
+    fi
 elif [ $# -eq 0 ]; then
     echo "Auto-detecting touch device..."
     DEVICE=$(detect_touch_device)
     if [ $? -ne 0 ] || [ -z "$DEVICE" ]; then
-        echo "Error: Failed to auto-detect touch device"
+        echo "Error: Failed to auto-detect compatible touch device"
         echo "Please specify device manually: $0 <device_path>"
         exit 1
     fi
-    echo "Auto-detected device: $DEVICE"
+    echo "Auto-detected compatible device: $DEVICE"
 else
     echo "Usage: $0 [device_path]"
     echo "Example: $0 /dev/input/by-id/usb-ELAN_Touchscreen-event-if00"
-    echo "If no device specified, will try to auto-detect"
+    echo "If no device specified, will try to auto-detect compatible touch device"
     exit 1
 fi
 
@@ -93,11 +133,10 @@ start_lisgd() {
     stop_lisgd
 
     # Небольшая задержка перед перезапуском
-    sleep 0.5
-
-    echo "Starting lisgd with device: $DEVICE"
+    sleep 0.1
 
     # Запускаем lisgd с новыми параметрами
+    echo "Starting lisgd with device: $DEVICE"
     lisgd -d "$DEVICE" -t 10 -T 5 \
         -g "1,RL,R,*,R,niri msg action focus-column-right" \
         -g "1,LR,L,*,R,niri msg action focus-column-left" \
@@ -105,6 +144,15 @@ start_lisgd() {
 
     # Сохраняем PID для возможного использования
     LISGD_PID=$!
+
+    # Проверяем, запустился ли lisgd
+    sleep 0.1
+    if ! ps -p $LISGD_PID >/dev/null 2>&1; then
+        echo "Error: lisgd failed to start. Check device permissions and compatibility."
+        exit 1
+    fi
+
+    echo "lisgd started successfully with PID: $LISGD_PID"
 }
 
 # Завершаем lisgd при выходе из скрипта
@@ -119,17 +167,8 @@ trap cleanup EXIT INT TERM
 # Первоначальный запуск
 start_lisgd
 
-# Проверяем, запустился ли lisgd
-sleep 1
-if ! ps -p $LISGD_PID >/dev/null 2>&1; then
-    echo "Error: lisgd failed to start. Check device permissions and compatibility."
-    exit 1
-fi
-
-echo "lisgd started successfully with PID: $LISGD_PID"
-echo "Monitoring orientation changes..."
-
 # Мониторинг изменений ориентации
+echo "Monitoring orientation changes..."
 monitor-sensor 2>/dev/null | awk '/Accelerometer orientation changed:/ { print $NF; fflush(); }' | while read -r line
 do
     case "$line" in
