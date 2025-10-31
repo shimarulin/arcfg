@@ -1,6 +1,6 @@
 ---
 # tasks file for "arcde.kotami.niri_lisgd" role
-- name: "Copy the 'niri-lisgd' helper"
+- name: "Copy the 'niri-lisgd' executable script and SystemD service"
   become: true
   ansible.builtin.copy:
     src: "{{ item.src }}"
@@ -10,3 +10,13 @@
     - src: "usr/local/bin/niri-lisgd"
       dest: "/usr/local/bin/niri-lisgd"
       mode: "u=rwx,g=rx,o=rx"
+    - src: "etc/systemd/user/niri-lisgd.service"
+      dest: "/etc/systemd/user/niri-lisgd.service"
+      mode: "u=rw,g=r,o=r"
+
+- name: "Enable 'niri-lisgd' service"
+  become: true
+  ansible.builtin.systemd:
+    name: "niri-lisgd.service"
+    state: "started"
+    enabled: true
