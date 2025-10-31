@@ -1,53 +1,148 @@
 #!/usr/bin/env bash
 
-# Checking arguments
-if [ $# -ne 1 ]; then
-    echo "Usage: $0 <device_path>"
+# Функция для автоматического определения сенсорного устройства
+detect_touch_device() {
+    # Ищем устройства touchscreen в by-id
+    local devices=()
+
+    # Варианты поиска устройств
+    if [ -d "/dev/input/by-id" ]; then
+        # Поиск по паттернам сенсорных устройств
+        while IFS= read -r -d $'\0' device; do
+            devices+=("$device")
+        done < <(find /dev/input/by-id -name "*Touchscreen*" -name "*event*" -print0 2>/dev/null)
+
+        # Если не нашли по Touchscreen, ищем другие варианты
+        if [ ${#devices[@]} -eq 0 ]; then
+            while IFS= read -r -d $'\0' device; do
+                devices+=("$device")
+            done < <(find /dev/input/by-id -name "*touch*" -name "*event*" -print0 2>/dev/null)
+        fi
+    fi
+
+    # Если в by-id не нашли, ищем в /dev/input
+    if [ ${#devices[@]} -eq 0 ]; then
+        echo "Searching in /dev/input..." >&2
+        while IFS= read -r -d $'\0' device; do
+            # Проверяем, что это действительно сенсорное устройство
+            if evtest --query "$device" EV_KEY BTN_TOUCH >/dev/null 2>&1; then
+                devices+=("$device")
+            fi
+        done < <(find /dev/input -name "event*" -print0 2>/dev/null | head -z -n 10)
+    fi
+
+    # Выбираем устройство
+    if [ ${#devices[@]} -eq 0 ]; then
+        echo "Error: No touch input devices found" >&2
+        return 1
+    elif [ ${#devices[@]} -eq 1 ]; then
+        echo "${devices[0]}"
+        return 0
+    else
+        echo "Multiple touch devices found:" >&2
+        for i in "${!devices[@]}"; do
+            echo "  $((i+1)): ${devices[$i]}" >&2
+        done
+        echo "Using: ${devices[0]}" >&2
+        echo "${devices[0]}"
+        return 0
+    fi
+}
+
+# Обработка аргументов
+if [ $# -eq 1 ]; then
+    DEVICE="$1"
+    echo "Using specified device: $DEVICE"
+elif [ $# -eq 0 ]; then
+    echo "Auto-detecting touch device..."
+    DEVICE=$(detect_touch_device)
+    if [ $? -ne 0 ] || [ -z "$DEVICE" ]; then
+        echo "Error: Failed to auto-detect touch device"
+        echo "Please specify device manually: $0 <device_path>"
+        exit 1
+    fi
+    echo "Auto-detected device: $DEVICE"
+else
+    echo "Usage: $0 [device_path]"
     echo "Example: $0 /dev/input/by-id/usb-ELAN_Touchscreen-event-if00"
+    echo "If no device specified, will try to auto-detect"
     exit 1
 fi
 
-DEVICE="$1"
-
-# Checking the existence of a device
+# Проверка существования устройства
 if [ ! -e "$DEVICE" ]; then
     echo "Error: Device $DEVICE does not exist"
     exit 1
 fi
 
+# Проверка доступности устройства
+if [ ! -r "$DEVICE" ]; then
+    echo "Error: Device $DEVICE is not readable"
+    echo "You may need to run as root or adjust permissions"
+    exit 1
+fi
+
+# Функция для завершения всех процессов lisgd
 stop_lisgd() {
     pkill -f "lisgd -d $DEVICE" 2>/dev/null
 }
 
+# Функция запуска/перезапуска lisgd
 start_lisgd() {
-    # Terminate lisgd if it running
+    # Завершаем предыдущие экземпляры
     stop_lisgd
 
-    # Background run (&) for lisgd
+    # Небольшая задержка перед перезапуском
+    sleep 0.5
+
+    echo "Starting lisgd with device: $DEVICE"
+
+    # Запускаем lisgd с новыми параметрами
     lisgd -d "$DEVICE" -t 10 -T 5 \
         -g "1,RL,R,*,R,niri msg action focus-column-right" \
         -g "1,LR,L,*,R,niri msg action focus-column-left" \
         -g "1,DU,B,*,R,niri msg action open-overview" &
+
+    # Сохраняем PID для возможного использования
+    LISGD_PID=$!
 }
 
-# Init lisgd
+# Завершаем lisgd при выходе из скрипта
+cleanup() {
+    echo "Stopping lisgd..."
+    stop_lisgd
+    exit 0
+}
+
+trap cleanup EXIT INT TERM
+
+# Первоначальный запуск
 start_lisgd
 
-# Monitoring orientation changes
-monitor-sensor | awk '/Accelerometer orientation changed:/ { print $NF; fflush(); }' | while read -r line
+# Проверяем, запустился ли lisgd
+sleep 1
+if ! ps -p $LISGD_PID >/dev/null 2>&1; then
+    echo "Error: lisgd failed to start. Check device permissions and compatibility."
+    exit 1
+fi
+
+echo "lisgd started successfully with PID: $LISGD_PID"
+echo "Monitoring orientation changes..."
+
+# Мониторинг изменений ориентации
+monitor-sensor 2>/dev/null | awk '/Accelerometer orientation changed:/ { print $NF; fflush(); }' | while read -r line
 do
     case "$line" in
         normal|bottom-up|right-up|left-up)
             echo "Orientation changed: $line, restarting lisgd..."
             start_lisgd
             ;;
+        *)
+            echo "Unknown orientation: $line"
+            ;;
     esac
 done
 
-# Terminate lisgd when the script exits
-cleanup() {
-    stop_lisgd
-    exit 0
-}
-
-trap cleanup EXIT
+# Если monitor-sensor завершился
+echo "Error: monitor-sensor terminated. Exiting."
+cleanup
