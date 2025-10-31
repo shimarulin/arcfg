@@ -1,98 +1,43 @@
 #!/usr/bin/env bash
 
-# Функция для проверки capabilities устройства через evtest
-check_device_capabilities() {
-    local device="$1"
-
-    # Проверяем наличие evtest
-    if ! command -v evtest >/dev/null 2>&1; then
-        echo "Warning: evtest not installed, cannot check device capabilities" >&2
-        return 0  # Без evtest принимаем все устройства
-    fi
-
-    # Получаем информацию о capabilities устройства
-    local capabilities
-    capabilities=$(evtest "$device" 2>/dev/null | head -50)
-
-    if [ -z "$capabilities" ]; then
-        echo "Warning: Could not get capabilities for $device" >&2
-        return 1
-    fi
-
-    # Проверяем наличие BTN_TOUCH (основной признак тачскрина)
-    if ! echo "$capabilities" | grep -q "BTN_TOUCH"; then
-        return 1
-    fi
-
-    # Проверяем отсутствие признаков стилуса
-    if echo "$capabilities" | grep -q -E "BTN_TOOL_PEN|BTN_STYLUS"; then
-        return 1
-    fi
-
-    return 0
-}
-
 # Функция для автоматического определения сенсорного устройства
 detect_touch_device() {
-    local devices=()
-    local candidate
-
     echo "Searching for touch devices..." >&2
 
-    # Поиск в by-id с проверкой capabilities
-    if [ -d "/dev/input/by-id" ]; then
-        while IFS= read -r -d $'\0' device; do
-            # Проверяем capabilities устройства
-            if check_device_capabilities "$device"; then
-                echo "Found compatible device: $device" >&2
-                devices+=("$device")
-            else
-                echo "Skipping device (not a touchscreen or stylus): $device" >&2
-            fi
-        done < <(find /dev/input/by-id \( -name "*Touchscreen*" -o -name "*touch*" \) -name "*event*" -print0 2>/dev/null)
-    fi
+    # Ищем устройства по паттернам, исключая стилус
+    local patterns=(
+        "/dev/input/by-id/*Touchscreen*event*"
+        "/dev/input/by-id/*touch*event*"
+    )
 
-    # Если не нашли подходящих устройств, пробуем поиск в /dev/input
-    if [ ${#devices[@]} -eq 0 ]; then
-        echo "Searching in /dev/input..." >&2
-        while IFS= read -r -d $'\0' device; do
-            if check_device_capabilities "$device"; then
-                echo "Found compatible device: $device" >&2
-                devices+=("$device")
+    for pattern in "${patterns[@]}"; do
+        for device in $pattern; do
+            # Исключаем устройства стилуса по имени
+            if [[ "$device" != *"mouse"* ]] && \
+               [[ "$device" != *"stylus"* ]] && \
+               [[ "$device" != *"pen"* ]] && \
+               [ -e "$device" ] && [ -r "$device" ]; then
+                echo "Found device: $device" >&2
+                echo "$device"
+                return 0
             fi
-        done < <(find /dev/input -maxdepth 1 -name "event*" -print0 2>/dev/null | head -z -n 10)
-    fi
-
-    # Выбираем устройство
-    if [ ${#devices[@]} -eq 0 ]; then
-        echo "Error: No compatible touch input devices found" >&2
-        echo "A compatible device should have BTN_TOUCH and no BTN_TOOL_PEN/BTN_STYLUS" >&2
-        return 1
-    elif [ ${#devices[@]} -eq 1 ]; then
-        echo "${devices[0]}"
-        return 0
-    else
-        echo "Multiple compatible touch devices found:" >&2
-        for i in "${!devices[@]}"; do
-            echo "  $((i+1)): ${devices[$i]}" >&2
         done
-        echo "Using: ${devices[0]}" >&2
-        echo "${devices[0]}"
-        return 0
-    fi
+    done
+
+    echo "Error: No touch devices found" >&2
+    return 1
 }
 
 # Обработка аргументов
 if [ $# -eq 1 ]; then
     DEVICE="$1"
-    echo "Using specified device: $DEVICE"
 
-    # Проверяем capabilities указанного устройства
-    if ! check_device_capabilities "$DEVICE"; then
-        echo "Warning: Specified device may not be a touchscreen or might be a stylus device"
-        echo "Device should have BTN_TOUCH and no BTN_TOOL_PEN/BTN_STYLUS"
+    # Проверка существования устройства
+    if [ ! -e "$DEVICE" ]; then
+        echo "Error: Device $DEVICE does not exist"
         exit 1
     fi
+    echo "Using specified device: $DEVICE"
 elif [ $# -eq 0 ]; then
     echo "Auto-detecting touch device..."
     DEVICE=$(detect_touch_device)
@@ -109,16 +54,10 @@ else
     exit 1
 fi
 
-# Проверка существования устройства
-if [ ! -e "$DEVICE" ]; then
-    echo "Error: Device $DEVICE does not exist"
-    exit 1
-fi
-
 # Проверка доступности устройства
 if [ ! -r "$DEVICE" ]; then
     echo "Error: Device $DEVICE is not readable"
-    echo "You may need to run as root or adjust permissions"
+    echo "You may need to add your user to input group"
     exit 1
 fi
 
