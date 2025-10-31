@@ -10,14 +10,3 @@
     - src: "usr/local/bin/niri-lisgd"
       dest: "/usr/local/bin/niri-lisgd"
       mode: "u=rwx,g=rx,o=rx"
-    - src: "etc/systemd/user/niri-lisgd.service"
-      dest: "/etc/systemd/user/niri-lisgd.service"
-      mode: "u=rw,g=r,o=r"
-
-- name: "Enable 'niri-lisgd' service"
-  become: true
-  ansible.builtin.systemd:
-    name: "niri-lisgd.service"
-    state: "started"
-    enabled: true
-    daemon_reload: true
