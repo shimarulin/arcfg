@@ -1,12 +1,23 @@
 ---
 # tasks file for "arcde.kotami.niri_lisgd" role
-- name: "Copy the 'niri-lisgd' executable script and SystemD service"
-  become: true
+- name: "Create lisgd.service.d directory"
+  ansible.builtin.file:
+    path: "~/.config/systemd/user/lisgd.service.d/"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: "Copy the 'niri-lisgd' files"
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
   loop:
-    - src: "usr/local/bin/niri-lisgd"
-      dest: "/usr/local/bin/niri-lisgd"
+    - src: "home/user/.local/bin/niri-lisgd-daemon"
+      dest: "~/.local/bin/niri-lisgd-daemon"
+      mode: "u=rwx,g=rx,o=rx"
+    - src: "home/user/.config/systemd/user/lisgd.service"
+      dest: "~/.config/systemd/user/lisgd.service"
+      mode: "u=rwx,g=rx,o=rx"
+    - src: "home/user/.config/systemd/user/lisgd.service.d/override.conf"
+      dest: "~/.config/systemd/user/lisgd.service.d/override.conf"
       mode: "u=rwx,g=rx,o=rx"

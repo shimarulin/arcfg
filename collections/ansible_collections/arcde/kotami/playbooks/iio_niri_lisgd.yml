@@ -1,0 +1,5 @@
+---
+- name: Apply the arcde.kotami.iio_niri_lisgd role to local node
+  hosts: localhost
+  roles:
+    - role: arcde.kotami.iio_niri_lisgd

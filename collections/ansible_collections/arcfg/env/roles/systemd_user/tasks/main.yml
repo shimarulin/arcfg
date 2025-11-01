@@ -1,0 +1,9 @@
+---
+# tasks file for "arcfg.env.systemd_user" role
+- name: "Create systemd user directories"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+  loop:
+    - "~/.config/systemd/user"

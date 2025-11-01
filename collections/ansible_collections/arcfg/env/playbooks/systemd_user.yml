@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.env.systemd_user role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.env.systemd_user

@@ -1,0 +1,24 @@
+[Unit]
+Description=Touch Screen Gesture Daemon
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/niri-lisgd-daemon
+ExecStartPre=/bin/sleep 5
+Restart=on-failure
+RestartSec=3
+
+# Optional: specify device manually by uncommenting and modifying next line
+# Environment=DEVICE=/dev/input/eventX
+# or by config file
+# mkdir -p ~/.config/systemd/user/lisgd.service.d/
+# touch ~/.config/systemd/user/lisgd.service.d/override.conf
+# ```
+# [Service]
+# Environment=DEVICE=/dev/input/your_device_here
+# ```
+
+[Install]
+WantedBy=default.target

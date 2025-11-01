@@ -1,0 +1,12 @@
+---
+# tasks file for "arcde.kotami.iio_niri_lisgd" role
+- name: "Copy the 'niri-lisgd' executable scripts"
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+  loop:
+    - src: "usr/local/bin/iio-niri-lisgd"
+      dest: "/usr/local/bin/iio-niri-lisgd"
+      mode: "u=rwx,g=rx,o=rx"
