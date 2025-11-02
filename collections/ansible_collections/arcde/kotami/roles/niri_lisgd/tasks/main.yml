@@ -17,7 +17,16 @@
       mode: "u=rwx,g=rx,o=rx"
     - src: "home/user/.config/systemd/user/lisgd.service"
       dest: "~/.config/systemd/user/lisgd.service"
-      mode: "u=rwx,g=rx,o=rx"
+      mode: "u=rw,g=r,o=r"
     - src: "home/user/.config/systemd/user/lisgd.service.d/override.conf"
       dest: "~/.config/systemd/user/lisgd.service.d/override.conf"
-      mode: "u=rwx,g=rx,o=rx"
+      mode: "u=rw,g=r,o=r"
+  register: "niri_lisgd_copy"
+
+- name: "Enable 'lisgd' service"
+  ansible.builtin.systemd:
+    name: "lisgd.service"
+    scope: "user"
+    enabled: true
+    state: "started"
+    daemon_reload: "{{ niri_lisgd_copy is changed }}"
