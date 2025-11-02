@@ -1,0 +1,37 @@
+---
+# tasks file for "arcde.kotami.niri_rot8_lisgd" role
+- name: "Create rot8.service.d directory"
+  ansible.builtin.file:
+    path: "~/.config/systemd/user/rot8.service.d/"
+    state: "directory"
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: "Copy the 'niri_rot8_lisgd' files"
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+  loop:
+    - src: "home/user/.config/systemd/user/rot8.service"
+      dest: "~/.config/systemd/user/rot8.service"
+      mode: "u=rw,g=r,o=r"
+  register: "niri_rot8_lisgd_copy"
+
+- name: "Apply the 'rot8' config template"
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
+  loop:
+    - src: "home/user/.config/systemd/user/rot8.service.d/override.conf.j2"
+      dest: "~/.config/systemd/user/rot8.service.d/override.conf"
+      mode: "u=rw,g=r,o=r"
+  register: "niri_rot8_lisgd_template"
+
+- name: "Enable 'rot8' service"
+  ansible.builtin.systemd:
+    name: "rot8.service"
+    scope: "user"
+    # enabled: true
+    # state: "started"
+    daemon_reload: "{{ niri_rot8_lisgd_copy is changed or niri_rot8_lisgd_template is changed }}"

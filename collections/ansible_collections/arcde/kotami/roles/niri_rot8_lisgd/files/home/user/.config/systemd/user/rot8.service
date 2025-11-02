@@ -1,0 +1,21 @@
+[Unit]
+Description=Screen rotation daemon based on accelerometer
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/rot8 \
+  --display ${ROT8_DISPLAY} \
+  ${ROT8_THRESHOLD:+--threshold $ROT8_THRESHOLD} \
+  ${ROT8_NORMALIZATION_FACTOR:+--normalization-factor $ROT8_NORMALIZATION_FACTOR} \
+  ${ROT8_INVERT_X:+--invert-x} \
+  ${ROT8_INVERT_Y:+--invert-y} \
+  ${ROT8_INVERT_Z:+--invert-z} \
+  ${ROT8_INVERT_XY:+--invert-xy $ROT8_INVERT_XY} \
+  --hooks 'systemctl --user restart lisgd.service'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

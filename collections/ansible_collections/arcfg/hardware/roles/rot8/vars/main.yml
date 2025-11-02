@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.hardware.rot8" role
+rot8_packages:
+  - "rot8"
