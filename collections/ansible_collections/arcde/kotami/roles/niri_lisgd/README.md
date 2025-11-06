@@ -176,6 +176,122 @@ WantedBy=default.target
 
 При необходимости ручного указания устройства можно просто создать файл `~/.config/niri-lisgd/device` с нужным путем.
 
+---
+
+Отличное замечание! Добавим ограничения на перезапуск в systemd юнит. Вот обновленная конфигурация:
+
+## Обновленный systemd юнит (`~/.config/systemd/user/niri-lisgd.service`)
+
+```ini
+[Unit]
+Description=Touch Screen Gesture Daemon
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/niri-lisgd
+Restart=on-failure
+RestartSec=3
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Install]
+WantedBy=graphical-session.target
+```
+
+## Альтернативный вариант с более строгими ограничениями:
+
+```ini
+[Unit]
+Description=Touch Screen Gesture Daemon
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/niri-lisgd
+Restart=on-failure
+RestartSec=5
+StartLimitIntervalSec=120
+StartLimitBurst=2
+StartLimitAction=none
+
+[Install]
+WantedBy=graphical-session.target
+```
+
+## Объяснение параметров:
+
+- **`StartLimitIntervalSec=60`** - временное окно в секундах для подсчета попыток перезапуска
+- **`StartLimitBurst=3`** - максимальное количество попыток перезапуска в указанном интервале
+- **`RestartSec=3`** - пауза между перезапусками
+- **`StartLimitAction=none`** - отключает дополнительное действие при превышении лимита (по умолчанию systemd может пытаться перезапускать сервис дальше)
+
+## Что происходит при превышении лимита:
+
+Когда сервис превышает `StartLimitBurst` перезапусков в течение `StartLimitIntervalSec`, systemd:
+1. Останавливает все попытки автоматического перезапуска
+2. Переводит сервис в состояние `failed`
+3. Требует ручного вмешательства для перезапуска
+
+## Дополнительное улучшение - скрипт с улучшенной обработкой ошибок:
+
+```bash
+#!/usr/bin/env bash
+
+# Configuration
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/niri-lisgd"
+DEVICE_FILE="$CONFIG_DIR/device"
+LOG_FILE="$CONFIG_DIR/niri-lisgd.log"
+
+# Log function
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
+}
+
+# Check if device file exists
+if [ ! -f "$DEVICE_FILE" ]; then
+    log "ERROR: Device not configured. Run niri-lisgd-device-setup first"
+    echo "Error: Device not configured. Run niri-lisgd-device-setup first" >&2
+    exit 1
+fi
+
+# Read device from file
+NIRI_LISGD_DEVICE=$(cat "$DEVICE_FILE")
+
+# Verify device exists and is readable
+if [ ! -r "$NIRI_LISGD_DEVICE" ]; then
+    log "ERROR: Device $NIRI_LISGD_DEVICE is not accessible"
+    echo "Error: Device $NIRI_LISGD_DEVICE is not accessible" >&2
+    echo "Please run niri-lisgd-device-setup to reconfigure" >&2
+    exit 1
+fi
+
+log "Starting lisgd with device: $NIRI_LISGD_DEVICE"
+
+# Start lisgd with gestures
+exec lisgd -d "$NIRI_LISGD_DEVICE" -t 10 -T 5 \
+    -g "1,RL,R,*,R,niri msg action focus-column-right" \
+    -g "1,LR,L,*,R,niri msg action focus-column-left" \
+    -g "1,DU,B,*,R,niri msg action open-overview"
+```
+
+## Проверка статуса после настройки:
+
+```bash
+# Проверить статус сервиса
+systemctl --user status niri-lisgd.service
+
+# Посмотреть логи
+journalctl --user -u niri-lisgd.service -f
+
+# Проверить количество перезапусков
+systemctl --user show niri-lisgd.service -p NRestarts
+```
+
+Теперь сервис будет пытаться перезапуститься только 3 раза в течение 60 секунд, после чего остановится и потребует ручного вмешательства, что предотвращает бесконечные циклы перезапуска.
+
 ## Resources
 
 ### Official
