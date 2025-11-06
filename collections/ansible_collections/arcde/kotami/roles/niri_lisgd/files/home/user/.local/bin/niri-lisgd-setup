@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# Function for automatic touch device detection
+detect_touch_device() {
+    echo "Searching for touch devices..." >&2
+
+    # Search for devices by patterns, excluding stylus
+    local patterns=(
+        "/dev/input/by-id/*Touchscreen*event*"
+        "/dev/input/by-id/*touch*event*"
+    )
+
+    for pattern in "${patterns[@]}"; do
+        for device in $pattern; do
+            # Exclude stylus devices by name
+            if [[ "$device" != *"mouse"* ]] && \
+               [[ "$device" != *"stylus"* ]] && \
+               [[ "$device" != *"pen"* ]] && \
+               [ -e "$device" ] && [ -r "$device" ]; then
+                echo "Found device: $device" >&2
+                echo "$device"
+                return 0
+            fi
+        done
+    done
+
+    echo "Error: No touch devices found" >&2
+    return 1
+}
+
+# Main execution
+main() {
+    local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/niri-lisgd"
+    local device_file="$config_dir/device"
+
+    # Create config directory
+    mkdir -p "$config_dir"
+
+    # Check if device file already exists
+    if [ -f "$device_file" ]; then
+        local existing_device=$(cat "$device_file")
+        if [ -r "$existing_device" ]; then
+            echo "Using existing device from cache: $existing_device" >&2
+            echo "$existing_device"
+            return 0
+        else
+            echo "Cached device not accessible, re-detecting..." >&2
+            rm -f "$device_file"
+        fi
+    fi
+
+    # Auto-detect device
+    echo "Auto-detecting touch device..." >&2
+    local device=$(detect_touch_device)
+
+    if [ $? -ne 0 ] || [ -z "$device" ]; then
+        echo "Error: Failed to auto-detect compatible touch device" >&2
+        return 1
+    fi
+
+    # Save device to file
+    echo "$device" > "$device_file"
+    echo "Auto-detected and cached device: $device" >&2
+    echo "$device"
+}
+
+main

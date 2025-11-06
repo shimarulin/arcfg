@@ -1,0 +1,11 @@
+[Unit]
+Description=Niri LISGD Device Setup
+Before=niri-lisgd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%h/.local/bin/niri-lisgd-setup
+
+[Install]
+WantedBy=default.target

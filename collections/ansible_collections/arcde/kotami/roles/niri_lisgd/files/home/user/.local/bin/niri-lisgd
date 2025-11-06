@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Configuration
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/niri-lisgd"
+DEVICE_FILE="$CONFIG_DIR/device"
+
+# Check if device file exists
+if [ ! -f "$DEVICE_FILE" ]; then
+    echo "Error: Device not configured. Run niri-lisgd-device-setup first" >&2
+    exit 1
+fi
+
+# Read device from file
+NIRI_LISGD_DEVICE=$(cat "$DEVICE_FILE")
+
+# Verify device exists and is readable
+if [ ! -r "$NIRI_LISGD_DEVICE" ]; then
+    echo "Error: Device $NIRI_LISGD_DEVICE is not accessible" >&2
+    echo "Please run niri-lisgd-device-setup to reconfigure" >&2
+    exit 1
+fi
+
+# Start lisgd with gestures
+exec lisgd -d "$NIRI_LISGD_DEVICE" -t 10 -T 5 \
+    -g "1,RL,R,*,R,niri msg action focus-column-right" \
+    -g "1,LR,L,*,R,niri msg action focus-column-left" \
+    -g "1,DU,B,*,R,niri msg action open-overview"

@@ -2,7 +2,7 @@
 # tasks file for "arcde.kotami.niri_lisgd" role
 - name: "Create lisgd.service.d directory"
   ansible.builtin.file:
-    path: "~/.config/systemd/user/lisgd.service.d/"
+    path: "~/.config/systemd/user/"
     state: "directory"
     mode: "u=rwx,g=rx,o=rx"
 
@@ -12,21 +12,27 @@
     dest: "{{ item.dest }}"
     mode: "{{ item.mode if item.mode is defined else 'u=rw,g=r,o=r' }}"
   loop:
-    - src: "home/user/.local/bin/niri-lisgd-daemon"
-      dest: "~/.local/bin/niri-lisgd-daemon"
+    - src: "home/user/.local/bin/niri-lisgd"
+      dest: "~/.local/bin/niri-lisgd"
       mode: "u=rwx,g=rx,o=rx"
-    - src: "home/user/.config/systemd/user/lisgd.service"
-      dest: "~/.config/systemd/user/lisgd.service"
+    - src: "home/user/.local/bin/niri-lisgd-setup"
+      dest: "~/.local/bin/niri-lisgd-setup"
+      mode: "u=rwx,g=rx,o=rx"
+    - src: "home/user/.config/systemd/user/niri-lisgd.service"
+      dest: "~/.config/systemd/user/niri-lisgd.service"
       mode: "u=rw,g=r,o=r"
-    - src: "home/user/.config/systemd/user/lisgd.service.d/override.conf"
-      dest: "~/.config/systemd/user/lisgd.service.d/override.conf"
+    - src: "home/user/.config/systemd/user/niri-lisgd-setup.service"
+      dest: "~/.config/systemd/user/niri-lisgd-setup.service"
       mode: "u=rw,g=r,o=r"
   register: "niri_lisgd_copy"
 
-- name: "Enable 'lisgd' service"
+- name: "Enable 'niri-lisgd.service'"
   ansible.builtin.systemd:
-    name: "lisgd.service"
+    name: "{{ item }}"
     scope: "user"
     enabled: true
     state: "started"
     daemon_reload: "{{ niri_lisgd_copy is changed }}"
+  loop:
+    - "niri-lisgd-setup"
+    - "niri-lisgd"

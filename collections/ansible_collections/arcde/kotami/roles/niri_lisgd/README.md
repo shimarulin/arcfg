@@ -2,12 +2,10 @@
 
 > Run niri action by lisgd gestures
 
-Для управления сервисом без sudo нужно создать пользовательский systemd сервис. Вот решение:
-
-1. Создайте скрипт `~/.local/bin/lisgd-daemon`:
+## 1. Скрипт определения устройства (`~/.local/bin/niri-lisgd-device-setup`)
 
 ```bash
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Function for automatic touch device detection
 detect_touch_device() {
@@ -39,62 +37,76 @@ detect_touch_device() {
 
 # Main execution
 main() {
-    local device="$1"
+    local config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/niri-lisgd"
+    local device_file="$config_dir/device"
 
-    # Use manual device if provided, otherwise auto-detect
-    if [ -n "$device" ]; then
-        echo "Using manually specified device: $device" >&2
-        DEVICE="$device"
-    else
-        echo "Auto-detecting touch device..." >&2
-        DEVICE=$(detect_touch_device)
-        if [ $? -ne 0 ] || [ -z "$DEVICE" ]; then
-            echo "Error: Failed to auto-detect compatible touch device" >&2
-            exit 1
+    # Create config directory
+    mkdir -p "$config_dir"
+
+    # Check if device file already exists
+    if [ -f "$device_file" ]; then
+        local existing_device=$(cat "$device_file")
+        if [ -r "$existing_device" ]; then
+            echo "Using existing device from cache: $existing_device" >&2
+            echo "$existing_device"
+            return 0
+        else
+            echo "Cached device not accessible, re-detecting..." >&2
+            rm -f "$device_file"
         fi
-        echo "Auto-detected compatible device: $DEVICE" >&2
     fi
 
-    # Verify device exists and is readable
-    if [ ! -r "$DEVICE" ]; then
-        echo "Error: Device $DEVICE is not accessible" >&2
-        exit 1
+    # Auto-detect device
+    echo "Auto-detecting touch device..." >&2
+    local device=$(detect_touch_device)
+
+    if [ $? -ne 0 ] || [ -z "$device" ]; then
+        echo "Error: Failed to auto-detect compatible touch device" >&2
+        return 1
     fi
 
-    # Start lisgd with gestures
-    exec lisgd -d "$DEVICE" -t 10 -T 5 \
-        -g "1,RL,R,*,R,niri msg action focus-column-right" \
-        -g "1,LR,L,*,R,niri msg action focus-column-left" \
-        -g "1,DU,B,*,R,niri msg action open-overview"
+    # Save device to file
+    echo "$device" > "$device_file"
+    echo "Auto-detected and cached device: $device" >&2
+    echo "$device"
 }
 
-# Parse command line arguments
-case "${1:-}" in
-    -d|--device)
-        main "$2"
-        ;;
-    "")
-        main ""
-        ;;
-    *)
-        echo "Usage: $0 [-d DEVICE_PATH]"
-        echo "  -d, --device  Use specified device instead of auto-detection"
-        exit 1
-        ;;
-esac
+main
 ```
 
-Сделайте скрипт исполняемым:
+## 2. Упрощенный скрипт запуска (`~/.local/bin/niri-lisgd`)
+
 ```bash
-chmod +x ~/.local/bin/lisgd-daemon
+#!/usr/bin/env bash
+
+# Configuration
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/niri-lisgd"
+DEVICE_FILE="$CONFIG_DIR/device"
+
+# Check if device file exists
+if [ ! -f "$DEVICE_FILE" ]; then
+    echo "Error: Device not configured. Run niri-lisgd-device-setup first" >&2
+    exit 1
+fi
+
+# Read device from file
+NIRI_LISGD_DEVICE=$(cat "$DEVICE_FILE")
+
+# Verify device exists and is readable
+if [ ! -r "$NIRI_LISGD_DEVICE" ]; then
+    echo "Error: Device $NIRI_LISGD_DEVICE is not accessible" >&2
+    echo "Please run niri-lisgd-device-setup to reconfigure" >&2
+    exit 1
+fi
+
+# Start lisgd with gestures
+exec lisgd -d "$NIRI_LISGD_DEVICE" -t 10 -T 5 \
+    -g "1,RL,R,*,R,niri msg action focus-column-right" \
+    -g "1,LR,L,*,R,niri msg action focus-column-left" \
+    -g "1,DU,B,*,R,niri msg action open-overview"
 ```
 
-2. Создайте директорию для пользовательских systemd сервисов, если её нет:
-```bash
-mkdir -p ~/.config/systemd/user
-```
-
-3. Создайте файл сервиса `~/.config/systemd/user/lisgd.service`:
+## 3. Обновленный systemd юнит (`~/.config/systemd/user/niri-lisgd.service`)
 
 ```ini
 [Unit]
@@ -104,90 +116,65 @@ Wants=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/lisgd-daemon
-ExecStartPre=/bin/sleep 5
+ExecStart=%h/.local/bin/niri-lisgd
 Restart=on-failure
 RestartSec=3
 
-# Optional: specify device manually by uncommenting and modifying next line
-# Environment=DEVICE=/dev/input/eventX
+[Install]
+WantedBy=graphical-session.target
+```
+
+## 4. Сервис однократной настройки (опционально) (`~/.config/systemd/user/niri-lisgd-setup.service`)
+
+```ini
+[Unit]
+Description=Niri LISGD Device Setup
+Before=niri-lisgd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%h/.local/bin/niri-lisgd-device-setup
 
 [Install]
 WantedBy=default.target
 ```
 
-4. Активируйте и запустите сервис:
+## Установка и использование:
 
-```bash
-# Перезагрузить конфигурацию пользовательских сервисов
-systemctl --user daemon-reload
+1. **Сделайте скрипты исполняемыми:**
+   ```bash
+   chmod +x ~/.local/bin/niri-lisgd-device-setup
+   chmod +x ~/.local/bin/niri-lisgd
+   ```
 
-# Включить автозапуск
-systemctl --user enable lisgd.service
+2. **Выполните настройку устройства один раз:**
+   ```bash
+   ~/.local/bin/niri-lisgd-device-setup
+   ```
 
-# Запустить сервис
-systemctl --user start lisgd.service
-```
+3. **Или включите сервис настройки:**
+   ```bash
+   systemctl --user enable niri-lisgd-setup.service
+   systemctl --user start niri-lisgd-setup.service
+   ```
 
-5. Для автоматического запуска при входе в систему, включите lingering:
+4. **Включите основной сервис:**
+   ```bash
+   systemctl --user enable niri-lisgd.service
+   systemctl --user start niri-lisgd.service
+   ```
 
-```bash
-# Если используете systemd без полного логина в сессии
-loginctl enable-linger $USER
-```
+## Преимущества этого подхода:
 
-Управление сервисом (без sudo):
-```bash
-# Статус
-systemctl --user status lisgd
+- **Однократное определение устройства** при первом запуске
+- **Кэширование результата** в файле конфигурации
+- **Более простая отладка** - можно проверить файл устройства
+- **Упрощенный основной сервис** - только запуск lisgd
+- **Уникальное имя переменной** `NIRI_LISGD_DEVICE`
+- **Автоматическое переопределение** при недоступности закэшированного устройства
 
-# Остановка
-systemctl --user stop lisgd
-
-# Запуск
-systemctl --user start lisgd
-
-# Перезагрузка
-systemctl --user restart lisgd
-
-# Просмотр логов
-journalctl --user-unit=lisgd -f
-
-# Включить автозапуск
-systemctl --user enable lisgd
-
-# Выключить автозапуск
-systemctl --user disable lisgd
-```
-
-6. Для ручного указания устройства создайте конфигурационный файл:
-
-```bash
-mkdir -p ~/.config/systemd/user/lisgd.service.d/
-```
-
-Создайте `~/.config/systemd/user/lisgd.service.d/override.conf`:
-```ini
-[Service]
-Environment=DEVICE=/dev/input/your_device_here
-```
-
-Или отредактируйте напрямую:
-```bash
-systemctl --user edit lisgd.service
-```
-
-Альтернативно, можно запускать с конкретным устройством через командную строку:
-```bash
-~/.local/bin/lisgd-daemon -d /dev/input/your_device
-```
-
-Преимущества этого подхода:
-- Полностью пользовательский сервис, не требует root прав
-- Автозапуск при входе пользователя
-- Легкое управление через systemctl --user
-- Возможность ручного указания устройства через переменные окружения или аргументы
-- Интеграция с графической сессией
+При необходимости ручного указания устройства можно просто создать файл `~/.config/niri-lisgd/device` с нужным путем.
 
 ## Resources
 
