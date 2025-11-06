@@ -2,14 +2,14 @@
 Description=Touch Screen Gesture Daemon
 After=graphical-session.target
 Wants=graphical-session.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
 
 [Service]
 Type=simple
 ExecStart=%h/.local/bin/niri-lisgd
 Restart=on-failure
 RestartSec=5
-StartLimitIntervalSec=120
-StartLimitBurst=2
 StartLimitAction=none
 
 [Install]
