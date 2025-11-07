@@ -7,19 +7,15 @@ monitor_lid_events() {
     while true; do
         # Monitor libinput events for switch toggle
         libinput debug-events | while read -r line; do
-            if echo "$line" | grep -q "SWITCH_TOGGLE" && echo "$line" | grep -q "switch lid state 0"; then
-                echo "Detected lid open event (SWITCH_TOGGLE state 0), restarting niri-lisgd.service" >&2
+            if [[ "$line" =~ SWITCH_TOGGLE.*switch.*lid.*state.0 ]]; then
+                echo "Detected lid open event, restarting niri-lisgd.service" >&2
                 logger -t niri-lisgd "Lid open detected, restarting gesture service"
 
                 # Small delay to ensure system is ready
-                sleep 2
+                sleep 1
 
                 # Restart the main service
-                if systemctl --user is-active niri-lisgd.service >/dev/null; then
-                    systemctl --user restart niri-lisgd.service
-                else
-                    systemctl --user start niri-lisgd.service
-                fi
+                systemctl --user restart niri-lisgd.service
             fi
         done
 
