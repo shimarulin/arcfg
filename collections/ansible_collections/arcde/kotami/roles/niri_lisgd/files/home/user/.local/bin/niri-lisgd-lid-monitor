@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Main monitoring function
+monitor_lid_events() {
+    echo "Starting lid switch monitor" >&2
+
+    while true; do
+        # Monitor libinput events for switch toggle
+        libinput debug-events | while read -r line; do
+            if echo "$line" | grep -q "SWITCH_TOGGLE" && echo "$line" | grep -q "switch lid state 0"; then
+                echo "Detected lid open event (SWITCH_TOGGLE state 0), restarting niri-lisgd.service" >&2
+                logger -t niri-lisgd "Lid open detected, restarting gesture service"
+
+                # Small delay to ensure system is ready
+                sleep 2
+
+                # Restart the main service
+                if systemctl --user is-active niri-lisgd.service >/dev/null; then
+                    systemctl --user restart niri-lisgd.service
+                else
+                    systemctl --user start niri-lisgd.service
+                fi
+            fi
+        done
+
+        # If we get here, the libinput command exited - wait and restart
+        echo "libinput debug-events exited, restarting monitor in 5 seconds" >&2
+        sleep 5
+    done
+}
+
+# Start monitoring
+monitor_lid_events

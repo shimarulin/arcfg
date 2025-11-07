@@ -1,0 +1,21 @@
+[Unit]
+Description=Niri LISGD Lid Switch Monitor
+After=graphical-session.target
+Wants=graphical-session.target
+PartOf=niri-lisgd.service
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/niri-lisgd-lid-monitor
+Restart=on-failure
+RestartSec=5
+StartLimitAction=none
+# systemd journal log
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=niri-lisgd-lid-monitor
+
+[Install]
+WantedBy=graphical-session.target
