@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.shell.bash" role
+bash_packages:
+  - "bash"
