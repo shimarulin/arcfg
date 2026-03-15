@@ -1,10 +1,20 @@
 [
-    // Place your key bindings in this file to override the defaults
-    // See https://code.visualstudio.com/docs/getstarted/keybindings
-    // Example:
-    // {
-    //     "key": "ctrl+shift+f",
-    //     "command": "workbench.action.findInFiles",
-    //     "when": "editorTextFocus"
-    // }
+  // Place your key bindings in this file to override the defaults
+  // See https://code.visualstudio.com/docs/getstarted/keybindings
+  // Example:
+  // {
+  //     "key": "ctrl+shift+f",
+  //     "command": "workbench.action.findInFiles",
+  //     "when": "editorTextFocus"
+  // }
+  {
+    "key": "ctrl+c",
+    "command": "workbench.action.terminal.copySelection",
+    "when": "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused"
+  },
+  {
+    "key": "ctrl+v",
+    "command": "workbench.action.terminal.paste",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  }
 ]
