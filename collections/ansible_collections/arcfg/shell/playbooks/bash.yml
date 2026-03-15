@@ -1,0 +1,5 @@
+---
+- name: Apply the arcfg.shell.bash role to local node
+  hosts: localhost
+  roles:
+    - role: arcfg.shell.bash

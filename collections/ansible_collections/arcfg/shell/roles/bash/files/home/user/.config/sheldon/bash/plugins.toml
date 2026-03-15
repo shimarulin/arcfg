@@ -1,0 +1,86 @@
+# `sheldon` configuration file for bash
+# --------------------------------------
+#
+# You can modify this file directly or you can use one of the following
+# `sheldon` commands which are provided to assist in editing the config file:
+#
+# - `sheldon add` to add a new plugin to the config file
+# - `sheldon edit` to open up the config file in the default editor
+# - `sheldon remove` to remove a plugin from the config file
+#
+# See the documentation for more https://github.com/rossmacarthur/sheldon#readme
+
+shell = "bash"
+
+[plugins]
+
+# bash-completion
+# -----------
+[plugins.bash-completion]
+inline = '''
+# Load bash-completion if available
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+    source /usr/share/bash-completion/bash_completion
+elif [[ -f /etc/bash_completion ]]; then
+    source /etc/bash_completion
+fi
+'''
+
+# fzf
+# -----------
+# https://github.com/junegunn/fzf
+[plugins.fzf-key-bindings]
+git = 'https://github.com/junegunn/fzf'
+use = ['shell/key-bindings.bash']
+
+[plugins.fzf-completion]
+git = 'https://github.com/junegunn/fzf'
+use = ['shell/completion.bash']
+
+# NVM (Node Version Manager)
+# -----------
+# Load nvm and add bash completion
+[plugins.nvm]
+inline = '''
+# Lazy load nvm
+export NVM_DIR="$HOME/.nvm"
+nvm() {
+    unset -f nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    nvm "$@"
+}
+
+# Auto-load .nvmrc when entering a directory
+cdnvm() {
+    cd "$@" || return
+    if [[ -f .nvmrc ]]; then
+        nvm use
+    fi
+}
+
+# Bash completion for nvm
+__nvm_complete() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=()
+    if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+        . "$NVM_DIR/bash_completion"
+        COMPREPLY=($(compgen -W "$(nvm ls | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+')" -- "$cur"))
+    fi
+}
+complete -F __nvm_complete nvm
+'''
+
+# Starship prompt
+# -----------
+# https://starship.rs
+[plugins.starship]
+inline = 'eval "$(starship init bash)"'
+
+# ble.sh - Bash Line Editor
+# -----------
+# https://github.com/akinomyoga/ble.sh
+# Provides syntax highlighting and autosuggestions similar to zsh
+# NOTE: ble.sh needs to be installed separately. On Arch Linux: yay -S blesh-git
+# Uncomment the following if ble.sh is installed:
+# [plugins.blesh]
+# inline = 'source ~/.local/share/blesh/ble.sh'

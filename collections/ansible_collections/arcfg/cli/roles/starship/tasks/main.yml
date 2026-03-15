@@ -5,3 +5,17 @@
   community.general.pacman:
     name: "{{ starship_packages }}"
     extra_args: "--needed"
+
+# NOTE: workaround to keep current role path
+- name: "Set current role path"
+  ansible.builtin.set_fact:
+    starship_role_path: "{{ role_path }}"
+
+- name: "Create a symbolic links to starship config dirs"
+  ansible.builtin.include_role:
+    name: "arcfg.internal.linkcfg"
+  vars:
+    linkcfg_items:
+      - src: "{{ starship_role_path }}/files/home/user/.config/starship"
+        dest: "{{ ansible_user_dir }}/.config/starship"
+        mode: "u=rwx,g=rx,o=rx"
