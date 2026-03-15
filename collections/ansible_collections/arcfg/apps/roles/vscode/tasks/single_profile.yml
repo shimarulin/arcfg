@@ -27,28 +27,7 @@
 # --- Find profile directory ---
 - name: "Find profile directory for {{ vscode_current_profile_name }}"
   ansible.builtin.script:
-    cmd: |
-      #!/usr/bin/env python3
-      import sqlite3, json, os, sys
-      config_dir = "{{ vscode_config_dir | trim }}"
-      db_path = os.path.join(config_dir, "globalStorage", "state.vscdb")
-      profile_name = "{{ vscode_current_profile_name }}"
-      if not os.path.exists(db_path):
-          print("NOT_FOUND")
-          sys.exit(0)
-      conn = sqlite3.connect(db_path)
-      cursor = conn.execute(
-          "SELECT value FROM ItemTable WHERE key='userDataProfiles'"
-      )
-      row = cursor.fetchone()
-      if row:
-          for p in json.loads(row[0]):
-              if p.get('name') == profile_name:
-                  loc = p['location']
-                  print(os.path.join(config_dir, "profiles", loc))
-                  sys.exit(0)
-      print("NOT_FOUND")
-    executable: python3
+    cmd: "find_profile_dir.py '{{ vscode_config_dir | trim }}' '{{ vscode_current_profile_name }}'"
   register: vscode_profile_dir_result
   become: true
   become_user: "{{ vscode_user }}"
@@ -64,12 +43,12 @@
 - name: "Write profile-only settings for {{ vscode_current_profile_name }}"
   ansible.builtin.copy:
     src: "vscode-config/profiles/{{ profile_key }}/settings.json"
-    dest: "{{ profile_dir }}/settings.json"
+    dest: "{{ vscode_profile_dir }}/settings.json"
     owner: "{{ vscode_user }}"
     mode: "0644"
   when:
-    - profile_dir is defined
-    - profile_dir != "NOT_FOUND"
+    - vscode_profile_dir is defined
+    - vscode_profile_dir != "NOT_FOUND"
     - lookup('first_found', dict(files=['vscode-config/profiles/' + profile_key + '/settings.json'], skip=true)) | length > 0
 
 # --- Install base extensions in profile ---
