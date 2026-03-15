@@ -1,0 +1,99 @@
+---
+# Configure a single VS Code profile
+# This file is simplified thanks to applyToAllProfiles - no JSON merge or SQLite writes needed
+
+- name: "Set profile variables for {{ profile_key }}"
+  ansible.builtin.set_fact:
+    vscode_current_profile: "{{ vscode_profile_configs[profile_key] }}"
+    vscode_current_profile_name: "{{ vscode_profile_configs[profile_key].name }}"
+
+# --- Create profile via CLI ---
+# VS Code creates profile on first use of --profile.
+# Install a dummy extension to initialize the profile.
+- name: "Create profile '{{ vscode_current_profile_name }}' by installing first extension"
+  ansible.builtin.command:
+    cmd: >-
+      {{ vscode_bin }}
+      --profile '{{ vscode_current_profile_name }}'
+      --install-extension {{ vscode_current_profile.extensions[0] }}
+      --force
+  register: vscode_profile_init_result
+  changed_when: "'was successfully installed' in vscode_profile_init_result.stdout"
+  failed_when: false
+  become: true
+  become_user: "{{ vscode_user }}"
+  when: vscode_current_profile.extensions | length > 0
+
+# --- Find profile directory ---
+- name: "Find profile directory for {{ vscode_current_profile_name }}"
+  ansible.builtin.script:
+    cmd: |
+      #!/usr/bin/env python3
+      import sqlite3, json, os, sys
+      config_dir = "{{ vscode_config_dir | trim }}"
+      db_path = os.path.join(config_dir, "globalStorage", "state.vscdb")
+      profile_name = "{{ vscode_current_profile_name }}"
+      if not os.path.exists(db_path):
+          print("NOT_FOUND")
+          sys.exit(0)
+      conn = sqlite3.connect(db_path)
+      cursor = conn.execute(
+          "SELECT value FROM ItemTable WHERE key='userDataProfiles'"
+      )
+      row = cursor.fetchone()
+      if row:
+          for p in json.loads(row[0]):
+              if p.get('name') == profile_name:
+                  loc = p['location']
+                  print(os.path.join(config_dir, "profiles", loc))
+                  sys.exit(0)
+      print("NOT_FOUND")
+    executable: python3
+  register: vscode_profile_dir_result
+  become: true
+  become_user: "{{ vscode_user }}"
+
+- name: "Set profile directory fact for {{ vscode_current_profile_name }}"
+  ansible.builtin.set_fact:
+    vscode_profile_dir: "{{ vscode_profile_dir_result.stdout | trim }}"
+  when: vscode_profile_dir_result.stdout | trim != "NOT_FOUND"
+
+# --- Write profile-only settings ---
+# Base settings are NOT duplicated - they are inherited automatically
+# via workbench.settings.applyToAllProfiles from Default Profile.
+- name: "Write profile-only settings for {{ vscode_current_profile_name }}"
+  ansible.builtin.copy:
+    src: "vscode-config/profiles/{{ profile_key }}/settings.json"
+    dest: "{{ profile_dir }}/settings.json"
+    owner: "{{ vscode_user }}"
+    mode: "0644"
+  when:
+    - profile_dir is defined
+    - profile_dir != "NOT_FOUND"
+    - lookup('first_found', dict(files=['vscode-config/profiles/' + profile_key + '/settings.json'], skip=true)) | length > 0
+
+# --- Install base extensions in profile ---
+- name: "Install base extensions for profile {{ vscode_current_profile_name }}"
+  ansible.builtin.command:
+    cmd: >-
+      {{ vscode_bin }}
+      --profile '{{ vscode_current_profile_name }}'
+      --install-extension {{ item }}
+      --force
+  loop: "{{ vscode_base_extensions }}"
+  register: vscode_default_ext_result
+  changed_when: "'was successfully installed' in vscode_default_ext_result.stdout"
+  failed_when: false
+
+# --- Install profile-specific extensions ---
+- name: "Install profile extensions for {{ vscode_current_profile_name }}"
+  ansible.builtin.command:
+    cmd: >-
+      {{ vscode_bin }}
+      --profile '{{ vscode_current_profile_name }}'
+      --install-extension {{ item }}
+      --force
+  loop: "{{ vscode_current_profile.extensions }}"
+  register: vscode_profile_ext_result
+  changed_when: "'was successfully installed' in vscode_profile_ext_result.stdout"
+  failed_when: false

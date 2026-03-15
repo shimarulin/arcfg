@@ -1,0 +1,10 @@
+[
+    // Place your key bindings in this file to override the defaults
+    // See https://code.visualstudio.com/docs/getstarted/keybindings
+    // Example:
+    // {
+    //     "key": "ctrl+shift+f",
+    //     "command": "workbench.action.findInFiles",
+    //     "when": "editorTextFocus"
+    // }
+]

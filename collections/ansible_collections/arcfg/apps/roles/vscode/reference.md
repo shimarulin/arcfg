@@ -239,12 +239,12 @@ vscode_profile_configs:
 
 ```yaml
 ---
-# tasks file for "arcfg.apps.visual_studio_code" role
+# tasks file for "arcfg.apps.vscode" role
 - name: "Install dependencies"
   become: true
   become_user: "aur_builder"
   kewlfft.aur.aur:
-    name: "{{ visual_studio_code_packages }}"
+    name: "{{ vscode_packages }}"
     use: "paru"
   # Avoid use local Python venv
   environment:

@@ -1,0 +1,5 @@
+{
+    "workbench.settings.applyToAllProfiles": {{ vscode_inherited_settings_keys | to_nice_json(indent=8) }}{% for key, value in vscode_base_settings.items() %},
+    {{ key | to_json }}: {{ value | to_json }}
+{% endfor %}
+}

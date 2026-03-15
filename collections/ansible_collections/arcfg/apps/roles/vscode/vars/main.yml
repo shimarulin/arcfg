@@ -1,0 +1,4 @@
+---
+# vars file for "arcfg.apps.vscode" role
+vscode_packages:
+  - "visual-studio-code-bin"
