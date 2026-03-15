@@ -41,14 +41,14 @@ users too:
 - name: Apply visual-studio-code configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.apps.visual_studio_code
+    - role: arcfg.apps.vscode
 ```
 
 ```yaml
 - name: Apply visual-studio-code configuration to local node
   hosts: localhost
   roles:
-    - role: arcfg.apps.visual_studio_code
+    - role: arcfg.apps.vscode
       tags:
         - laptop
         - desktop

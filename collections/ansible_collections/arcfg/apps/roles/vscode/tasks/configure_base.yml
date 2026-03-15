@@ -1,0 +1,38 @@
+---
+# Configure base VS Code settings
+
+- name: Ensure VS Code config directory exists
+  ansible.builtin.file:
+    path: "{{ vscode_config_dir | trim }}"
+    state: directory
+    owner: "{{ vscode_user }}"
+    mode: "0755"
+
+# Записываем базовые настройки с workbench.settings.applyToAllProfiles.
+# Шаблон автоматически включает массив наследуемых ключей.
+- name: Write base settings.json with applyToAllProfiles
+  ansible.builtin.template:
+    src: settings_base.json.j2
+    dest: "{{ vscode_config_dir | trim }}/settings.json"
+    owner: "{{ vscode_user }}"
+    mode: "0644"
+    backup: true
+
+- name: Copy base keybindings.json
+  ansible.builtin.copy:
+    src: vscode-config/base/keybindings.json
+    dest: "{{ vscode_config_dir | trim }}/keybindings.json"
+    owner: "{{ vscode_user }}"
+    mode: "0644"
+  when: >
+    lookup('first_found',
+      dict(files=['vscode-config/base/keybindings.json'], skip=true)
+    ) | length > 0
+
+- name: Install base extensions
+  ansible.builtin.command:
+    cmd: "{{ vscode_bin }} --install-extension {{ item }} --force"
+  loop: "{{ vscode_base_extensions }}"
+  register: vscode_ext_result
+  changed_when: "'was successfully installed' in vscode_ext_result.stdout"
+  failed_when: false

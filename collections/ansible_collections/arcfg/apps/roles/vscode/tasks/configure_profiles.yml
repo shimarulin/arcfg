@@ -1,0 +1,9 @@
+---
+# Configure VS Code profiles
+
+- name: Configure VS Code profiles
+  ansible.builtin.include_tasks: single_profile.yml
+  loop: "{{ vscode_profiles_enabled }}"
+  loop_control:
+    loop_var: profile_key
+  when: profile_key in vscode_profile_configs

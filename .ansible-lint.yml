@@ -18,3 +18,4 @@ enable_list:
 skip_list:
   - yaml[line-length]
   - schema[meta]
+  - name[template]

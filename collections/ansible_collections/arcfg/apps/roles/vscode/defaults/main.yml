@@ -1,0 +1,135 @@
+---
+# defaults file for "arcfg.apps.vscode" role
+
+# Какие профили создавать на данном хосте
+vscode_profiles_enabled:
+  - web
+  - python
+  - devops
+
+# Пользователь
+vscode_user: "{{ ansible_user_id }}"
+vscode_user_home: "{{ ansible_env.HOME }}"
+
+# Пути (автоопределение по ОС)
+vscode_config_dir: >-
+  {% if ansible_os_family == 'Darwin' %}
+  {{ vscode_user_home }}/Library/Application Support/Code/User
+  {% elif ansible_os_family == 'Windows' %}
+  {{ ansible_env.APPDATA }}/Code/User
+  {% else %}
+  {{ vscode_user_home }}/.config/Code/User
+  {% endif %}
+
+# Команда VS Code
+vscode_bin: "code"
+
+# ===== Базовые расширения (устанавливаются всегда) =====
+vscode_base_extensions:
+  # Git
+  - eamodio.gitlens
+  # Инструменты
+  - editorconfig.editorconfig
+
+# ===== Настройки, наследуемые всеми профилями =====
+# Эти ключи попадут в workbench.settings.applyToAllProfiles
+vscode_inherited_settings_keys:
+  # Окно
+  - "window.titleBarStyle"
+  - "window.commandCenter"
+  - "window.menuBarVisibility"
+  - "window.customTitleBarVisibility"
+  # Редактор
+  - "editor.fontSize"
+  - "editor.fontFamily"
+  # Терминал
+  - "terminal.integrated.fontSize"
+  - "terminal.integrated.fontFamily"
+  - "terminal.integrated.scrollback"
+  # Файлы
+  - "files.trimTrailingWhitespace"
+  - "files.insertFinalNewline"
+  - "files.trimFinalNewlines"
+  - "files.autoSave"
+  - "files.exclude"
+  # Проводник
+  - "explorer.confirmPasteNative"
+  # Поиск
+  - "search.exclude"
+  # Git
+  - "git.autofetch"
+  - "git.confirmSync"
+  # Телеметрия
+  - "telemetry.telemetryLevel"
+  - "extensions.autoUpdate"
+
+# ===== Базовые настройки (значения) =====
+vscode_base_settings:
+  # Окно
+  window.titleBarStyle: "custom"
+  window.commandCenter: true
+  window.menuBarVisibility: "visible"
+  window.customTitleBarVisibility: "auto"
+  # Редактор
+  editor.fontSize: 14
+  editor.fontFamily: "'JetBrains Mono', 'Fira Code', monospace"
+  # Терминал
+  terminal.integrated.fontSize: 13
+  terminal.integrated.fontFamily: "'JetBrains Mono'"
+  terminal.integrated.cursorStyle: "line"
+  terminal.integrated.scrollback: 10000
+  # Файлы
+  files.trimTrailingWhitespace: true
+  files.insertFinalNewline: true
+  files.trimFinalNewlines: true
+  files.autoSave: "afterDelay"
+  files.autoSaveDelay: 1000
+  files.exclude:
+    "**/.git": true
+    "**/.DS_Store": true
+    "**/__pycache__": true
+    "**/.pytest_cache": true
+    "**/node_modules": true
+    "**/*.pyc": true
+  # Проводник
+  explorer.confirmPasteNative: false
+  # Рабочая область
+  workbench.startupEditor: "none"
+  workbench.colorTheme: "One Dark Pro"
+  workbench.iconTheme: "material-icon-theme"
+  workbench.tree.indent: 16
+  workbench.editor.enablePreview: false
+  # Поиск
+  search.exclude:
+    "**/node_modules": true
+    "**/dist": true
+    "**/.git": true
+    "**/coverage": true
+  # Git
+  git.autofetch: true
+  git.confirmSync: false
+  git.enableSmartCommit: true
+  # Телеметрия
+  telemetry.telemetryLevel: "off"
+  extensions.autoUpdate: true
+
+# ===== Профили =====
+vscode_profile_configs:
+  web:
+    name: "Web Dev"
+    extensions:
+      - dbaeumer.vscode-eslint
+
+  python:
+    name: "Python Dev"
+    extensions:
+      - ms-python.python
+
+  devops:
+    name: "DevOps"
+    extensions:
+      - ms-python.python
+      - redhat.ansible
+      - samuelcolvin.jinjahtml
+      - redhat.vscode-yaml
+      - tamasfe.even-better-toml

@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "*.yml": "ansible",
+        "*.j2": "ansible-jinja",
+        "*.service": "ini"
+    },
+    "templateFinder.variables.externalVariables": [
+        "ansible_env\\..*",
+        "ansible_[a-z_]+"
+    ],
+    "templateFinder.extension.activated": true,
+    "templateFinder.display.showLineSeparators": false,
+    "ansible.lightspeed.enabled": false,
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    }
+}

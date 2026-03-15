@@ -1,0 +1,19 @@
+---
+# tasks file for "arcfg.apps.vscode" role
+- name: "Install dependencies"
+  become: true
+  become_user: "aur_builder"
+  kewlfft.aur.aur:
+    name: "{{ vscode_packages }}"
+    use: "paru"
+  # Avoid use local Python venv
+  environment:
+    PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+
+- name: Include base configuration
+  ansible.builtin.include_tasks: configure_base.yml
+  tags: [vscode, vscode-config]
+
+- name: Include profile configuration
+  ansible.builtin.include_tasks: configure_profiles.yml
+  tags: [vscode, vscode-profiles]
