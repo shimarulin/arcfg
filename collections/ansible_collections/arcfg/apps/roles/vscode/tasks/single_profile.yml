@@ -7,30 +7,21 @@
     vscode_current_profile: "{{ vscode_profile_configs[profile_key] }}"
     vscode_current_profile_name: "{{ vscode_profile_configs[profile_key].name }}"
 
-# --- Create profile via CLI ---
-# VS Code creates profile on first use of --profile.
-# Install a dummy extension to initialize the profile.
-- name: "Create profile '{{ vscode_current_profile_name }}' by installing first extension"
-  ansible.builtin.command:
-    cmd: >-
-      {{ vscode_bin }}
-      --profile '{{ vscode_current_profile_name }}'
-      --install-extension {{ vscode_current_profile.extensions[0] }}
-      --force
-  register: vscode_profile_init_result
-  changed_when: "'was successfully installed' in vscode_profile_init_result.stdout"
-  failed_when: false
-  become: true
-  become_user: "{{ vscode_user }}"
-  when: vscode_current_profile.extensions | length > 0
+# --- Create profile via script ---
+# VS Code CLI doesn't support profile creation directly with --install-extension.
+# We create the profile by writing to the state.vscdb SQLite database.
+- name: "Create profile '{{ vscode_current_profile_name }}'"
+  ansible.builtin.script:
+    cmd: "./create_profile.py '{{ vscode_config_dir | trim }}' '{{ vscode_current_profile_name }}'"
+  register: vscode_profile_create_result
+  changed_when: "'CREATED' in vscode_profile_create_result.stdout"
+  failed_when: "'ERROR' in vscode_profile_create_result.stdout"
 
 # --- Find profile directory ---
 - name: "Find profile directory for {{ vscode_current_profile_name }}"
   ansible.builtin.script:
-    cmd: "find_profile_dir.py '{{ vscode_config_dir | trim }}' '{{ vscode_current_profile_name }}'"
+    cmd: "./find_profile_dir.py '{{ vscode_config_dir | trim }}' '{{ vscode_current_profile_name }}'"
   register: vscode_profile_dir_result
-  become: true
-  become_user: "{{ vscode_user }}"
 
 - name: "Set profile directory fact for {{ vscode_current_profile_name }}"
   ansible.builtin.set_fact:

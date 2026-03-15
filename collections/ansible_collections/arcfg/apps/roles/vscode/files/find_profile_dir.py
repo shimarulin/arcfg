@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Find VS Code profile directory by name.
-Reads the profiles from VS Code's globalStorage/state.vscdb SQLite database.
+Reads the profiles from VS Code's globalStorage/storage.json file.
 
 Usage:
     python3 find_profile_dir.py <config_dir> <profile_name>
@@ -14,7 +14,6 @@ Output:
     Prints the profile directory path if found, or "NOT_FOUND" if not found.
 """
 
-import sqlite3
 import json
 import os
 import sys
@@ -31,31 +30,25 @@ def find_profile_directory(config_dir: str, profile_name: str) -> str:
     Returns:
         Profile directory path or "NOT_FOUND"
     """
-    db_path = os.path.join(config_dir, "globalStorage", "state.vscdb")
+    storage_path = os.path.join(config_dir, "globalStorage", "storage.json")
 
-    if not os.path.exists(db_path):
+    if not os.path.exists(storage_path):
         return "NOT_FOUND"
 
     try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.execute(
-            "SELECT value FROM ItemTable WHERE key='userDataProfiles'"
-        )
-        row = cursor.fetchone()
-
-        if row:
-            profiles = json.loads(row[0])
-            for profile in profiles:
-                if profile.get('name') == profile_name:
-                    location = profile.get('location', '')
-                    return os.path.join(config_dir, "profiles", location)
-
+        with open(storage_path, 'r', encoding='utf-8') as f:
+            storage_data = json.load(f)
+    except (json.JSONDecodeError, IOError):
         return "NOT_FOUND"
-    except (sqlite3.Error, json.JSONDecodeError):
-        return "NOT_FOUND"
-    finally:
-        if 'conn' in locals():
-            conn.close()
+
+    profiles = storage_data.get('userDataProfiles', [])
+
+    for profile in profiles:
+        if profile.get('name') == profile_name:
+            location = profile.get('location', '')
+            return os.path.join(config_dir, "profiles", location)
+
+    return "NOT_FOUND"
 
 
 if __name__ == "__main__":
